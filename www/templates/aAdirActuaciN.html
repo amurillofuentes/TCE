@@ -1,0 +1,33 @@
+<ion-view title="Añadir actuación">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <form class="list">
+            <div class="spacer" style="width: 285px; height: 43px;"></div>
+            <label class="item item-input">
+                <span class="input-label">Nombre de actuación</span>
+                <input type="text" placeholder="Nombre de la actuacion">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Fecha</span>
+                <input type="date" placeholder="">
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Paciente</span>
+                <select>
+                    <option>Curtis</option>
+                    <option>Lucky</option>
+                </select>
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Recordarme</span>
+                <select>
+                    <option>Nunca</option>
+                    <option>12 horas antes</option>
+                    <option>1 días antes</option>
+                    <option>2 días antes</option>
+                </select>
+            </label>
+        </form>
+        <div class="spacer" style="width: 285px; height: 52px;"></div>
+        <a ui-sref="menu.home" class="button button-stable button-block  icon-left ion-checkmark-round button-full">AÑADIR ACTUACION</a>
+    </ion-content>
+</ion-view>
