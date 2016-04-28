@@ -2,18 +2,14 @@
 
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <div>
-            
-     <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <img style="display:none;" id="largeImage" src="" />
-            
-            
-            
-            
+
+            <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+            <img style="display:none;" id="largeImage" src="" />
+
             <p>
                 Introduce los datos de tu mascota. Presiona "añadir otra" para añadir más de una y presiona "Terminar" cuando hayas acabado</p>
         </div>
         <div class="spacer" style="width: 285px; height: 18px;"></div>
-<a ui-sref="menu.test" class="button button-stable button-block ">TEST</a>
 
         <ion-list>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddName()">
@@ -28,23 +24,19 @@
             </ion-item>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddType()">
                 Tipo de mascota
-                
-<span class="item-note">{{interfaz.typePet}}</span>
+                <span class="item-note">{{interfaz.typePet}}</span>
             </ion-item>
         </ion-list>
 
-
         <div class="item item-thumbnail-left">
-            <img ng-model="image" src="{{imagestring}}" id="imageSelected">            
-            <button class="button button-stable button-block " ng-click="launchPhotoAlbum()">From Photo Album</button>
-            <button class="button button-stable button-block " ng-click="launchCapturePhoto()">Capture Photo</button>
-            
-            foto: {{imagestring}} </br>
-            console: {{console}}
+            <img ng-model="image" src="{{imagestring}}" id="imageSelected">
+            <button class="button button-stable button-block " ng-click="launchPhotoAlbum()">Imagen desde tu telefono(no funciona)</button>
+            <button class="button button-stable button-block " ng-click="launchCapturePhoto()">Imagen desde la camara (no funciona)</button>
+
         </div>
 
         <div class="button-bar">
-            <button class="button button-stable button-block " ng-click="addPet()">AÑADIR OTRA</button>
+            <button class="button button-stable button-block " ng-click="addPet()">AÑADIR</button>
             <a ui-sref="menu.home" class="button button-stable button-block ">TERMINAR</a>
         </div>
 

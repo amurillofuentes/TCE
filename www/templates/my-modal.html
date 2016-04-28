@@ -10,9 +10,9 @@
             <ion-item class="item-stable" ng-click="toggleGroup(filtro1)" ng-class="{active: isGroupShown(filtro1)}">
                 <i class="icon" ng-class="isGroupShown(filtro1) ? 'ion-minus' : 'ion-plus'"></i> Ordenar lista por
             </ion-item>
-            <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'A'">Fecha</ion-radio>
-            <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'A'">Mascotas</ion-radio>
-            <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'A'">Actuacion</ion-radio>
+            <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-fecha'">Fecha</ion-radio>
+            <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-mascota'">Mascotas</ion-radio>
+            <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-actuacion'">Actuacion</ion-radio>
 
             <div ng-repeat="group in groups">
                 <ion-item class="item-stable" ng-click="toggleGroup(group)" ng-class="{active: isGroupShown(group)}">
@@ -27,8 +27,3 @@
         <button class="button button-full button-positive" ng-click="createContact(newUser)">MOSTRAR</button>
         </ion-content>
       </ion-modal-view>
-      
-      
-      
-      
-      
