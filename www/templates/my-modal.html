@@ -1,15 +1,14 @@
 <ion-modal-view>
-        <ion-header-bar class="bar bar-header bar-positive">
-          <h1 class="title">Seleccion de filtros</h1>
-          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
-        </ion-header-bar>
-        <ion-content class="padding">
-         
-          
-          <ion-list>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Seleccion de filtros</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <ion-list>
             <ion-item class="item-stable" ng-click="toggleGroup(filtro1)" ng-class="{active: isGroupShown(filtro1)}">
                 <i class="icon" ng-class="isGroupShown(filtro1) ? 'ion-minus' : 'ion-plus'"></i> Ordenar lista por
             </ion-item>
+            
             <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-fecha'">Fecha</ion-radio>
             <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-mascota'">Mascotas</ion-radio>
             <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-actuacion'">Actuacion</ion-radio>
@@ -19,11 +18,11 @@
                     <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{group.name}}
                 </ion-item>
 
-                <ion-checkbox ng-model="filter.blue" class="item-accordion" ng-repeat="item in group.items" ng-show="isGroupShown(group)">
+                <ion-checkbox ng-model="item.selected" class="item-accordion" ng-repeat="item in group.items" ng-show="isGroupShown(group)">
                     {{item.subId}}
-                    </ion-item>
+
             </div>
         </ion-list>
-        <button class="button button-full button-positive" ng-click="createContact(newUser)">MOSTRAR</button>
-        </ion-content>
-      </ion-modal-view>
+        <button class="button button-full button-positive" ng-click="processFilters(choice); modal.hide() ">MOSTRAR</button>
+    </ion-content>
+</ion-modal-view>
