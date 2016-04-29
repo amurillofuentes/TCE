@@ -7,8 +7,6 @@ angular.module('app.controllers', [])
             $scope.mascotas = [];
             $scope.actuacionesDeLasMascotas = [];
 
-            localStorage.clear();
-
             initValues();
             initValuesFromMemory();
 
@@ -91,7 +89,7 @@ angular.module('app.controllers', [])
             console.log('CTRL - camposIntroducidosOk - $scope.pet.date=', $scope.pet.date);
             console.log('CTRL - camposIntroducidosOk - $scope.pet.type=', $scope.pet.type);
 
-            if ($scope.pet.name != undefined && $scope.pet.name != '') {
+            if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
                 if ($scope.pet.type != undefined && $scope.pet.type != '') {
                     if ($scope.pet.date != undefined && $scope.pet.date != '') {
                         console.log('CTRL - addPetInSystem-return true');
@@ -128,87 +126,87 @@ angular.module('app.controllers', [])
 
             if ($scope.pet.type = 'perro') {
                 //10 de enero: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-01-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;  
+                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-01-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //01 de abril: ANALÍTICA DE FILARIA*
-                $scope.act.id = Date.now(); $scope.act.name = 'ANALÍTICA DE FILARIA*'; $scope.act.date = new Date('2016-04-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'ANALÍTICA DE FILARIA*'; $scope.act.date = new Date('2016-04-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de abril: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-04-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-04-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de abril: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de abril: PONER COLLAR PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'PONER COLLAR PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'PONER COLLAR PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 de mayo: PREVENCIÓN ANUAL FILARIA GUARDIAN**
-                $scope.act.id = Date.now(); $scope.act.name = 'PREVENCIÓN ANUAL FILARIA GUARDIAN**'; $scope.act.date = new Date('2016-05-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'PREVENCIÓN ANUAL FILARIA GUARDIAN**'; $scope.act.date = new Date('2016-05-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de mayo: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de mayo: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de junio: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de julio: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de julio: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de julio: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-07-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-07-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de agosto: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-08-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-08-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de septiembre: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de septiembre: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de octubre: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-10-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-10-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de diciembre: ANALÍTICA DE LEISHMANIA*
-                $scope.act.id = Date.now(); $scope.act.name = 'ANALÍTICA DE LEISHMANIA'; $scope.act.date = new Date('2016-12-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true;
+                $scope.act.id = Date.now(); $scope.act.name = 'ANALÍTICA DE LEISHMANIA'; $scope.act.date = new Date('2016-12-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible=true; 
                 console.log("CTRL - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
@@ -464,6 +462,7 @@ angular.module('app.controllers', [])
                 return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
             }
         }
+        
         $scope.processFilters = function ($filter) {
             console.log('homeCtrl - processFilters');
             console.log('homeCtrl - eleccionFilter', $filter);
@@ -476,26 +475,26 @@ angular.module('app.controllers', [])
             } else if ($filter == 'filtro-actuacion') {
                 reorderactuacionesDeLasMascotasByNameActuacion();
             }
-            
-            for (element in $scope.elemes){
-                var nombre=element.subId;
-                var isVisible=element.selected;
-                
-                procesarVisibilidad(nombre, isVisible);
-            }
-            
-           
 
+
+            var i=0;
+            for (i;  i<$scope.elemes.length; i++){
+                var element=$scope.elemes[i];
+                procesarVisibilidad(element.subId, element.selected);
+            }
         };
+
 
         $scope.$on('$ionicView.unloaded', function (viewInfo, state) {
             console.log('homeCtrl - $ionicView.unloaded', viewInfo, state);
         });
 
         function procesarVisibilidad(nombre, isVisible){
-            for (actuacion in $scope.actuacionesDeLasMascotas){
-                if (actuacion.namePet==nombre){
-                    actuacion.isVisible=isVisible;
+            console.log('homeCtrl - procesarVisibilidad', nombre, isVisible);
+            var i=0;
+            for(i; i<$scope.actuacionesDeLasMascotas.length; i++){
+                if ( $scope.actuacionesDeLasMascotas[i].namePet==nombre){
+                    $scope.actuacionesDeLasMascotas[i].isVisible=isVisible;
                 }
             }
         }
@@ -527,19 +526,19 @@ angular.module('app.controllers', [])
         }
 
         function reorderactuacionesDeLasMascotasByNameActuacion() {
-            console.log("CTRL - reorderactuacionesDeLasMascotasByNameActuacion - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
+           // console.log("CTRL - reorderactuacionesDeLasMascotasByNameActuacion - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
             $scope.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a.toUpperCase() }));
-            console.log("CTRL - reorderactuacionesDeLasMascotasByNameActuacion - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
+           // console.log("CTRL - reorderactuacionesDeLasMascotasByNameActuacion - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
         }
         function reorderactuacionesDeLasMascotasByDate() {
-            console.log("CTRL - reorderactuacionesDeLasMascotasByDate - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
+           // console.log("CTRL - reorderactuacionesDeLasMascotasByDate - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
             $scope.actuacionesDeLasMascotas.sort(sort_by('date', false, function (a) { return a }));
-            console.log("CTRL - reorderactuacionesDeLasMascotasByDate - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
+           // console.log("CTRL - reorderactuacionesDeLasMascotasByDate - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
         }
         function reorderactuacionesDeLasMascotasByNameMascota() {
-            console.log("CTRL - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
+            //console.log("CTRL - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
             $scope.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
-            console.log("CTRL - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
+           // console.log("CTRL - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
         }
 
 
