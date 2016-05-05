@@ -1,8 +1,13 @@
+<!--
+por defecto campos ya sleccionados de mascota, aviso y nombre
+comprobar que se añade de verdad
+-->
+
 <ion-view title="Añadir actuación">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
 
 
- <ion-list>
+        <ion-list>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddNameAct()">
                 Nombre de la actuacion
                 <span class="item-note">{{interfaz.nameAct}}</span>
@@ -13,21 +18,23 @@
                     {{interfaz.dateAct | date:'dd/MM/yyyy'}}
                     </span>
             </ion-item>
-            <ion-item ng-class="item-icon-left" ng-click="showPopupAddPet()">
+            <ion-item ng-class="item-icon-left" ng-click="showPopupAddMultiplePet()">
                 Para qué mascota
-                <span class="item-note">{{interfaz.namePet}}</span>
+                <span class="item-note">
+                    <div ng-repeat="f in mascotasToShow">
+                            <div ng-show="f.selected">
+                                {{f.subId}}
+                                </div>                       
+                    </div>
+                </span>
             </ion-item>
-                <ion-item ng-class="item-icon-left" ng-click="showPopupAddAlarm()">
+            <ion-item ng-class="item-icon-left" ng-click="showPopupAddAlarm()">
                 Definir aviso
-                <span class="item-note">{{interfaz.nameAlarm}}</span>
+                <span class="item-note">{{interfaz.alarmName}}</span>
             </ion-item>
         </ion-list>
-        
+
         <div class="spacer" style="width: 285px; height: 52px;"></div>
-         {{interfaz.nameAct}}--
-         {{interfaz.dateAct}}--
-         {{interfaz.namePet}}--
-         {{interfaz.nameAlarm}}
         <button class="button button-stable button-block  icon-left ion-checkmark-round button-full" ng-click="addActuacion()">AÑADIR ACTUACION</button>
     </ion-content>
 </ion-view>

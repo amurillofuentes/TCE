@@ -1,40 +1,63 @@
 angular.module('app.controllers', [])
 
-    .controller('aAdirMascotasCtrl', function ($scope, $ionicPopup, $timeout) {
+    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout) {
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
 
             $scope.mascotas = [];
             $scope.actuacionesDeLasMascotas = [];
-
+            clearData();
             initValues();
             initValuesFromMemory();
 
-            console.log('aAdirMascotasCtrl - $ionicView.loaded', viewInfo, state);
+            console.log('addMyPetsCtrl - $ionicView.loaded', viewInfo, state);
         });
         $scope.$on('$ionicView.unloaded', function (viewInfo, state) {
-            console.log('aAdirMascotasCtrl - $ionicView.unloaded', viewInfo, state);
+            console.log('addMyPetsCtrl - $ionicView.unloaded', viewInfo, state);
         });
 
         function initValuesFromMemory() {
-            console.log('aAdirMascotasCtrl - getValuesFromMemory');
+            console.log('addMyPetsCtrl - getValuesFromMemory');
 
-            console.log('aAdirMascotasCtrl - $scope.mascotas.length antes ', $scope.mascotas.length);
+            console.log('addMyPetsCtrl - $scope.mascotas.length antes ', $scope.mascotas.length);
             if (localStorage.getItem("mascotas") !== null) {
                 $scope.mascotas = getDataFromInternalPhoneMemory("mascotas");
             }
-            console.log('aAdirMascotasCtrl - $scope.mascotas.length despues ', $scope.mascotas.length);
+            console.log('addMyPetsCtrl - $scope.mascotas.length despues ', $scope.mascotas.length);
 
-            console.log('aAdirMascotasCtrl - $scope.actuacionesDeLasMascotas.length qntes ', $scope.actuacionesDeLasMascotas.length);
+            console.log('addMyPetsCtrl - $scope.actuacionesDeLasMascotas.length qntes ', $scope.actuacionesDeLasMascotas.length);
             if (localStorage.getItem("actuacionesDeLasMascotas") !== null) {
                 $scope.actuacionesDeLasMascotas = getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
-            console.log('aAdirMascotasCtrl - $scope.actuacionesDeLasMascotas.length despues ', $scope.actuacionesDeLasMascotas.length);
+            console.log('addMyPetsCtrl - $scope.actuacionesDeLasMascotas.length despues ', $scope.actuacionesDeLasMascotas.length);
 
         }
+        function IDGenerator() {
 
+            this.length = 8;
+            this.timestamp = +new Date;
+
+            var _getRandomInt = function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            this.generate = function () {
+                var ts = this.timestamp.toString();
+                var parts = ts.split("").reverse();
+                var id = "";
+
+                for (var i = 0; i < this.length; ++i) {
+                    var index = _getRandomInt(0, parts.length - 1);
+                    id += parts[index];
+                }
+
+                return id;
+            }
+
+
+        }
         function initValues() {
-            console.log('aAdirMascotasCtrl - initValues');
+            console.log('addMyPetsCtrl - initValues');
             $scope.imagestring = {};
             $scope.console = {};
             $scope.lastPhoto = "init";
@@ -68,7 +91,7 @@ angular.module('app.controllers', [])
         }
 
         function selectIfDefaultImage() {
-            console.log('aAdirMascotasCtrl - selectIfDefaultImage');
+            console.log('addMyPetsCtrl - selectIfDefaultImage');
             if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
                 $scope.imagestring = "img/perroIcon.jpg";
                 if ($scope.interfaz.typePet == 'Gato') {
@@ -77,31 +100,31 @@ angular.module('app.controllers', [])
             }
         }
         function camposIntroducidosOk() {
-            console.log('aAdirMascotasCtrl - camposIntroducidosOk');
+            console.log('addMyPetsCtrl - camposIntroducidosOk');
 
             $scope.pet.name = $scope.interfaz.namePet;
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
-            $scope.pet.id = Date.now();
+            $scope.pet.id = IDGenerator();
 
-            console.log('aAdirMascotasCtrl - camposIntroducidosOk - $scope.pet.id=', $scope.pet.id);
-            console.log('aAdirMascotasCtrl - camposIntroducidosOk - $scope.pet.name=', $scope.pet.name);
-            console.log('aAdirMascotasCtrl - camposIntroducidosOk - $scope.pet.date=', $scope.pet.date);
-            console.log('aAdirMascotasCtrl - camposIntroducidosOk - $scope.pet.type=', $scope.pet.type);
+            console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.id=', $scope.pet.id);
+            console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.name=', $scope.pet.name);
+            console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.date=', $scope.pet.date);
+            console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.type=', $scope.pet.type);
 
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
                 if ($scope.pet.type != undefined && $scope.pet.type != '') {
                     if ($scope.pet.date != undefined && $scope.pet.date != '') {
-                        console.log('aAdirMascotasCtrl - addPetInSystem-return true');
+                        console.log('addMyPetsCtrl - addPetInSystem-return true');
                         return true;
                     } else {
-                        console.log('aAdirMascotasCtrl - addPetInSystem-pet.date');
+                        console.log('addMyPetsCtrl - addPetInSystem-pet.date');
                     }
                 } else {
-                    console.log('aAdirMascotasCtrl - addPetInSystem-pet.type');
+                    console.log('addMyPetsCtrl - addPetInSystem-pet.type');
                 }
             } else {
-                console.log('aAdirMascotasCtrl - addPetInSystem-pet.name');
+                console.log('addMyPetsCtrl - addPetInSystem-pet.name');
             }
             var alertPopup = $ionicPopup.alert({
                 title: 'Añadir mascotas',
@@ -110,8 +133,8 @@ angular.module('app.controllers', [])
         };
 
         function savePetInSystem() {
-            console.log('aAdirMascotasCtrl - savePetInSystem');
-            console.log('aAdirMascotasCtrl - savePetInSystem', $scope.mascotas);
+            console.log('addMyPetsCtrl - savePetInSystem');
+            console.log('addMyPetsCtrl - savePetInSystem', $scope.mascotas);
             $scope.mascotas.push($scope.pet);
             saveDataInInternalPhoneMemory("mascotas", $scope.mascotas);
             return true;
@@ -120,113 +143,113 @@ angular.module('app.controllers', [])
 
         function createActuacionesDeMascota() {
             //creo las actuaciones depende de si es perro o gatoIcon
-            console.log("aAdirMascotasCtrl - createActuacionesDeMascota");
+            console.log("addMyPetsCtrl - createActuacionesDeMascota");
 
             $scope.act = {};
 
             if ($scope.pet.type = 'perro') {
                 //10 de enero: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-01-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-01-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //01 de abril: ANALÍTICA DE FILARIA*
-                $scope.act.id = Date.now(); $scope.act.name = 'ANALÍTICA DE FILARIA*'; $scope.act.date = new Date('2016-04-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'ANALÍTICA DE FILARIA*'; $scope.act.date = new Date('2016-04-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de abril: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-04-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-04-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de abril: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de abril: PONER COLLAR PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'PONER COLLAR PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'PONER COLLAR PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 de mayo: PREVENCIÓN ANUAL FILARIA GUARDIAN**
-                $scope.act.id = Date.now(); $scope.act.name = 'PREVENCIÓN ANUAL FILARIA GUARDIAN**'; $scope.act.date = new Date('2016-05-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'PREVENCIÓN ANUAL FILARIA GUARDIAN**'; $scope.act.date = new Date('2016-05-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de mayo: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de mayo: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de junio: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de julio: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de julio: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de julio: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-07-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-07-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de agosto: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-08-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-08-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de septiembre: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = Date.now(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de septiembre: prevención Filaria en pastilla
-                $scope.act.id = Date.now(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de octubre: desparasitación interna
-                $scope.act.id = Date.now(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-10-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-10-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de diciembre: ANALÍTICA DE LEISHMANIA*
-                $scope.act.id = Date.now(); $scope.act.name = 'ANALÍTICA DE LEISHMANIA'; $scope.act.date = new Date('2016-12-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
-                console.log("aAdirMascotasCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
+                $scope.act.id = IDGenerator(); $scope.act.name = 'ANALÍTICA DE LEISHMANIA'; $scope.act.date = new Date('2016-12-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 $scope.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
             } else if ($scope.pet.type = 'gato') {
 
             }
 
-            console.log("aAdirMascotasCtrl - createActuacionesDeMascota - actuaciones - ok");
+            console.log("addMyPetsCtrl - createActuacionesDeMascota - actuaciones - ok");
             return true;
         }
 
         function saveActuacionesDeMascota() {
-            console.log('aAdirMascotasCtrl - saveActuacionesDeMascota');
+            console.log('addMyPetsCtrl - saveActuacionesDeMascota');
             saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", $scope.actuacionesDeLasMascotas);
             initValuesFromMemory()
             return true;
         };
 
         function saveDataInInternalPhoneMemory(key, value) {
-            console.log('aAdirMascotasCtrl -saveDataInInternalPhoneMemory');
+            console.log('addMyPetsCtrl -saveDataInInternalPhoneMemory');
             var antes = [];
             var despues = [];
             if (getDataFromInternalPhoneMemory(key) !== null) {
@@ -236,8 +259,8 @@ angular.module('app.controllers', [])
             if (getDataFromInternalPhoneMemory(key) !== null) {
                 despues = getDataFromInternalPhoneMemory(key);
             }
-            console.log('aAdirMascotasCtrl -saveDataInInternalPhoneMemory- antes ', antes.length);
-            console.log('aAdirMascotasCtrl -saveDataInInternalPhoneMemory- despues ', despues.length);
+            console.log('addMyPetsCtrl -saveDataInInternalPhoneMemory- antes ', antes.length);
+            console.log('addMyPetsCtrl -saveDataInInternalPhoneMemory- despues ', despues.length);
         }
 
         function getDataFromInternalPhoneMemory(key) {
@@ -245,14 +268,18 @@ angular.module('app.controllers', [])
             return JSON.parse(retrievedObject);
         }
         function saveDataEndInInternalPhoneMemory(key, value) {
-            console.log('aAdirMascotasCtrl - saveDataEndInInternalPhoneMemory...');
+            console.log('addMyPetsCtrl - saveDataEndInInternalPhoneMemory...');
             localStorage.setItem(key, JSON.stringify(value));
-            console.log('aAdirMascotasCtrl - saveDataEndInInternalPhoneMemory ok --', JSON.stringify(value));
+            console.log('addMyPetsCtrl - saveDataEndInInternalPhoneMemory ok --', JSON.stringify(value));
+        }
+        function clearData() {
+            console.log('addMyPetsCtrl - clearData...');
+
+            localStorage.clear();
         }
 
-
         $scope.addPet = function () {
-            console.log('aAdirMascotasCtrl - addPet');
+            console.log('addMyPetsCtrl - addPet');
             if ((camposIntroducidosOk()) && (savePetInSystem()) && (createActuacionesDeMascota()) && (saveActuacionesDeMascota())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir mascotas',
@@ -294,7 +321,7 @@ angular.module('app.controllers', [])
         }
 
         $scope.launchPhotoAlbum = function ($state) {
-            console.log('aAdirMascotasCtrl - launchPhotoAlbum');
+            console.log('addMyPetsCtrl - launchPhotoAlbum');
             $scope.console = "launchPhotoAlbum";
             if (navigator.camera) {
                 $scope.console = "launchPhotoAlbum--1";
@@ -313,7 +340,7 @@ angular.module('app.controllers', [])
             }
         };
         function onPhotoURISuccess(imageURI) {
-            console.log('aAdirMascotasCtrl - onPhotoURISuccess');
+            console.log('addMyPetsCtrl - onPhotoURISuccess');
             $scope.console = "onPhotoURISuccess";
             if (imageURI.substring(0, 21) == "content://com.android") {
                 var photo_split = imageURI.split("%3A");
@@ -332,7 +359,7 @@ angular.module('app.controllers', [])
         }
 
         $scope.showPopupAddName = function () {
-            console.log('aAdirMascotasCtrl - showPopupAddName');
+            console.log('addMyPetsCtrl - showPopupAddName');
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="interfaz.namePet">',
                 title: 'Nombre de tu mascota',
@@ -362,7 +389,7 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDate = function () {
-            console.log('aAdirMascotasCtrl - showPopupAddDate');
+            console.log('addMyPetsCtrl - showPopupAddDate');
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="interfaz.datePet">',
                 title: 'Fecha de tu mascota',
@@ -392,7 +419,7 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddType = function () {
-            console.log('aAdirMascotasCtrl - showPopupAddType');
+            console.log('addMyPetsCtrl - showPopupAddType');
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="pet in interfaz.typesPet" ng-model="interfaz.typePet" ng-value="pet.name">{{pet.name}} ' +
@@ -452,14 +479,41 @@ angular.module('app.controllers', [])
             $scope.groups.push({ name: 'Mostrar', id: 1, items: $scope.elemes });
 
         });
+        function IDGenerator() {
 
+            this.length = 8;
+            this.timestamp = +new Date;
+
+            var _getRandomInt = function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            this.generate = function () {
+                var ts = this.timestamp.toString();
+                var parts = ts.split("").reverse();
+                var id = "";
+
+                for (var i = 0; i < this.length; ++i) {
+                    var index = _getRandomInt(0, parts.length - 1);
+                    id += parts[index];
+                }
+
+                return id;
+            }
+
+
+        }
         var sort_by = function (field, reverse, primer) {
-            var key = primer ?
-                function (x) { return primer(x[field]) } :
-                function (x) { return x[field] };
-            reverse = !reverse ? 1 : -1;
-            return function (a, b) {
-                return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+            try {
+                var key = primer ?
+                    function (x) { return primer(x[field]) } :
+                    function (x) { return x[field] };
+                reverse = !reverse ? 1 : -1;
+                return function (a, b) {
+                    return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+                }
+            } catch (err) {
+
             }
         }
 
@@ -475,7 +529,7 @@ angular.module('app.controllers', [])
             } else if ($filter == 'filtro-actuacion') {
                 reorderactuacionesDeLasMascotasByNameActuacion();
             }
-
+            console.log('homeCtrl - holaaaaaaaaaa');
             testFilter();
         };
 
@@ -483,8 +537,8 @@ angular.module('app.controllers', [])
         function testFilter(filterText) {
             console.log("homeCtrl - testFilter ", filterText);
             var i = 0;
-            var size=$scope.actuacionesDeLasMascotas.length;
-             console.log("homeCtrl - actuaciones tamaño  ", size);
+            var size = $scope.actuacionesDeLasMascotas.length;
+            console.log("homeCtrl - actuaciones tamaño  ", size);
 
             console.log("homeCtrl - testFilter ", JSON.stringify($scope.actuacionesDeLasMascotas));
 
@@ -522,9 +576,39 @@ angular.module('app.controllers', [])
             }
         }
 
-        $scope.$on('$ionicView.unloaded', function (viewInfo, state) {
-            console.log('homeCtrl - $ionicView.unloaded', viewInfo, state);
-        });
+$scope.$on("$ionicView.enter", function (viewInfo, state) {
+   // handle event
+    console.log('homeCtrl - $ionicView.unloaded', viewInfo, state);
+    getValuesFromMemory();
+});
+$scope.$on("$ionicView.leave", function (viewInfo, state) {
+   // handle event
+    console.log('homeCtrl - $ionicView.leave', viewInfo, state);
+});
+$scope.$on("$ionicView.beforeEnter", function (viewInfo, state) {
+   // handle event
+    console.log('homeCtrl - $ionicView.beforeEnter', viewInfo, state);
+    getValuesFromMemory();
+});
+$scope.$on("$ionicView.beforeLeave", function (viewInfo, state) {
+   // handle event
+    console.log('homeCtrl - $ionicView.beforeLeave', viewInfo, state);
+});
+$scope.$on("$ionicView.afterEnter", function (viewInfo, state) {
+   // handle event
+    console.log('homeCtrl - $ionicView.afterEnter', viewInfo, state);
+});
+$scope.$on("$ionicView.afterLeave", function (viewInfo, state) {
+   // handle event
+    console.log('homeCtrl - $ionicView.afterLeave', viewInfo, state);
+});
+$scope.$on('$ionicView.unloaded', function (viewInfo, state) {
+    console.log('homeCtrl - $ionicView.unloaded', viewInfo, state);
+});
+
+
+
+
 
 
 
@@ -534,6 +618,9 @@ angular.module('app.controllers', [])
         }
         function saveDataEndInInternalPhoneMemory(key, value) {
             localStorage.setItem(key, JSON.stringify(value));
+        }
+        function clearData() {
+            localStorage.clearAll();
         }
 
         function getValuesFromMemory() {
@@ -565,9 +652,9 @@ angular.module('app.controllers', [])
             // console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
         }
         function reorderactuacionesDeLasMascotasByNameMascota() {
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
+            console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify($scope.actuacionesDeLasMascotas));
             $scope.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
-            // console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
+            console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify($scope.actuacionesDeLasMascotas));
         }
 
 
@@ -621,21 +708,29 @@ angular.module('app.controllers', [])
         });
 
         $scope.openModal = function () {
+            console.log("homeCtrl - openModalopenModalopenModalopenModalopenModal ");
+            $scope.item = {};
+            $scope.choice = '';
+            $scope.item.checked = '';
             $scope.modal.show();
         };
 
         $scope.closeModal = function () {
+            console.log("homeCtrl - closeModalcloseModalcloseModalcloseModalcloseModal ");
             $scope.modal.hide();
         };
 
         $scope.$on('$destroy', function () {
+            console.log("homeCtrl - destroydestroydestroydestroy ");
             $scope.modal.remove();
         });
 
         $scope.$on('modal.hidden', function () {
+            console.log("homeCtrl - hiddenhiddenhiddenhidden ");
         });
 
         $scope.$on('modal.removed', function () {
+            console.log("homeCtrl - removedremovedremovedremovedremoved ");
         });
 
         $scope.toggleGroup = function (group) {
@@ -655,16 +750,28 @@ angular.module('app.controllers', [])
 
     .controller('menuCtrl', function ($scope) {
     })
-    .controller('detalleDeActuaciNCtrl', function ($scope) {
+    .controller('treatmentDetailCtrl', function ($scope) {
     })
 
-    .controller('aAdirActuaciNCtrl', function ($scope, $ionicPopup, $timeout) {
+    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout) {
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            console.log('aAdirActuaciNCtrl - $ionicView.loaded', viewInfo, state);
+            console.log('addTreatmentCtrl - $ionicView.loaded', viewInfo, state);
 
             initValues();
             initValuesFromMemory()
 
+            $scope.mascotasToShow = [];
+            var i = 0;
+            for (mascota in $scope.mascotas) {
+                $scope.mascotasToShow.push(
+                    {
+                        subId: JSON.stringify($scope.mascotas[i].name).replace(/\"/g, ""),
+                        id: i,
+                        selected: true
+                    }
+                );
+                i++;
+            }
 
 
         });
@@ -681,8 +788,8 @@ angular.module('app.controllers', [])
                 $scope.actuacionesDeLasMascotas = getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
 
-            console.log('aAdirActuaciNCtrl - mascotas length -', $scope.mascotas.length);
-            console.log('aAdirActuaciNCtrl - actuacionesDeLasMascotas length -', $scope.actuacionesDeLasMascotas.length);
+            console.log('addTreatmentCtrl - mascotas length -', $scope.mascotas.length);
+            console.log('addTreatmentCtrl - actuacionesDeLasMascotas length -', $scope.actuacionesDeLasMascotas.length);
 
         }
         function getDataFromInternalPhoneMemory(key) {
@@ -693,7 +800,7 @@ angular.module('app.controllers', [])
             localStorage.setItem(key, JSON.stringify(value));
         }
         function saveDataInInternalPhoneMemory(key, value) {
-            console.log('aAdirActuaciNCtrl -saveDataInInternalPhoneMemory');
+            console.log('addTreatmentCtrl -saveDataInInternalPhoneMemory');
             var antes = [];
             var despues = [];
             if (getDataFromInternalPhoneMemory(key) !== null) {
@@ -703,12 +810,12 @@ angular.module('app.controllers', [])
             if (getDataFromInternalPhoneMemory(key) !== null) {
                 despues = getDataFromInternalPhoneMemory(key);
             }
-            console.log('aAdirActuaciNCtrl -saveDataInInternalPhoneMemory- antes ', antes.length);
-            console.log('aAdirActuaciNCtrl -saveDataInInternalPhoneMemory- despues ', despues.length);
+            console.log('addTreatmentCtrl -saveDataInInternalPhoneMemory- antes ', antes.length);
+            console.log('addTreatmentCtrl -saveDataInInternalPhoneMemory- despues ', despues.length);
         }
 
         $scope.addActuacion = function () {
-            console.log('aAdirMascotasCtrl - addPet');
+            console.log('addMyPetsCtrl - addPet');
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir actuacion',
@@ -721,7 +828,7 @@ angular.module('app.controllers', [])
             }
         };
         function initValues() {
-            console.log('aAdirActuaciNCtrl - initValues');
+            console.log('addTreatmentCtrl - initValues');
 
             $scope.mascotas = [];
             $scope.actuacionesDeLasMascotas = [];
@@ -730,7 +837,7 @@ angular.module('app.controllers', [])
             $scope.interfaz.nameAct = '';
             $scope.interfaz.dateAct = new Date;
             $scope.interfaz.petName = '';
-            $scope.interfaz.alarmName = '';
+            $scope.interfaz.alarmName = 'Nunca';
 
             $scope.alarmas = [
                 { "name": "Nunca", "id": "0" },
@@ -753,7 +860,7 @@ angular.module('app.controllers', [])
         }
 
         $scope.showPopupAddNameAct = function () {
-            console.log('aAdirActuaciNCtrl - showPopupAddName');
+            console.log('addTreatmentCtrl - showPopupAddName');
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="interfaz.nameAct">',
                 title: 'Nombre de la actuacion',
@@ -783,7 +890,7 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDateAct = function () {
-            console.log('aAdirActuaciNCtrl - showPopupAddDate');
+            console.log('addTreatmentCtrl - showPopupAddDate');
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="interfaz.dateAct">',
                 title: 'Fecha de la actuacion',
@@ -812,11 +919,13 @@ angular.module('app.controllers', [])
             }, 30000);
         };
 
-        $scope.showPopupAddPet = function () {
-            console.log('aAdirActuaciNCtrl - showPopupAddPet');
+
+        $scope.showPopupAddMultiplePet = function () {
+            console.log('addTreatmentCtrl - showPopupAddMultiplePet');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
-                '  <ion-radio ng-repeat="pet in mascotas" ng-model="interfaz.namePet" ng-value="pet.name">{{pet.name}} ' +
+                '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="pet.selected" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
                 '</ion-list>                               ',
                 title: 'Mascota',
                 subTitle: '',
@@ -826,11 +935,13 @@ angular.module('app.controllers', [])
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
                         onTap: function (e) {
+                            /*
                             if (!$scope.interfaz.namePet) {
                                 e.preventDefault();
                             } else {
                                 return $scope.interfaz.namePet;
                             }
+                            */
                         }
                     }
                 ]
@@ -845,10 +956,10 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddAlarm = function () {
-            console.log('aAdirActuaciNCtrl - showPopupAddAlarm');
+            console.log('addTreatmentCtrl - showPopupAddAlarm');
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
-                '  <ion-radio ng-repeat="alarm in alarmas" ng-model="interfaz.nameAlarm" ng-value="alarm.name">{{alarm.name}} ' +
+                '  <ion-radio ng-repeat="alarm in alarmas" ng-model="interfaz.alarmName" ng-value="alarm.name">{{alarm.name}} ' +
                 '</ion-list>                               ',
                 title: 'Alarma',
                 subTitle: '',
@@ -858,10 +969,10 @@ angular.module('app.controllers', [])
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
                         onTap: function (e) {
-                            if (!$scope.interfaz.nameAlarm) {
+                            if (!$scope.interfaz.alarmName) {
                                 e.preventDefault();
                             } else {
-                                return $scope.interfaz.nameAlarm;
+                                return $scope.interfaz.alarmName;
                             }
                         }
                     }
@@ -877,13 +988,55 @@ angular.module('app.controllers', [])
         };
 
         function saveActuacionInSystem() {
-            console.log('aAdirActuaciNCtrl - saveActuacionInSystem');
-            console.log('aAdirActuaciNCtrl - saveActuacionInSystem', $scope.act);
-            $scope.actuacionesDeLasMascotas.push($scope.actuacion);
+            console.log('addTreatmentCtrl - saveActuacionInSystem');
+            //guardar una actuacion por cada macota seleccionada
+            var k = 0;
+            for (k; k < $scope.mascotasToShow.length; k++) {
+                if ($scope.mascotasToShow[k].selected) {
+                    someSelected = true;
+                    var pet = findPetbyName($scope.mascotasToShow[k].subId);
+                    $scope.act.id = IDGenerator();
+                    $scope.act.idPet = pet.id;
+                    $scope.act.datePet = pet.date;
+                    $scope.act.typePet = pet.type;
+                    $scope.act.namePet = pet.name;
+                    console.log('addTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify($scope.act));
+                    $scope.actuacionesDeLasMascotas.push($scope.act);
+                }
+            }
+
+
             saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", $scope.actuacionesDeLasMascotas);
+
             return true;
         };
+        function IDGenerator() {
+            //console.log('addTreatmentCtrl - IDGenerator -  ');
+            this.length = 8;
+            this.timestamp = +new Date;
 
+            var _getRandomInt = function (min, max) {
+                //console.log('addTreatmentCtrl - IDGenerator -  _getRandomInt');
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+
+            }
+
+            //console.log('addTreatmentCtrl - IDGenerator -  function');
+            var ts = this.timestamp.toString();
+            var parts = ts.split("").reverse();
+            var id = "";
+
+            for (var i = 0; i < this.length; ++i) {
+                var index = _getRandomInt(0, parts.length - 1);
+                id += parts[index];
+            }
+            console.log('addTreatmentCtrl - IDGenerator - return id ', id);
+
+            return id;
+
+
+
+        }
         function findPetbyName(name) {
             var i = 0;
             for (i; i < $scope.mascotas.length; i++) {
@@ -906,50 +1059,46 @@ angular.module('app.controllers', [])
 
         function camposIntroducidosOk() {
 
-            console.log('aAdirActuaciNCtrl - camposIntroducidosOk');
+            console.log('addTreatmentCtrl - camposIntroducidosOk');
 
-            $scope.act.id = Date.now();
             $scope.act.name = $scope.interfaz.nameAct;
             $scope.act.date = $scope.interfaz.dateAct;
-            $scope.act.namePet = $scope.interfaz.namePet;
-            $scope.act.nameAlarm = $scope.interfaz.nameAlarm;
+            $scope.act.nameAlarm = $scope.interfaz.alarmName;
 
-            console.log('aAdirActuaciNCtrl - camposIntroducidosOk - $scope.act.id=', $scope.act.id);
-            console.log('aAdirActuaciNCtrl - camposIntroducidosOk - $scope.act.name=', $scope.act.name);
-            console.log('aAdirActuaciNCtrl - camposIntroducidosOk - $scope.act.date=', $scope.act.date);
-            console.log('aAdirActuaciNCtrl - camposIntroducidosOk - $scope.act.petName=', $scope.act.namePet);
-            console.log('aAdirActuaciNCtrl - camposIntroducidosOk - $scope.act.nameAlarm=', $scope.act.nameAlarm);
+            console.log('addTreatmentCtrl - camposIntroducidosOk - $scope.act.name=', $scope.act.name);
+            console.log('addTreatmentCtrl - camposIntroducidosOk - $scope.act.date=', $scope.act.date);
+            console.log('addTreatmentCtrl - camposIntroducidosOk - $scope.act.nameAlarm=', $scope.act.nameAlarm);
 
             if ($scope.act.name != undefined && $scope.act.name != '' && $scope.act.name != 'nombre') {
                 if ($scope.act.date != undefined && $scope.act.date != '') {
-                    if ($scope.act.namePet != undefined && $scope.act.namePet != '') {
-                        if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
-                            var pet = findPetbyName($scope.act.namePet);
-                            if (pet) {
-                                var alarm = findAlarmbyName($scope.act.nameAlarm);
-                                if (alarm) {
-                                    $scope.act.alarmId = alarm.id;
-                                    $scope.act.idPet = pet.id;
-                                    $scope.act.datePet = pet.date;
-                                    $scope.act.typePet = pet.type;
-                                    return true;
-                                } else {
-                                    console.log('aAdirActuaciNCtrl - camposIntroducidosOk-findAlarmbyName');
-                                }
+                    if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
+                        var k = 0;
+                        someSelected = false;
+                        for (k; k < $scope.mascotasToShow.length; k++) {
+                            if ($scope.mascotasToShow[k].selected) {
+                                someSelected = true;
+                            }
+                        }
+                        if (someSelected) {
+                            var alarm = findAlarmbyName($scope.act.nameAlarm);
+                            if (alarm) {
+                                $scope.act.alarmId = alarm.id;
+                                return true;
                             } else {
-                                console.log('aAdirActuaciNCtrl - camposIntroducidosOk-findPetbyName');
+                                console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por findAlarmbyName');
                             }
                         } else {
-                            console.log('aAdirActuaciNCtrl - camposIntroducidosOk-act.nameAlarm');
+                            console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por NotPets');
                         }
                     } else {
-                        console.log('aAdirActuaciNCtrl - camposIntroducidosOk-act.namePet');
+                        console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
                     }
+
                 } else {
-                    console.log('aAdirActuaciNCtrl - camposIntroducidosOk-act.date');
+                    console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
                 }
             } else {
-                console.log('aAdirActuaciNCtrl - camposIntroducidosOk-act.name');
+                console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
             }
 
             var alertPopup = $ionicPopup.alert({

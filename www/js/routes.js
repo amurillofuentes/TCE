@@ -1,3 +1,5 @@
+//TODO: Meter redrirección al inicio si hay mascota añadida o no
+
 angular.module('app.routes', [])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -8,12 +10,12 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
 $stateProvider
 
-.state('menu.aAdirMascotas', {
+.state('menu.addMyPets', {
     url: '/addPet',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/aAdirMascotas.html',
-        controller: 'aAdirMascotasCtrl'
+        templateUrl: 'templates/addMyPets.html',
+        controller: 'addMyPetsCtrl'
       }
     }
   })
@@ -27,22 +29,22 @@ $stateProvider
       }
     }
   })
-  .state('menu.detalleDeActuaciN', {
+  .state('menu.treatmentDetail', {
     url: '/detailEvent',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/detalleDeActuaciN.html',
-        controller: 'detalleDeActuaciNCtrl'
+        templateUrl: 'templates/treatmentDetail.html',
+        controller: 'treatmentDetailCtrl'
       }
     }
   })
 
-  .state('menu.aAdirActuaciN', {
+  .state('menu.addTreatment', {
     url: '/addActuacion',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/aAdirActuaciN.html',
-        controller: 'aAdirActuaciNCtrl'
+        templateUrl: 'templates/addTreatment.html',
+        controller: 'addTreatmentCtrl'
       }
     }
   })
