@@ -1,7 +1,6 @@
 angular.module('app.services', [])
 
     .factory('BlankFactory', [function () {
-
     }])
 
     .service('BlankService', [function () {
@@ -17,7 +16,7 @@ angular.module('app.services', [])
 
         this.initValuesFromMemory = function () {
             console.log('BlankService - getValuesFromMemory');
-
+            
             console.log('BlankService - mascotas.length antes ', this.mascotas.length);
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");

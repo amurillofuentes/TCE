@@ -3,7 +3,10 @@ arreglar las imagenes en los botones
 que nombre sea un placeholder?
 -->
 <ion-view title="Añadir mascotas">
-
+    <ion-nav-buttons side="right">
+        <button class="button button-icon ion-checkmark-round" ng-click="finishPet()" ng-hide="interfaz.ocultarFinish">
+        </button>
+    </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <div>
             <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
@@ -39,8 +42,7 @@ que nombre sea un placeholder?
 
         <div class="button-bar">
             <button class="button button-stable button-block " ng-click="addPet()">AÑADIR</button>
-            <button class="button button-stable button-block " ng-click="finishPet()" ng-hide="interfaz.ocultarFinish">TERMINAR</button>
-
+            
         </div>
 
     </ion-content>

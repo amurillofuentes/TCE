@@ -140,6 +140,8 @@ angular.module('app.controllers', [])
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
+                
+                
                 //15 de junio: prevención Filaria en pastilla
                 $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
@@ -394,7 +396,7 @@ angular.module('app.controllers', [])
             console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to home');
             // $state.go('menu.home');
         }
-
+        
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('homeCtrl - $ionicView.loaded', viewInfo, state);
@@ -635,9 +637,8 @@ angular.module('app.controllers', [])
     .controller('menuCtrl', function ($scope) {
     })
 
-    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService) {
+    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window) {
         $scope.service = BlankService;
-
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('addTreatmentCtrl - $ionicView.loaded', viewInfo, state);
@@ -652,7 +653,9 @@ angular.module('app.controllers', [])
                     template: 'Actuacion añadida correctamente'
                 });
                 alertPopup.then(function (res) {
-                    initValues();
+                    BlankService.initValuesFromMemory();
+                     $window.history.back();
+                     
                 });
             }
         };
@@ -834,7 +837,6 @@ angular.module('app.controllers', [])
                 }
             }
 
-
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
 
             return true;
@@ -893,9 +895,174 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function ($scope, BlankService) {
+    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, BlankService, $window) {
         console.log('detailTreatmentCtrl - ', JSON.stringify(BlankService.detailTreatment));
+
         $scope.actuacion = BlankService.detailTreatment;
+        $scope.service = BlankService;
+
+        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
+            console.log('detailTreatmentCtrl - $ionicView.loaded', viewInfo, state);
+            initValues();
+
+        });
+        
+        $scope.solicitarConsulta = function () {
+            console.log('detailTreatmentCtrl - solicitarConsulta');
+            $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+        };
+         $scope.modifyTreatment = function () {
+            console.log('detailTreatmentCtrl - modifyTreatment');
+            $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+        };
+    
+
+        function initValues() {
+            $scope.mascotasToShow = [];
+            var i = 0;
+            console.log('detailTreatmentCtrl - initValues - i', i);
+            for (mascota in BlankService.mascotas) {
+                console.log('detailTreatmentCtrl - initValues -inside- i', i);
+                subId = JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, "");
+                if (subId == BlankService.detailTreatment.namePet) {
+                    $scope.mascotasToShow.push(
+                        {
+                            subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
+                            id: i,
+                            selected: true
+                        }
+                    );
+                } else {
+
+                    $scope.mascotasToShow.push(
+                        {
+                            subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
+                            id: i,
+                            selected: false
+                        }
+                    );
+
+                }
+
+                i++;
+            }
+        }
+
+        $scope.showPopupAddNameAct = function () {
+            console.log('detailTreatmentCtrl - showPopupAddName');
+            var myPopup = $ionicPopup.show({
+                template: '<input type="text" ng-model="actuacion.name">',
+                title: 'Nombre de la actuacion',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if (!$scope.actuacion.name) {
+                                e.preventDefault();
+                            } else {
+                                return $scope.actuacion.name;
+                            }
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
+
+        $scope.showPopupAddDateAct = function () {
+            console.log('detailTreatmentCtrl - showPopupAddDate');
+            var myPopup = $ionicPopup.show({
+                template: '<input type="date" ng-model="actuacion.date">',
+                title: 'Fecha de la actuacion',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            if (!$scope.actuacion.date) {
+                                e.preventDefault();
+                            } else {
+                                return $scope.actuacion.date;
+                            }
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
+
+
+        $scope.showPopupAddMultiplePet = function () {
+            console.log('detailTreatmentCtrl - showPopupAddMultiplePet');
+            console.log('detailTreatmentCtrl - mascotasToShow', JSON.stringify($scope.mascotasToShow));
+            var myPopup = $ionicPopup.show({
+                template: '<ion-list>                                ' +
+                '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="actuacion.namePet" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
+                '</ion-list>                               ',
+                title: 'Mascota',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
+
+        $scope.showPopupAddAlarm = function () {
+            console.log('detailTreatmentCtrl - showPopupAddAlarm');
+            var myPopup = $ionicPopup.show({
+                template: '<ion-list>                                ' +
+                '  <ion-radio ng-repeat="alarm in service.alarmas" ng-model="actuacion.nameAlarm" ng-value="alarm.name">{{alarm.name}} ' +
+                '</ion-list>                               ',
+                title: 'Alarma',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
     })
 
     ;

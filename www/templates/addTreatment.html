@@ -1,4 +1,10 @@
 <ion-view title="Añadir actuación">
+    
+    <ion-nav-buttons side="right">
+        <button class="button button-icon ion-checkmark-round" ng-click="addActuacion()">
+        </button>
+    </ion-nav-buttons>
+    
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <ion-list>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddNameAct()">
@@ -27,7 +33,5 @@
             </ion-item>
         </ion-list>
 
-        <div class="spacer" style="width: 285px; height: 52px;"></div>
-        <button class="button button-stable button-block  icon-left ion-checkmark-round button-full" ng-click="addActuacion()">AÑADIR ACTUACION</button>
     </ion-content>
 </ion-view>
