@@ -140,8 +140,8 @@ angular.module('app.controllers', [])
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
-                
-                
+
+
                 //15 de junio: prevención Filaria en pastilla
                 $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
@@ -396,7 +396,7 @@ angular.module('app.controllers', [])
             console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to home');
             // $state.go('menu.home');
         }
-        
+
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('homeCtrl - $ionicView.loaded', viewInfo, state);
@@ -654,8 +654,8 @@ angular.module('app.controllers', [])
                 });
                 alertPopup.then(function (res) {
                     BlankService.initValuesFromMemory();
-                     $window.history.back();
-                     
+                    $window.history.back();
+
                 });
             }
         };
@@ -895,7 +895,7 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, BlankService, $window) {
+    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window) {
         console.log('detailTreatmentCtrl - ', JSON.stringify(BlankService.detailTreatment));
 
         $scope.actuacion = BlankService.detailTreatment;
@@ -904,20 +904,138 @@ angular.module('app.controllers', [])
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('detailTreatmentCtrl - $ionicView.loaded', viewInfo, state);
             initValues();
-
         });
-        
+
         $scope.solicitarConsulta = function () {
             console.log('detailTreatmentCtrl - solicitarConsulta');
             $window.open('http:///tecuroencasa.com/consultas/', '_blank');
         };
-         $scope.modifyTreatment = function () {
+        $scope.modifyTreatment = function () {
             console.log('detailTreatmentCtrl - modifyTreatment');
-            $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+            if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Añadir actuacion',
+                    template: 'Actuacion modificada correctamente'
+                });
+                alertPopup.then(function (res) {
+                    BlankService.initValuesFromMemory();
+                    $window.history.back();
+                });
+            }
         };
-    
+
+        function saveActuacionInSystem() {
+            console.log('detailTreatmentCtrl - saveActuacionInSystem');
+            //guardar una actuacion por cada mascota seleccionada
+            var k = 0;
+            for (k; k < $scope.mascotasToShow.length; k++) {
+                if ($scope.mascotasToShow[k].selected) {
+                    someSelected = true;
+                    var pet = BlankService.findPetbyName($scope.mascotasToShow[k].subId);
+                    $scope.act.id = BlankService.IDGenerator();
+                    $scope.act.idPet = pet.id;
+                    $scope.act.datePet = pet.date;
+                    $scope.act.typePet = pet.type;
+                    $scope.act.namePet = pet.name;
+                    console.log('detailTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify($scope.act));
+                    BlankService.actuacionesDeLasMascotas.push($scope.act);
+                }
+            }
+            
+            //borro la antigua
+            var i=0;
+            var indexToDelete=-1;
+            for(i; i<BlankService.actuacionesDeLasMascotas.length; i++){
+                if(BlankService.actuacionesDeLasMascotas[i].id==BlankService.detailTreatment.id){
+                    indexToDelete=i;
+                    break;
+                }
+            }
+            console.log('detailTreatmentCtrl - saveActuacionInSystem - index to remove ', indexToDelete);
+            if(indexToDelete!=-1){
+                console.log('detailTreatmentCtrl - saveActuacionInSystem - remove in vector ', JSON.stringify(BlankService.detailTreatment));
+                BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
+            }
+            
+            BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
+            return true;
+        }
+
+        function camposIntroducidosOk() {
+
+            console.log('detailTreatmentCtrl - camposIntroducidosOk');
+
+            $scope.act.name = BlankService.detailTreatment.name;
+            $scope.act.date = BlankService.detailTreatment.date;
+            $scope.act.nameAlarm = BlankService.detailTreatment.nameAlarm;
+
+            console.log('detailTreatmentCtrl - camposIntroducidosOk - $scope.act.name=', $scope.act.name);
+            console.log('detailTreatmentCtrl - camposIntroducidosOk - $scope.act.date=', $scope.act.date);
+            console.log('detailTreatmentCtrl - camposIntroducidosOk - $scope.act.nameAlarm=', $scope.act.nameAlarm);
+
+            if ($scope.act.name != undefined && $scope.act.name != '' && $scope.act.name != 'nombre') {
+                if ($scope.act.date != undefined && $scope.act.date != '') {
+                    if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
+                        var k = 0;
+                        someSelected = false;
+                        for (k; k < $scope.mascotasToShow.length; k++) {
+                            if ($scope.mascotasToShow[k].selected) {
+                                someSelected = true;
+                            }
+                        }
+                        if (someSelected) {
+                            console.log('detailTreatmentCtrl - camposIntroducidosOk - 6');
+                            var alarm = BlankService.findAlarmbyName($scope.act.nameAlarm);
+                            console.log('detailTreatmentCtrl - camposIntroducidosOk - 7');
+                            if (alarm) {
+                                $scope.act.alarmId = alarm.id;
+                                return true;
+                            } else {
+                                console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por BlankService.findAlarmbyName');
+                            }
+                        } else {
+                            console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por NotPets');
+                        }
+                    } else {
+                        console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
+                    }
+
+                } else {
+                    console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
+                }
+            } else {
+                console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
+            }
+
+            var alertPopup = $ionicPopup.alert({
+                title: 'Añadir actuacion',
+                template: 'Error 1. Rellena todos los campos correctamente'
+            });
+        }
+
 
         function initValues() {
+            console.log('addTreatmentCtrl - initValues');
+
+            $scope.interfaz = {};
+            $scope.interfaz.nameAct = '';
+            $scope.interfaz.dateAct = new Date;
+            $scope.interfaz.petName = '';
+            $scope.interfaz.alarmName = 'Nunca';
+
+            $scope.act = {};
+            $scope.act.id = '';
+            $scope.act.name = '';
+            $scope.act.date = '';
+            $scope.act.namePet = '';
+            $scope.act.nameAlarm = '';
+            $scope.act.alarmId = '';
+            $scope.act.idPet = '';
+            $scope.act.namePet = '';
+            $scope.act.datePet = '';
+            $scope.act.typePet = '';
+            $scope.act.isVisible = true;
+
             $scope.mascotasToShow = [];
             var i = 0;
             console.log('detailTreatmentCtrl - initValues - i', i);
