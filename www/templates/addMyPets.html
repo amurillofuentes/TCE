@@ -1,7 +1,6 @@
 <!--
 arreglar las imagenes en los botones
 que nombre sea un placeholder?
-que se anule el boton terminar si no hay ninguna mascota y mostrar toast
 -->
 <ion-view title="Añadir mascotas">
 
@@ -40,7 +39,8 @@ que se anule el boton terminar si no hay ninguna mascota y mostrar toast
 
         <div class="button-bar">
             <button class="button button-stable button-block " ng-click="addPet()">AÑADIR</button>
-            <a ui-sref="menu.home" class="button button-stable button-block ">TERMINAR</a>
+            <button class="button button-stable button-block " ng-click="finishPet()" ng-hide="interfaz.ocultarFinish">TERMINAR</button>
+
         </div>
 
     </ion-content>

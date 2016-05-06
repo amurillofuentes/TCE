@@ -1,9 +1,8 @@
 angular.module('app.controllers', [])
 
-    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService) {
+    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $state) {
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            BlankService.clearData();
             initValues();
             BlankService.initValuesFromMemory();
             console.log('addMyPetsCtrl - $ionicView.loaded', viewInfo, state);
@@ -28,6 +27,12 @@ angular.module('app.controllers', [])
             $scope.pet.name = '';
             $scope.pet.date = '';
             $scope.pet.type = '';
+
+            $scope.interfaz.ocultarFinish = false;
+
+            if (BlankService.mascotas.length == 0) {
+                $scope.interfaz.ocultarFinish = true;
+            }
 
             selectIfDefaultImage();
 
@@ -96,87 +101,87 @@ angular.module('app.controllers', [])
 
             if ($scope.pet.type = 'perro') {
                 //10 de enero: desparasitación interna
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-01-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-01-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //01 de abril: ANALÍTICA DE FILARIA*
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'ANALÍTICA DE FILARIA*'; $scope.act.date = new Date('2016-04-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'ANALÍTICA DE FILARIA*'; $scope.act.date = new Date('2016-04-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de abril: desparasitación interna
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-04-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-04-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de abril: prevención Filaria en pastilla
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de abril: PONER COLLAR PREVENCIÓN LEISHMANIA
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'PONER COLLAR PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'PONER COLLAR PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-04-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 de mayo: PREVENCIÓN ANUAL FILARIA GUARDIAN**
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'PREVENCIÓN ANUAL FILARIA GUARDIAN**'; $scope.act.date = new Date('2016-05-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'PREVENCIÓN ANUAL FILARIA GUARDIAN**'; $scope.act.date = new Date('2016-05-01T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de mayo: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de mayo: prevención Filaria en pastilla
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-05-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de junio: prevención Filaria en pastilla
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-06-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de julio: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de julio: desparasitación interna
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-07-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de julio: prevención Filaria en pastilla
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-07-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-07-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de agosto: prevención Filaria en pastilla
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-08-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-08-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //1 a 29 de septiembre: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'LEISGUARD PREVENCIÓN LEISHMANIA'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //15 de septiembre: prevención Filaria en pastilla
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'prevención Filaria en pastilla'; $scope.act.date = new Date('2016-09-15T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de octubre: desparasitación interna
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-10-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'desparasitación interna'; $scope.act.date = new Date('2016-10-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
                 //10 de diciembre: ANALÍTICA DE LEISHMANIA*
-                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'ANALÍTICA DE LEISHMANIA'; $scope.act.date = new Date('2016-12-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true;
+                $scope.act.id = BlankService.IDGenerator(); $scope.act.name = 'ANALÍTICA DE LEISHMANIA'; $scope.act.date = new Date('2016-12-10T09:00:00'); $scope.act.idPet = $scope.pet.id; $scope.act.namePet = $scope.pet.name; $scope.act.datePet = $scope.pet.date; $scope.act.typePet = $scope.pet.type; $scope.act.isVisible = true; $scope.act.nameAlarm = "Nunca"; $scope.act.alarmId = "0";
                 console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.act));
                 BlankService.actuacionesDeLasMascotas.push($scope.act);
                 $scope.act = {};
@@ -187,6 +192,12 @@ angular.module('app.controllers', [])
             console.log("addMyPetsCtrl - createActuacionesDeMascota - actuaciones - ok");
             return true;
         }
+
+        $scope.finishPet = function () {
+            console.log('addMyPetsCtrl - finishPet');
+            BlankService.initValuesFromMemory();
+            $state.go('menu.home');
+        };
 
         $scope.addPet = function () {
             console.log('addMyPetsCtrl - addPet');
@@ -367,8 +378,23 @@ angular.module('app.controllers', [])
 
     })
 
-    .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService) {
+    .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state) {
         $scope.service = BlankService;
+        BlankService.initValuesFromMemory();
+
+        mascotas = [];
+        console.log("xxxxxxxxxxxxxxxxxxxxxxxxx-------------App Run: ");
+        var retrievedObject = localStorage.getItem("mascotas");
+        mascotas = JSON.parse(retrievedObject);
+
+        if ((mascotas == undefined) || (mascotas.length == 0)) {
+            console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to add Pet');
+            $state.go('menu.addMyPets');
+        } else {
+            console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to home');
+            // $state.go('menu.home');
+        }
+
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('homeCtrl - $ionicView.loaded', viewInfo, state);
@@ -409,6 +435,20 @@ angular.module('app.controllers', [])
 
             }
         }
+
+        $scope.borrarActuacion = function ($item) {
+            console.log('homeCtrl - borrarActuacion', JSON.stringify($item));
+            var i = 0;
+            var indexToDelete = -1;
+            for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                if (BlankService.actuacionesDeLasMascotas[i].id = $item.id) {
+                    indexToDelete = i;
+                    break;
+                }
+            }
+            BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
+            BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
+        };
 
         $scope.processFilters = function ($filter) {
             console.log('homeCtrl - processFilters');
@@ -549,7 +589,7 @@ angular.module('app.controllers', [])
         };
 
 
-        $ionicModal.fromTemplateUrl('templates/my-modal.html', {
+        $ionicModal.fromTemplateUrl('templates/ModalOrderAndGroupPets.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
@@ -585,11 +625,14 @@ angular.module('app.controllers', [])
         $scope.isGroupShown = function (group) {
             return $scope.shownGroup === group;
         };
+        $scope.showDetail = function ($item) {
+            console.log('homeCtrl - showDetail', JSON.stringify($item));
+            BlankService.detailTreatment = $item;
+            $state.go('menu.detailTreatment');
+        }
     })
 
     .controller('menuCtrl', function ($scope) {
-    })
-    .controller('treatmentDetailCtrl', function ($scope) {
     })
 
     .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService) {
@@ -849,4 +892,10 @@ angular.module('app.controllers', [])
             });
         };
     })
+
+    .controller('detailTreatmentCtrl', function ($scope, BlankService) {
+        console.log('detailTreatmentCtrl - ', JSON.stringify(BlankService.detailTreatment));
+        $scope.actuacion = BlankService.detailTreatment;
+    })
+
     ;

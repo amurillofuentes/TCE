@@ -1,14 +1,14 @@
-<ion-view title="Añadir actuación">
+<ion-view title="Detalle de actuación">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <ion-list>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddNameAct()">
                 Nombre de la actuacion
-                <span class="item-note">{{interfaz.nameAct}}</span>
+                <span class="item-note">{{actuacion.name}}</span>
             </ion-item>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddDateAct()">
                 Fecha de Nacimiento
                 <span class="item-note">
-                    {{interfaz.dateAct | date:'dd/MM/yyyy'}}
+                    {{actuacion.dateAct | date:'dd/MM/yyyy'}}
                     </span>
             </ion-item>
             <ion-item ng-class="item-icon-left" ng-click="showPopupAddMultiplePet()">
@@ -26,8 +26,7 @@
                 <span class="item-note">{{interfaz.alarmName}}</span>
             </ion-item>
         </ion-list>
-
         <div class="spacer" style="width: 285px; height: 52px;"></div>
-        <button class="button button-stable button-block  icon-left ion-checkmark-round button-full" ng-click="addActuacion()">AÑADIR ACTUACION</button>
+        <button class="button button-stable button-block  icon-left ion-checkmark-round button-full" ng-click="window.open('http://tecuroencasa.com/consultas/');">SOLICITAR CITA A DOMICILIO</button>
     </ion-content>
 </ion-view>

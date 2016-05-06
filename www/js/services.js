@@ -5,6 +5,7 @@ angular.module('app.services', [])
     }])
 
     .service('BlankService', [function () {
+        this.detailTreatment={};
         this.mascotas = [];
         this.actuacionesDeLasMascotas = [];
 
@@ -36,6 +37,7 @@ angular.module('app.services', [])
             this.initValuesFromMemory()
             return true;
         };
+       
 
         this.saveDataInInternalPhoneMemory = function (key, value) {
             console.log('BlankService -saveDataInInternalPhoneMemory');
@@ -61,8 +63,8 @@ angular.module('app.services', [])
             console.log('BlankService - saveDataEndInInternalPhoneMemory ok --', JSON.stringify(value));
         }
         this.clearData = function () {
-            //console.log('BlankService - clearData...');
-            //localStorage.clear();
+            console.log('BlankService - clearData...');
+            localStorage.clear();
         }
         this.savePetInSystem = function (pet) {
             console.log('BlankService - savePetInSystem');
@@ -120,16 +122,8 @@ angular.module('app.services', [])
 
         }
 
-function getDataFromInternalPhoneMemory(key) {
-            var retrievedObject = localStorage.getItem(key);
-            return JSON.parse(retrievedObject);
-        }
-        function saveDataEndInInternalPhoneMemory(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
-        function clearData() {
-            localStorage.clearAll();
-        }
+       
+        
         
     }]);
 

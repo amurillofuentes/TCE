@@ -10,6 +10,7 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
 $stateProvider
 
+
 .state('menu.addMyPets', {
     url: '/addPet',
     views: {
@@ -29,12 +30,12 @@ $stateProvider
       }
     }
   })
-  .state('menu.treatmentDetail', {
-    url: '/detailEvent',
+  .state('menu.detailTreatment', {
+    url: '/detailTreatment',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/treatmentDetail.html',
-        controller: 'treatmentDetailCtrl'
+        templateUrl: 'templates/detailTreatment.html',
+        controller: 'detailTreatmentCtrl'
       }
     }
   })
@@ -49,15 +50,6 @@ $stateProvider
     }
   })
 
-.state('menu.test', {
-    url: '/test',
-    views: {
-      'side-menu21': {
-        templateUrl: 'templates/test.html',
-        controller: 'testCtrl'
-      }
-    }
-  })
   
   .state('menu', {
     url: '/side-menu21',
@@ -65,8 +57,9 @@ $stateProvider
     controller: 'menuCtrl',
     abstract:true
   })
+  
 
-$urlRouterProvider.otherwise('/side-menu21/addPet')
+$urlRouterProvider.otherwise('/side-menu21/home')
 
   
 
