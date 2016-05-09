@@ -1,32 +1,28 @@
 <!--
-Hacerla. Listado de las mascotas
+Sacar las imagenes reales de las mascotas
 -->
-
-<ion-view title="Mascotas">
+<ion-view title="Mis mascotas">
     <ion-nav-buttons side="right">
-        <button class="button button-icon ion-android-calendar" ng-click="TODO()">
+        <button class="button button-icon ion-plus-round" ng-click="addPet()">
         </button>
-        <button class="button button-icon ion-plus-round" ng-click="TODO()" ui-sref="menu.addTreatment">
-        </button>
-        <button class="button button-icon icon ion-settings" ng-click="openModal()">
-        </button>
-            <button class="button-icon icon ion-ios-search" ng-click="showFilterBar()">
-            </button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
 
         <div class="spacer" style="width: 285px; height: 9px;"></div>
-        <h4>Próximas Actuaciones</h4>
+        <h4>Listado de mascotas</h4>
         <div class="spacer" style="width: 285px; height: 3px;"></div>
 
         <ion-list>
-            <ion-list ng-controller="homeCtrl">
+            <ion-list ng-controller="myPetsCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
                 <ion-card>
-                    <ion-item class="item-thumbnail-left" ng-repeat="actuacion in actuacionesDeLasMascotas track by $index" ng-show="actuacion.isVisible">
+                    <ion-item class="item-thumbnail-left" ng-repeat="mascota in service.mascotas track by $index" ng-click="showDetailPet(mascota)">
                         <img src="img/perroIcon.jpg">
-                        <h2>{{actuacion.name}}</h2>
-                        <p>{{actuacion.date | date:'dd/MM/yyyy HH:mm'}}</p>
-                        <p>{{actuacion.namePet}}</p>
+                        <h2>{{mascota.name}}</h2>
+                        <p>{{mascota.date | date:'dd/MM/yyyy HH:mm'}}</p>
+                        <p>{{macota.type}}</p>
+                        <ion-option-button class="button-positive" ng-click="borrarMascota(mascota)">
+                            Borrar
+                        </ion-option-button>
                     </ion-item>
                 </ion-card>
             </ion-list>

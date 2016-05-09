@@ -1,3 +1,31 @@
+/*
+HOME: 
+Siempre todas las actuaciones en mayusculas?
+ filtro inicial al cargar la pagina home? 
+ order al cargar la pagina home?
+
+En la home, mostrar que no hay actuaciones pero si mascotas, o bien que no hay mascotas
+
+Modificar Pet
+	
+    Navegabilidad?
+    
+Fotos/imagenes
+	Añadir mascotas
+	Añadir actuacion
+	Modificar actuación
+	Listado home
+	Listado mascotas
+	
+Test añadirActuacion
+Test movil
+
+Asignar alarmas	
+
+Investigar calendario
+
+Fase de pruebas con stephan
+*/
 angular.module('app.controllers', [])
 
     .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $state) {
@@ -382,6 +410,9 @@ angular.module('app.controllers', [])
 
     .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state) {
         $scope.service = BlankService;
+
+        //BlankService.clearData();
+
         BlankService.initValuesFromMemory();
 
         mascotas = [];
@@ -401,7 +432,7 @@ angular.module('app.controllers', [])
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('homeCtrl - $ionicView.loaded', viewInfo, state);
 
-            getValuesFromMemory();
+            BlankService.initValuesFromMemory();
 
             $scope.choice = '';
             $scope.elemes = [];
@@ -440,6 +471,8 @@ angular.module('app.controllers', [])
 
         $scope.borrarActuacion = function ($item) {
             console.log('homeCtrl - borrarActuacion', JSON.stringify($item));
+            BlankService.initValuesFromMemory();
+
             var i = 0;
             var indexToDelete = -1;
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
@@ -453,6 +486,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.processFilters = function ($filter) {
+            BlankService.initValuesFromMemory();
+
             console.log('homeCtrl - processFilters');
             console.log('homeCtrl - eleccionFilter', $filter);
             console.log('homeCtrl - eleccionCheckBoxes', JSON.stringify($scope.elemes));
@@ -514,23 +549,7 @@ angular.module('app.controllers', [])
 
 
 
-        function getValuesFromMemory() {
-            console.log('homeCtrl - getValuesFromMemory');
-            if (BlankService.getDataFromInternalPhoneMemory("mascotas") === null) {
-                BlankService.mascotas = [];
-            } else {
-                BlankService.mascotas = BlankService.getDataFromInternalPhoneMemory("mascotas");
-            }
 
-            if (BlankService.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas") === null) {
-                BlankService.mascotas = [];
-            } else {
-                BlankService.actuacionesDeLasMascotas = BlankService.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
-            }
-
-            console.log('homeCtrl - mascotas length -', BlankService.mascotas.length);
-            console.log('homeCtrl - actuacionesDeLasMascotas length -', BlankService.actuacionesDeLasMascotas.length);
-        }
 
         function reorderactuacionesDeLasMascotasByNameActuacion() {
             console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion ");
@@ -563,6 +582,8 @@ angular.module('app.controllers', [])
         actuacionesDeLasMascotasFiltradas = [];
 
         $scope.showFilterBar = function ($filter) {
+            BlankService.initValuesFromMemory();
+
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.items,
                 update: function (filteredItems, filterText) {
@@ -603,6 +624,8 @@ angular.module('app.controllers', [])
 
         $scope.openModal = function () {
             console.log("homeCtrl - openModalopenModalopenModalopenModalopenModal ");
+            BlankService.initValuesFromMemory();
+
             $scope.item = {};
             $scope.choice = '';
             $scope.item.checked = '';
@@ -611,6 +634,8 @@ angular.module('app.controllers', [])
 
         $scope.closeModal = function () {
             console.log("homeCtrl - closeModalcloseModalcloseModalcloseModalcloseModal ");
+            BlankService.initValuesFromMemory();
+
             $scope.modal.hide();
         };
 
@@ -631,14 +656,81 @@ angular.module('app.controllers', [])
             return $scope.shownGroup === group;
         };
         $scope.showDetail = function ($item) {
+            BlankService.initValuesFromMemory();
+
             console.log('homeCtrl - showDetail', JSON.stringify($item));
             BlankService.detailTreatment = $item;
             $state.go('menu.detailTreatment');
         }
     })
 
-    .controller('myPetsCtrl', function ($scope) {
+    .controller('myPetsCtrl', function ($scope, $ionicPopup, BlankService, $state) {
+        $scope.service = BlankService;
+        BlankService.initValuesFromMemory();
+
+        $scope.addPet = function () {
+            console.log('myPetsCtrl -redirect');
+            $state.go('menu.addMyPets');
+        };
+
+        $scope.showDetailPet = function (pet) {
+            console.log('myPetsCtrl - showDetailPet');
+        };
+
+        $scope.borrarMascota = function (pet) {
+            console.log('myPetsCtrl - borrarMascota');
+
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Borrar Mascota',
+                template: 'Al borrar la mascota también se borrarán todas sus actuaciones. ¿Quieres continuar?'
+            });
+
+            confirmPopup.then(function (res) {
+                if (res) {
+                    console.log('myPetsCtrl - borrarMascota', JSON.stringify(pet));
+                    var i = 0;
+                    var indexToDelete = -1;
+                    for (i; i < BlankService.mascotas.length; i++) {
+                        if (BlankService.mascotas[i].id = pet.id) {
+                            indexToDelete = i;
+                            break;
+                        }
+                    }
+                    BlankService.mascotas.splice(indexToDelete, 1);
+                    BlankService.saveDataInInternalPhoneMemory("mascotas", BlankService.mascotas);
+
+
+                    var indexActuacionesToDelete = [];
+                    i = 0;
+                    console.log('myPetsCtrl - borrarMascota con id', pet.id);
+
+                    for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                        if (BlankService.actuacionesDeLasMascotas[i].idPet == pet.id) {
+                            console.log('myPetsCtrl - encontrada actuacion para esa mascota. Adding to vector.');
+                            indexActuacionesToDelete.push(i);
+                            console.log('myPetsCtrl - posicines añadida.', i);
+                        }
+                    }
+
+                    i = 0;
+                    console.log('myPetsCtrl - actuaciones a boprrar', indexActuacionesToDelete.length);
+                    for (i; i < indexActuacionesToDelete.length; i++) {
+                        if (indexActuacionesToDelete[i] != -1) {
+                            console.log('myPetsCtrl - delete - removing from vector ');
+                            BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
+                        }
+                    }
+
+                    BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
+                    return true;
+
+                } else {
+                    console.log('myPetsCtrl - no borrar');
+                }
+            });
+        };
     })
+
 
     .controller('menuCtrl', function ($scope) {
     })
@@ -945,7 +1037,7 @@ angular.module('app.controllers', [])
             console.log('detailTreatmentCtrl - saveActuacionInSystem - RECEIVED PET ', JSON.stringify(pet));
             console.log('detailTreatmentCtrl - saveActuacionInSystem - selectec act ', JSON.stringify($scope.act));
             console.log('detailTreatmentCtrl - saveActuacionInSystem - created act ', JSON.stringify($scope.newact));
-            
+
             return $scope.newact;
         }
 
@@ -957,10 +1049,10 @@ angular.module('app.controllers', [])
                 if ($scope.mascotasToShow[k].selected) {
                     someSelected = true;
                     var act = getActuacion(BlankService.findPetbyName($scope.mascotasToShow[k].subId));
-                   // console.log('detailTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify(act));
+                    // console.log('detailTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify(act));
                     //console.log('detailTreatmentCtrl - saveActuacionInSystem - antes in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
                     BlankService.actuacionesDeLasMascotas.push(act);
-                   // console.log('detailTreatmentCtrl - saveActuacionInSystem - despues in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
+                    // console.log('detailTreatmentCtrl - saveActuacionInSystem - despues in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
                 }
             }
 
