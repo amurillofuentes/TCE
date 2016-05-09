@@ -475,7 +475,7 @@ angular.module('app.controllers', [])
             var size = BlankService.actuacionesDeLasMascotas.length;
             console.log("homeCtrl - actuaciones tamaño  ", size);
 
-            console.log("homeCtrl - testFilter ", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            //console.log("homeCtrl - testFilter ", JSON.stringify(BlankService.actuacionesDeLasMascotas));
 
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                 //1 chequeo si es visible o no.
@@ -533,19 +533,22 @@ angular.module('app.controllers', [])
         }
 
         function reorderactuacionesDeLasMascotasByNameActuacion() {
-            // console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
-            BlankService.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a.toUpperCase() }));
-            // console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion ");
+            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            BlankService.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a }));
+            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
         }
         function reorderactuacionesDeLasMascotasByDate() {
-            // console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate ");
+            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
             BlankService.actuacionesDeLasMascotas.sort(sort_by('date', false, function (a) { return a }));
-            // console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
         }
         function reorderactuacionesDeLasMascotasByNameMascota() {
-            console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota ");
+            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
             BlankService.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
-            console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
         }
 
 
@@ -632,6 +635,9 @@ angular.module('app.controllers', [])
             BlankService.detailTreatment = $item;
             $state.go('menu.detailTreatment');
         }
+    })
+
+    .controller('myPetsCtrl', function ($scope) {
     })
 
     .controller('menuCtrl', function ($scope) {
@@ -924,6 +930,25 @@ angular.module('app.controllers', [])
             }
         };
 
+        function getActuacion(pet) {
+            $scope.newact = {};
+            $scope.newact.id = BlankService.IDGenerator();
+            $scope.newact.name = $scope.act.name;
+            $scope.newact.date = $scope.act.date;
+            $scope.newact.idPet = pet.id;
+            $scope.newact.namePet = pet.name;
+            $scope.newact.datePet = pet.date;
+            $scope.newact.typePet = pet.type;
+            $scope.newact.isVisible = $scope.act.isVisible;
+            $scope.newact.nameAlarm = $scope.act.nameAlarm;
+            $scope.newact.alarmId = $scope.act.alarmId;
+            console.log('detailTreatmentCtrl - saveActuacionInSystem - RECEIVED PET ', JSON.stringify(pet));
+            console.log('detailTreatmentCtrl - saveActuacionInSystem - selectec act ', JSON.stringify($scope.act));
+            console.log('detailTreatmentCtrl - saveActuacionInSystem - created act ', JSON.stringify($scope.newact));
+            
+            return $scope.newact;
+        }
+
         function saveActuacionInSystem() {
             console.log('detailTreatmentCtrl - saveActuacionInSystem');
             //guardar una actuacion por cada mascota seleccionada
@@ -931,32 +956,29 @@ angular.module('app.controllers', [])
             for (k; k < $scope.mascotasToShow.length; k++) {
                 if ($scope.mascotasToShow[k].selected) {
                     someSelected = true;
-                    var pet = BlankService.findPetbyName($scope.mascotasToShow[k].subId);
-                    $scope.act.id = BlankService.IDGenerator();
-                    $scope.act.idPet = pet.id;
-                    $scope.act.datePet = pet.date;
-                    $scope.act.typePet = pet.type;
-                    $scope.act.namePet = pet.name;
-                    console.log('detailTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify($scope.act));
-                    BlankService.actuacionesDeLasMascotas.push($scope.act);
+                    var act = getActuacion(BlankService.findPetbyName($scope.mascotasToShow[k].subId));
+                   // console.log('detailTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify(act));
+                    //console.log('detailTreatmentCtrl - saveActuacionInSystem - antes in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
+                    BlankService.actuacionesDeLasMascotas.push(act);
+                   // console.log('detailTreatmentCtrl - saveActuacionInSystem - despues in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
                 }
             }
-            
+
             //borro la antigua
-            var i=0;
-            var indexToDelete=-1;
-            for(i; i<BlankService.actuacionesDeLasMascotas.length; i++){
-                if(BlankService.actuacionesDeLasMascotas[i].id==BlankService.detailTreatment.id){
-                    indexToDelete=i;
+            var i = 0;
+            var indexToDelete = -1;
+            for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                if (BlankService.actuacionesDeLasMascotas[i].id == BlankService.detailTreatment.id) {
+                    indexToDelete = i;
                     break;
                 }
             }
             console.log('detailTreatmentCtrl - saveActuacionInSystem - index to remove ', indexToDelete);
-            if(indexToDelete!=-1){
+            if (indexToDelete != -1) {
                 console.log('detailTreatmentCtrl - saveActuacionInSystem - remove in vector ', JSON.stringify(BlankService.detailTreatment));
                 BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
             }
-            
+
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
             return true;
         }
@@ -1126,13 +1148,12 @@ angular.module('app.controllers', [])
             }, 30000);
         };
 
-
         $scope.showPopupAddMultiplePet = function () {
             console.log('detailTreatmentCtrl - showPopupAddMultiplePet');
             console.log('detailTreatmentCtrl - mascotasToShow', JSON.stringify($scope.mascotasToShow));
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
-                '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="actuacion.namePet" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
+                '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="pet.selected" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
                 '</ion-list>                               ',
                 title: 'Mascota',
                 subTitle: '',

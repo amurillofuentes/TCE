@@ -50,6 +50,15 @@ $stateProvider
     }
   })
 
+.state('menu.myPets', {
+    url: '/addActuacion',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/myPets.html',
+        controller: 'myPetsCtrl'
+      }
+    }
+  })
   
   .state('menu', {
     url: '/side-menu21',
