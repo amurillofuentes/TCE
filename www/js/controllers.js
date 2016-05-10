@@ -1,14 +1,13 @@
 /*
 HOME: 
-Siempre todas las actuaciones en mayusculas?
- filtro inicial al cargar la pagina home? 
- order al cargar la pagina home?
 
-En la home, mostrar que no hay actuaciones pero si mascotas, o bien que no hay mascotas
-
-Modificar Pet
-	
-    Navegabilidad?
+que la busqueda se la pele si son mayusculas o minuscular
+Fltro inicial al cargar la pagina home? 
+Order al cargar la pagina home?
+arreglar el puto ordacion de actuaciones
+arreglar el refresco de todas las pantallas
+Navegabilidad?
+verActuacionesDeLaMascota -->te lleva a la home con filtro de mascota activado
     
 Fotos/imagenes
 	Añadir mascotas
@@ -21,11 +20,13 @@ Test añadirActuacion
 Test movil
 
 Asignar alarmas	
-
 Investigar calendario
+Estadisticas
+Sistema de errores
 
 Fase de pruebas con stephan
 */
+
 angular.module('app.controllers', [])
 
     .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $state) {
@@ -411,7 +412,7 @@ angular.module('app.controllers', [])
     .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state) {
         $scope.service = BlankService;
 
-        //BlankService.clearData();
+        // BlankService.clearData();
 
         BlankService.initValuesFromMemory();
 
@@ -423,11 +424,7 @@ angular.module('app.controllers', [])
         if ((mascotas == undefined) || (mascotas.length == 0)) {
             console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to add Pet');
             $state.go('menu.addMyPets');
-        } else {
-            console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to home');
-            // $state.go('menu.home');
         }
-
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             console.log('homeCtrl - $ionicView.loaded', viewInfo, state);
@@ -468,6 +465,16 @@ angular.module('app.controllers', [])
 
             }
         }
+
+        $scope.redirectToaddTreatment = function () {
+            console.log('homeCtrl - redirectToaddTreatment');
+            $state.go('menu.addTreatment');
+        };
+
+        $scope.redirectToaddPet = function () {
+            console.log('homeCtrl - redirectToaddPet');
+            $state.go('menu.addMyPets');
+        };
 
         $scope.borrarActuacion = function ($item) {
             console.log('homeCtrl - borrarActuacion', JSON.stringify($item));
@@ -545,11 +552,6 @@ angular.module('app.controllers', [])
                 }
             }
         }
-
-
-
-
-
 
         function reorderactuacionesDeLasMascotasByNameActuacion() {
             console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion ");
@@ -675,6 +677,8 @@ angular.module('app.controllers', [])
 
         $scope.showDetailPet = function (pet) {
             console.log('myPetsCtrl - showDetailPet');
+            BlankService.detailPet = pet;
+            $state.go('menu.detailPet');
         };
 
         $scope.borrarMascota = function (pet) {
@@ -731,6 +735,279 @@ angular.module('app.controllers', [])
         };
     })
 
+    .controller('detailPetCtrl', function ($scope, $ionicPopup, BlankService, $state, $window, $timeout) {
+        $scope.service = BlankService;
+
+        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
+            initValues();
+            BlankService.initValuesFromMemory();
+            console.log('detailPetCtrl - $ionicView.loaded', viewInfo, state);
+        });
+
+
+        function initValues() {
+            console.log('detailPetCtrl - initValues');
+            $scope.imagestring = {};
+            $scope.lastPhoto = "init";
+            $scope.imagestring = "img/perroIcon.jpg";
+            $scope.typesPet = [{ "name": "Perro" }, { "name": "Gato" }];
+            selectIfDefaultImage();
+        }
+
+
+        function selectIfDefaultImage() {
+            console.log('detailPetCtrl - selectIfDefaultImage');
+            if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
+                $scope.imagestring = "img/perroIcon.jpg";
+                if (BlankService.type == 'Gato') {
+                    $scope.imagestring = "img/gatoIcon.jpg";
+                }
+            }
+        }
+
+        function camposIntroducidosOk() {
+            console.log('detailPetCtrl - camposIntroducidosOk');
+
+            console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.id=', BlankService.detailPet.id);
+            console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.name=', BlankService.detailPet.name);
+            console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.date=', BlankService.detailPet.date);
+            console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.type=', BlankService.detailPet.type);
+
+            if (BlankService.detailPet.name != undefined && BlankService.detailPet.name != '' && BlankService.detailPet.name != 'nombre') {
+                if (BlankService.detailPet.type != undefined && BlankService.detailPet.type != '') {
+                    if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '') {
+                        console.log('detailPetCtrl - camposIntroducidosOk-return true');
+                        return true;
+                    } else {
+                        console.log('detailPetCtrl - camposIntroducidosOk-pet.date');
+                    }
+                } else {
+                    console.log('detailPetCtrl - camposIntroducidosOk-pet.type');
+                }
+            } else {
+                console.log('detailPetCtrl - camposIntroducidosOk-pet.name');
+            }
+            var alertPopup = $ionicPopup.alert({
+                title: 'Modificar mascota',
+                template: 'Error 1. Rellena todos los campos correctamente'
+            });
+        };
+
+
+        $scope.modifyPet = function () {
+            console.log('detailPetCtrl - modifyPet');
+            if (camposIntroducidosOk()) {
+
+                var i = 0;
+                var petFound = {};
+                for (i; i < BlankService.mascotas.length; i++) {
+                    if (BlankService.mascotas[i].id == BlankService.detailPet.id) {
+                        break;
+                    }
+                }
+                BlankService.mascotas.splice(i, 1);
+                BlankService.mascotas.push(BlankService.detailPet);
+
+                var actuacionesFound = [];
+                var actuacionesToDeleteIndexes = [];
+                var actuacionFound = {};
+                i = 0;
+                for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                    if (BlankService.actuacionesDeLasMascotas[i].idPet == BlankService.detailPet.id) {
+                 
+                        actuacionFound = BlankService.actuacionesDeLasMascotas[i];
+                                  
+                        actuacionFound.namePet = BlankService.detailPet.name;
+                        actuacionFound.datePet = BlankService.detailPet.date;
+                        actuacionFound.typePet = BlankService.detailPet.type;
+                        actuacionesFound.push(actuacionFound);
+                        actuacionesToDeleteIndexes.push(i);
+                    }
+                }
+
+           // console.log('detailPetCtrl - actuaciones a borrar tamaño ',JSON.stringify(actuacionesToDeleteIndexes));
+
+          //  console.log('detailPetCtrl - actuaciones a insertar tamaño ', JSON.stringify(actuacionesFound));
+
+
+                i = 0;
+                for (i; i < actuacionesToDeleteIndexes.length; i++) {
+                    BlankService.actuacionesDeLasMascotas.splice(actuacionesToDeleteIndexes[i], 1);
+                }
+                i = 0;
+                for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                    actuacionesFound.push(BlankService.actuacionesDeLasMascotas[i]);
+                }
+
+            //console.log('detailPetCtrl - actuacionesDeLasMascotas final ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
+
+                BlankService.saveMascotas();
+                BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas",actuacionesFound);
+
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Añadir mascotas',
+                    template: 'Mascota modificada correctamente'
+                });
+                alertPopup.then(function (res) {
+                    BlankService.initValuesFromMemory();
+                    $state.go("menu.home")
+                });
+
+            }
+        };
+
+        $scope.launchCapturePhoto = function ($state) {
+            console.log('CTRL - launchCapturePhoto');
+            $scope.console = "launchCapturePhoto";
+            if (navigator.camera) {
+                $scope.console = "launchCapturePhoto--1";
+                navigator.camera.getPicture(
+                    onPhotoDataSuccess,
+                    cameraError,
+                    {
+                        quality: 50,
+                        destinationType: destinationType.DATA_URL
+                    });
+            } else {
+                $scope.console = "launchCapturePhoto-selectIfDefaultImage";
+                selectIfDefaultImage();
+            }
+        };
+
+        function onPhotoDataSuccess(imageData) {
+
+            $scope.console = "onPhotoDataSuccess";
+            console.log(imageData);
+            var smallImage = document.getElementById('smallImage');
+            smallImage.style.display = 'block';
+            smallImage.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        $scope.launchPhotoAlbum = function ($state) {
+            console.log('addMyPetsCtrl - launchPhotoAlbum');
+            $scope.console = "launchPhotoAlbum";
+            if (navigator.camera) {
+                $scope.console = "launchPhotoAlbum--1";
+                navigator.camera.getPicture(
+                    onPhotoURISuccess,
+                    cameraError,
+                    {
+                        sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
+                        quality: 50,
+                        destinationType: destinationType.FILE_URI
+                    }
+                );
+            } else {
+                $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
+                selectIfDefaultImage();
+            }
+        };
+        function onPhotoURISuccess(imageURI) {
+            console.log('addMyPetsCtrl - onPhotoURISuccess');
+            $scope.console = "onPhotoURISuccess";
+            if (imageURI.substring(0, 21) == "content://com.android") {
+                var photo_split = imageURI.split("%3A");
+                imageURI = "content://media/external/images/media/" + photo_split[1];
+            }
+            $scope.imagestring = imageURI;
+            var largeImage = document.getElementById('largeImage');
+            largeImage.style.display = 'block';
+            largeImage.src = imageURI;
+        }
+
+        function cameraError(message) {
+            console.log('CTRL - cameraError');
+            $scope.console = "cameraError";
+            alert('Failed because: ' + message);
+        }
+
+
+
+        $scope.viewTreatmentsPet = function () {
+            //TODO: redirect to home filtrando por pet
+        }
+
+        $scope.showPopupAddName = function () {
+            console.log('detailPetCtrl - showPopupAddName');
+            var myPopup = $ionicPopup.show({
+                template: '<input type="text" ng-model="service.detailPet.name">',
+                title: 'Nombre de tu mascota',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
+
+        $scope.showPopupAddDate = function () {
+            console.log('detailPetCtrl - showPopupAddDate');
+            var myPopup = $ionicPopup.show({
+                template: '<input type="date" ng-model="service.detailPet.date">',
+                title: 'Fecha de tu mascota',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
+
+        $scope.showPopupAddType = function () {
+            console.log('detailPetCtrl - showPopupAddType');
+            var myPopup = $ionicPopup.show({
+                template: '<ion-list>                                ' +
+                '  <ion-radio ng-repeat="pet in typesPet" ng-model="service.detailPet.type" ng-value="pet.name">{{pet.name}} ' +
+                '</ion-list>                               ',
+                title: 'Tipo de tu mascota',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Guardar</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function (res) {
+                console.log('Tapped!', res);
+            });
+
+            $timeout(function () {
+                myPopup.close();
+            }, 30000);
+        };
+
+    })
 
     .controller('menuCtrl', function ($scope) {
     })

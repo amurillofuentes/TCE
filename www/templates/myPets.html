@@ -11,6 +11,7 @@ Sacar las imagenes reales de las mascotas
         <div class="spacer" style="width: 285px; height: 9px;"></div>
         <h4>Listado de mascotas</h4>
         <div class="spacer" style="width: 285px; height: 3px;"></div>
+        <div id="showHayMascotas" ng-hide="{{service.noHayMascotas}}">
 
         <ion-list>
             <ion-list ng-controller="myPetsCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
@@ -27,5 +28,13 @@ Sacar las imagenes reales de las mascotas
                 </ion-card>
             </ion-list>
         </ion-list>
+        </div>
+        
+        <div id="showNoHayMascotas" ng-hide="{{service.hayMascotas}}">
+            <h4><p><center>No se ha encontrado ninguna mascota en el sistema. Deberías añadir al menos una a la app.</center></p></h4>
+            <div class="button-bar">
+                <button class="button button-stable button-block " ng-click="addPet()">AÑADIR MASCOTA</button>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

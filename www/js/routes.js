@@ -59,7 +59,16 @@ $stateProvider
       }
     }
   })
-  
+   .state('menu.detailPet', {
+    url: '/detailPet',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/detailPet.html',
+        controller: 'detailPetCtrl'
+      }
+    }
+  })
+
   .state('menu', {
     url: '/side-menu21',
     templateUrl: 'templates/menu.html',
