@@ -69,6 +69,15 @@ $stateProvider
     }
   })
 
+.state('menu.versions', {
+    url: '/detailPet',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/versions.html',
+      }
+    }
+  })
+  
   .state('menu', {
     url: '/side-menu21',
     templateUrl: 'templates/menu.html',
