@@ -4,6 +4,7 @@ angular.module('app.services', [])
     }])
 
     .service('BlankService', [function () {
+        
         this.hayMascotas = false;
         this.noHayMascotas = false;
         this.hayActuaciones = false;
@@ -20,6 +21,11 @@ angular.module('app.services', [])
             { "name": "12 horas antes", "id": "1" },
             { "name": "1 día antes", "id": "2" },
             { "name": "2 días antes", "id": "3" }];
+            
+        this.orders = [
+            { "name": "Fecha", "id": "0", "selected":"true" },
+            { "name": "Mascota", "id": "1", "selected":"false" },
+            { "name": "Actuacion", "id": "2", "selected":"false" }];
 
         this.initValuesFromMemory = function () {
             //console.log('BlankService - getValuesFromMemory');

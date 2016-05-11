@@ -12,9 +12,13 @@ filtro de fecha ya marcado
                 <i class="icon" ng-class="isGroupShown(filtro1) ? 'ion-minus' : 'ion-plus'"></i> Ordenar lista por
             </ion-item>
             <ion-list radio-group>
+
+            <ion-radio ng-model="item.selected" class="item-accordion" ng-repeat="item in service.orders" ng-show="isGroupShown(group)">{{item.name}}
+<!--
                 <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-fecha'">Fecha</ion-radio>
                 <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-mascota'">Mascotas</ion-radio>
                 <ion-radio class="item-accordion" ng-show="isGroupShown(filtro1)" ng-model="choice" ng-value="'filtro-actuacion'">Actuacion</ion-radio>
+  -->
   </ion-list>
 
             <div ng-repeat="group in groups">
@@ -22,12 +26,11 @@ filtro de fecha ya marcado
                     <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{group.name}}
                 </ion-item>
 
-                <ion-checkbox ng-model="item.selected" class="item-accordion" ng-repeat="item in group.items" ng-show="isGroupShown(group)">
-                    {{item.subId}}
+                <ion-checkbox ng-model="item.selected" class="item-accordion" ng-repeat="item in group.items" ng-show="isGroupShown(group)">{{item.subId}}
 
             </div>
         </ion-list>
-        <button class="button button-full button-positive" ng-click="processFilters(choice); modal.hide() ">MOSTRAR</button>
+        <button class="button button-full button-positive" ng-click="processFilters(); modal.hide() ">MOSTRAR</button>
     </ion-content>
 </ion-modal-view>
 
