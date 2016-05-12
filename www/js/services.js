@@ -16,6 +16,8 @@ angular.module('app.services', [])
         this.mascotas = [];
         this.actuacionesDeLasMascotas = [];
 
+        this.reloadHome=true;
+
         this.alarmas = [
             { "name": "Nunca", "id": "0" },
             { "name": "12 horas antes", "id": "1" },
@@ -28,19 +30,19 @@ angular.module('app.services', [])
             { "name": "Actuacion", "id": "2", "selected":"false" }];
 
         this.initValuesFromMemory = function () {
-            //console.log('BlankService - getValuesFromMemory');
+            console.log('BlankService - initValuesFromMemory');
 
             //console.log('BlankService - mascotas.length antes ', this.mascotas.length);
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");
             }
-            //console.log('BlankService - mascotas.length despues ', this.mascotas.length);
+            console.log('BlankService - initValuesFromMemory- mascotas.length despues ', this.mascotas.length);
 
             //console.log('BlankService - actuacionesDeLasMascotas.length qntes ', this.actuacionesDeLasMascotas.length);
             if (localStorage.getItem("actuacionesDeLasMascotas") !== null) {
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
-            //console.log('BlankService - actuacionesDeLasMascotas.length despues ', this.actuacionesDeLasMascotas.length);
+            console.log('BlankService - initValuesFromMemory- actuacionesDeLasMascotas.length despues ', this.actuacionesDeLasMascotas.length);
 
             this.ocultarBotonera=true;
             if ((this.mascotas != undefined) && (this.mascotas.length > 0)) {
@@ -54,17 +56,17 @@ angular.module('app.services', [])
             } else {
                this. hayMascotas = false; this.noHayMascotas = true; this.noHayActuaciones = false; this.hayActuaciones = true;
             }
-            //console.log('BlankService - hayMascotas  ', this.hayMascotas);
-            //console.log('BlankService - noHayMascotas  ', this.noHayMascotas);
-            //console.log('BlankService - hayActuaciones  ', this.hayActuaciones);
-            //console.log('BlankService - noHayActuaciones  ', this.noHayActuaciones);
+            console.log('BlankService - initValuesFromMemory- hayMascotas  ', this.hayMascotas);
+            console.log('BlankService - initValuesFromMemory- noHayMascotas  ', this.noHayMascotas);
+            console.log('BlankService - initValuesFromMemory- hayActuaciones  ', this.hayActuaciones);
+            console.log('BlankService - initValuesFromMemory- noHayActuaciones  ', this.noHayActuaciones);
         }
         
         this.saveActuacionesDeMascota = function () {
-            console.log('BlankService - saveActuacionesDeMascota before toSave ', JSON.stringify(this.actuacionesDeLasMascotas));
+            //console.log('BlankService - saveActuacionesDeMascota before toSave ', JSON.stringify(this.actuacionesDeLasMascotas));
             this.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", this.actuacionesDeLasMascotas);
             this.initValuesFromMemory();
-            console.log('BlankService - saveActuacionesDeMascota after toSave ', JSON.stringify(this.actuacionesDeLasMascotas));
+            //console.log('BlankService - saveActuacionesDeMascota after toSave ', JSON.stringify(this.actuacionesDeLasMascotas));
             return true;
         };
 

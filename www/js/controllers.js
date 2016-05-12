@@ -29,7 +29,24 @@ Fase de pruebas con stephan
 
 angular.module('app.controllers', [])
 
-    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $state) {
+    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
+
+        $scope.$on('$ionicView.afterEnter', function () {
+            console.log("$ionicView.afterEnter");
+
+            if (BlankService.reloadHome) {
+                console.log("$ionicView.afterEnter - reload");
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
+
+        });
+
+        $scope.$on('$ionicView.loaded', function () {
+            console.log("$ionicView.loaded");
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             initValues();
@@ -37,7 +54,16 @@ angular.module('app.controllers', [])
             //console.log('addMyPetsCtrl - $ionicView.loaded', viewInfo, state);
         });
 
+        $scope.$on('$ionicView.beforeLeave', function () {
+            console.log("addMyPetsCtrl--$ionicView.beforeLeave");
+            BlankService.initValuesFromMemory();
+        });
+        $scope.$on('$ionicView.leave', function () {
+            console.log("addMyPetsCtrl--$ionicView.leave");
+            BlankService.initValuesFromMemory();
 
+        });
+        BlankService.initValuesFromMemory();
         function initValues() {
             //console.log('addMyPetsCtrl - initValues');
             $scope.imagestring = {};
@@ -418,31 +444,52 @@ angular.module('app.controllers', [])
 
     })
 
-    .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state) {
+    .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window) {
         $scope.service = BlankService;
 
         // BlankService.clearData();
 
+        $scope.$on('$ionicView.afterEnter', function () {
+            console.log("$ionicView.afterEnter");
+            if (BlankService.reloadHome) {
+                console.log("$ionicView.afterEnter - reload");
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
+        });
+
+        $scope.$on('$ionicView.loaded', function () {
+            console.log("$ionicView.loaded");
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
+
+        $scope.$on('$ionicView.beforeEnter', function () {
+            console.log("$ionicView.beforeEnter");
+
+            BlankService.initValuesFromMemory();
+        });
+        $scope.$on('$ionicView.enter', function () {
+            console.log("$ionicView.enter");
+            BlankService.initValuesFromMemory();
+        });
+
         BlankService.initValuesFromMemory();
 
         mascotas = [];
-        //console.log("xxxxxxxxxxxxxxxxxxxxxxxxx-------------App Run: ");
         var retrievedObject = localStorage.getItem("mascotas");
         mascotas = JSON.parse(retrievedObject);
 
         if ((mascotas == undefined) || (mascotas.length == 0)) {
-            //console.log('xxxxxxxxxxxxxxxxxxxxxxxxx - redirect to add Pet');
             $state.go('menu.addMyPets');
         }
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            //console.log('homeCtrl - $ionicView.loaded', viewInfo, state);
 
             BlankService.initValuesFromMemory();
 
             $scope.choice = '';
             $scope.elemes = [];
-            //console.log('homeCtrl -BlankService.mascotas1', JSON.stringify(BlankService.mascotas));
             var i = 0;
             var name = '';
             for (mascota in BlankService.mascotas) {
@@ -476,17 +523,14 @@ angular.module('app.controllers', [])
         }
 
         $scope.redirectToaddTreatment = function () {
-            //console.log('homeCtrl - redirectToaddTreatment');
             $state.go('menu.addTreatment');
         };
 
         $scope.redirectToaddPet = function () {
-            //console.log('homeCtrl - redirectToaddPet');
             $state.go('menu.addMyPets');
         };
 
         $scope.borrarActuacion = function ($item) {
-            //console.log('homeCtrl - borrarActuacion', JSON.stringify($item));
             BlankService.initValuesFromMemory();
 
             var i = 0;
@@ -503,13 +547,8 @@ angular.module('app.controllers', [])
 
         $scope.processFilters = function () {
             BlankService.initValuesFromMemory();
-            //console.log('homeCtrl - processFilters');
-            //console.log('homeCtrl - eleccionFilter', JSON.stringify(BlankService.orders));
-            //console.log('homeCtrl - eleccionCheckBoxes', JSON.stringify($scope.elemes));
-
             processOrder();
 
-            //console.log('homeCtrl - holaaaaaaaaaa');
             testFilter();
         };
 
@@ -524,12 +563,8 @@ angular.module('app.controllers', [])
         }
 
         function testFilter(filterText) {
-            //console.log("homeCtrl - testFilter ", filterText);
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
-            //console.log("homeCtrl - actuaciones tamaño  ", size);
-
-            //console.log("homeCtrl - testFilter ", JSON.stringify(BlankService.actuacionesDeLasMascotas));
 
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                 //1 chequeo si es visible o no.
@@ -558,30 +593,28 @@ angular.module('app.controllers', [])
                             }
                         }
                     } else {
-                        //console.log("homeCtrl - testFilter WTF");
-
                     }
                 }
             }
         }
 
         function reorderactuacionesDeLasMascotasByNameActuacion() {
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion ");
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
             BlankService.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a }));
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameActuacion - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            console.log("reorderactuacionesDeLasMascotasByNameActuacion - reload");
+            $state.go($state.current, {}, { reload: true });
+            BlankService.reloadHome = false;
         }
         function reorderactuacionesDeLasMascotasByDate() {
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate ");
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
             BlankService.actuacionesDeLasMascotas.sort(sort_by('date', false, function (a) { return a }));
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByDate - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            console.log("reorderactuacionesDeLasMascotasByNameActuacion - reload");
+            $state.go($state.current, {}, { reload: true });
+            BlankService.reloadHome = false;
         }
         function reorderactuacionesDeLasMascotasByNameMascota() {
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota ");
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - antes", JSON.stringify(BlankService.actuacionesDeLasMascotas));
             BlankService.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
-            //console.log("homeCtrl - reorderactuacionesDeLasMascotasByNameMascota - despues", JSON.stringify(BlankService.actuacionesDeLasMascotas));
+            console.log("reorderactuacionesDeLasMascotasByNameActuacion - reload");
+            $state.go($state.current, {}, { reload: true });
+            BlankService.reloadHome = false;
         }
 
 
@@ -678,9 +711,26 @@ angular.module('app.controllers', [])
         }
     })
 
-    .controller('myPetsCtrl', function ($scope, $ionicPopup, BlankService, $state) {
+    .controller('myPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
         BlankService.initValuesFromMemory();
+
+        $scope.$on('$ionicView.afterEnter', function () {
+            console.log("$ionicView.afterEnter");
+
+            if (BlankService.reloadHome) {
+                console.log("$ionicView.afterEnter - reload");
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
+
+        });
+
+        $scope.$on('$ionicView.loaded', function () {
+            console.log("$ionicView.loaded");
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
 
         $scope.addPet = function () {
             //console.log('myPetsCtrl -redirect');
@@ -747,14 +797,27 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailPetCtrl', function ($scope, $ionicPopup, BlankService, $state, $window, $timeout) {
+    .controller('detailPetCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
 
-        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            initValues();
-            BlankService.initValuesFromMemory();
-            //console.log('detailPetCtrl - $ionicView.loaded', viewInfo, state);
+        $scope.$on('$ionicView.afterEnter', function () {
+            console.log("$ionicView.afterEnter");
+
+            if (BlankService.reloadHome) {
+                console.log("$ionicView.afterEnter - reload");
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
+
         });
+
+        $scope.$on('$ionicView.loaded', function () {
+            console.log("$ionicView.loaded");
+            initValues();
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
+
 
 
         function initValues() {
@@ -838,9 +901,7 @@ angular.module('app.controllers', [])
                 }
 
                 // //console.log('detailPetCtrl - actuaciones a borrar tamaño ',JSON.stringify(actuacionesToDeleteIndexes));
-
                 //  //console.log('detailPetCtrl - actuaciones a insertar tamaño ', JSON.stringify(actuacionesFound));
-
 
                 i = 0;
                 for (i; i < actuacionesToDeleteIndexes.length; i++) {
@@ -1024,14 +1085,29 @@ angular.module('app.controllers', [])
     .controller('menuCtrl', function ($scope) {
     })
 
-    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window) {
+    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
 
-        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            //console.log('addTreatmentCtrl - $ionicView.loaded', viewInfo, state);
-            initValues();
+        $scope.$on('$ionicView.afterEnter', function () {
+            console.log("$ionicView.afterEnter");
+
+            if (BlankService.reloadHome) {
+                console.log("$ionicView.afterEnter - reload");
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
 
         });
+
+        $scope.$on('$ionicView.loaded', function () {
+            console.log("$ionicView.loaded");
+            initValues();
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
+
+
+
         $scope.addActuacion = function () {
             //console.log('addMyPetsCtrl - addPet');
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
@@ -1282,16 +1358,30 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window) {
+    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         //console.log('detailTreatmentCtrl - ', JSON.stringify(BlankService.detailTreatment));
 
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
-        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            //console.log('detailTreatmentCtrl - $ionicView.loaded', viewInfo, state);
-            initValues();
+        $scope.$on('$ionicView.afterEnter', function () {
+            console.log("$ionicView.afterEnter");
+
+            if (BlankService.reloadHome) {
+                console.log("$ionicView.afterEnter - reload");
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
+
         });
+
+        $scope.$on('$ionicView.loaded', function () {
+            console.log("$ionicView.loaded");
+            initValues();
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
+
 
         $scope.solicitarConsulta = function () {
             //console.log('detailTreatmentCtrl - solicitarConsulta');
