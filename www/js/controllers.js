@@ -51,7 +51,6 @@ angular.module('app.controllers', [])
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
             initValues();
             BlankService.initValuesFromMemory();
-            //console.log('addMyPetsCtrl - $ionicView.loaded', viewInfo, state);
         });
 
         $scope.$on('$ionicView.beforeLeave', function () {
@@ -65,7 +64,6 @@ angular.module('app.controllers', [])
         });
         BlankService.initValuesFromMemory();
         function initValues() {
-            //console.log('addMyPetsCtrl - initValues');
             $scope.imagestring = {};
             $scope.console = {};
             $scope.lastPhoto = "init";
@@ -105,7 +103,6 @@ angular.module('app.controllers', [])
         }
 
         function selectIfDefaultImage() {
-            //console.log('addMyPetsCtrl - selectIfDefaultImage');
             if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
                 $scope.imagestring = "img/perroIcon.jpg";
                 if ($scope.interfaz.typePet == 'Gato') {
@@ -114,31 +111,24 @@ angular.module('app.controllers', [])
             }
         }
         function camposIntroducidosOk() {
-            //console.log('addMyPetsCtrl - camposIntroducidosOk');
-
             $scope.pet.name = $scope.interfaz.namePet;
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
             $scope.pet.id = BlankService.IDGenerator();
 
-            //console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.id=', $scope.pet.id);
-            //console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.name=', $scope.pet.name);
-            //console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.date=', $scope.pet.date);
-            //console.log('addMyPetsCtrl - camposIntroducidosOk - $scope.pet.type=', $scope.pet.type);
-
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
                 if ($scope.pet.type != undefined && $scope.pet.type != '') {
                     if ($scope.pet.date != undefined && $scope.pet.date != '') {
-                        //console.log('addMyPetsCtrl - addPetInSystem-return true');
+                        console.log('addMyPetsCtrl - addPetInSystem-return true');
                         return true;
                     } else {
-                        //console.log('addMyPetsCtrl - addPetInSystem-pet.date');
+                        console.log('addMyPetsCtrl - addPetInSystem-pet.date');
                     }
                 } else {
-                    //console.log('addMyPetsCtrl - addPetInSystem-pet.type');
+                    console.log('addMyPetsCtrl - addPetInSystem-pet.type');
                 }
             } else {
-                //console.log('addMyPetsCtrl - addPetInSystem-pet.name');
+                console.log('addMyPetsCtrl - addPetInSystem-pet.name');
             }
             var alertPopup = $ionicPopup.alert({
                 title: 'Añadir mascotas',
@@ -166,69 +156,54 @@ angular.module('app.controllers', [])
             if ($scope.pet.type = 'perro') {
                 //10 de enero: desparasitación interna
                 $scope.newact = createActuacion('desparasitación interna', new Date('2016-01-10T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //01 de abril: ANALÍTICA DE FILARIA*
                 $scope.newact = createActuacion('ANALÍTICA DE FILARIA*', new Date('2016-04-01T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de abril: desparasitación interna
                 $scope.newact = createActuacion('desparasitación interna', new Date('2016-04-10T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de abril: prevención Filaria en pastilla
                 $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-04-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de abril: PONER COLLAR PREVENCIÓN LEISHMANIA
                 $scope.newact = createActuacion('PONER COLLAR PREVENCIÓN LEISHMANIA', new Date('2016-04-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 de mayo: PREVENCIÓN ANUAL FILARIA GUARDIAN**
                 $scope.newact = createActuacion('PREVENCIÓN ANUAL FILARIA GUARDIAN**', new Date('2016-05-01T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de mayo: LEISGUARD PREVENCIÓN LEISHMANIA
                 $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', new Date('2016-05-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de mayo: prevención Filaria en pastilla
                 $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-05-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
-
-
                 //15 de junio: prevención Filaria en pastilla
                 $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-06-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de julio: LEISGUARD PREVENCIÓN LEISHMANIA
                 $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', new Date('2016-07-10T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de julio: desparasitación interna
                 $scope.newact = createActuacion('desparasitación interna', new Date('2016-07-10T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de julio: prevención Filaria en pastilla
                 $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-07-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de agosto: prevención Filaria en pastilla
                 $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-08-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de septiembre: LEISGUARD PREVENCIÓN LEISHMANIA
@@ -238,35 +213,28 @@ angular.module('app.controllers', [])
                 $scope.act = {};
                 //15 de septiembre: prevención Filaria en pastilla
                 $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-09-15T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de octubre: desparasitación interna
                 $scope.newact = createActuacion('desparasitación interna', new Date('2016-10-10T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de diciembre: ANALÍTICA DE LEISHMANIA*
                 $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', new Date('2016-12-10T09:00:00'));
-                //console.log("addMyPetsCtrl - createActuacionesDeMascota - perro", JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
             } else if ($scope.pet.type = 'gato') {
 
             }
-
-            //console.log("addMyPetsCtrl - createActuacionesDeMascota - actuaciones - ok");
             return true;
         }
 
         $scope.finishPet = function () {
-            //console.log('addMyPetsCtrl - finishPet');
             BlankService.initValuesFromMemory();
             $state.go('menu.home');
         };
 
         $scope.addPet = function () {
-            //console.log('addMyPetsCtrl - addPet');
             if (camposIntroducidosOk()) {
                 if (BlankService.savePetInSystem($scope.pet)) {
                     if (createActuacionesDeMascota()) {
@@ -285,7 +253,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.launchCapturePhoto = function ($state) {
-            //console.log('CTRL - launchCapturePhoto');
             $scope.console = "launchCapturePhoto";
             if (navigator.camera) {
                 $scope.console = "launchCapturePhoto--1";
@@ -303,16 +270,13 @@ angular.module('app.controllers', [])
         };
 
         function onPhotoDataSuccess(imageData) {
-            //console.log('CTRL - onPhotoDataSuccess');
             $scope.console = "onPhotoDataSuccess";
-            //console.log(imageData);
             var smallImage = document.getElementById('smallImage');
             smallImage.style.display = 'block';
             smallImage.src = "data:image/jpeg;base64," + imageData;
         }
 
         $scope.launchPhotoAlbum = function ($state) {
-            //console.log('addMyPetsCtrl - launchPhotoAlbum');
             $scope.console = "launchPhotoAlbum";
             if (navigator.camera) {
                 $scope.console = "launchPhotoAlbum--1";
@@ -331,7 +295,6 @@ angular.module('app.controllers', [])
             }
         };
         function onPhotoURISuccess(imageURI) {
-            //console.log('addMyPetsCtrl - onPhotoURISuccess');
             $scope.console = "onPhotoURISuccess";
             if (imageURI.substring(0, 21) == "content://com.android") {
                 var photo_split = imageURI.split("%3A");
@@ -344,13 +307,11 @@ angular.module('app.controllers', [])
         }
 
         function cameraError(message) {
-            //console.log('CTRL - cameraError');
             $scope.console = "cameraError";
             alert('Failed because: ' + message);
         }
 
         $scope.showPopupAddName = function () {
-            //console.log('addMyPetsCtrl - showPopupAddName');
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="interfaz.namePet">',
                 title: 'Nombre de tu mascota',
@@ -371,7 +332,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -380,7 +340,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDate = function () {
-            //console.log('addMyPetsCtrl - showPopupAddDate');
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="interfaz.datePet">',
                 title: 'Fecha de tu mascota',
@@ -401,7 +360,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -410,7 +368,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddType = function () {
-            //console.log('addMyPetsCtrl - showPopupAddType');
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="pet in interfaz.typesPet" ng-model="interfaz.typePet" ng-value="pet.name">{{pet.name}} ' +
@@ -434,7 +391,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -636,18 +592,14 @@ angular.module('app.controllers', [])
                 update: function (filteredItems, filterText) {
                     $scope.items = filteredItems;
                     if (filterText) {
-                        //console.log("homeCtrl - filtrar por ", filterText);
                         testFilter(filterText);
                     }
                 },
                 cancel: function (filteredItems) {
-                    //console.log("homeCtrl - sin filtro ");
                     testFilter();
                 }
             });
         };
-
-
 
         $scope.refreshItems = function () {
             if (filterBarInstance) {
@@ -661,7 +613,6 @@ angular.module('app.controllers', [])
             }, 1000);
         };
 
-
         $ionicModal.fromTemplateUrl('templates/ModalOrderAndGroupPets.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -670,9 +621,7 @@ angular.module('app.controllers', [])
         });
 
         $scope.openModal = function () {
-            //console.log("homeCtrl - openModalopenModalopenModalopenModalopenModal ");
             BlankService.initValuesFromMemory();
-
             $scope.item = {};
             $scope.choice = '';
             $scope.item.checked = '';
@@ -680,14 +629,11 @@ angular.module('app.controllers', [])
         };
 
         $scope.closeModal = function () {
-            //console.log("homeCtrl - closeModalcloseModalcloseModalcloseModalcloseModal ");
             BlankService.initValuesFromMemory();
-
             $scope.modal.hide();
         };
 
         $scope.$on('$destroy', function () {
-            //console.log("homeCtrl - destroydestroydestroydestroy ");
             $scope.modal.remove();
         });
 
@@ -704,8 +650,6 @@ angular.module('app.controllers', [])
         };
         $scope.showDetail = function ($item) {
             BlankService.initValuesFromMemory();
-
-            //console.log('homeCtrl - showDetail', JSON.stringify($item));
             BlankService.detailTreatment = $item;
             $state.go('menu.detailTreatment');
         }
@@ -818,10 +762,7 @@ angular.module('app.controllers', [])
             BlankService.initValuesFromMemory();
         });
 
-
-
         function initValues() {
-            //console.log('detailPetCtrl - initValues');
             $scope.imagestring = {};
             $scope.lastPhoto = "init";
             $scope.imagestring = "img/perroIcon.jpg";
@@ -829,9 +770,7 @@ angular.module('app.controllers', [])
             selectIfDefaultImage();
         }
 
-
         function selectIfDefaultImage() {
-            //console.log('detailPetCtrl - selectIfDefaultImage');
             if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
                 $scope.imagestring = "img/perroIcon.jpg";
                 if (BlankService.type == 'Gato') {
@@ -841,26 +780,19 @@ angular.module('app.controllers', [])
         }
 
         function camposIntroducidosOk() {
-            //console.log('detailPetCtrl - camposIntroducidosOk');
-
-            //console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.id=', BlankService.detailPet.id);
-            //console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.name=', BlankService.detailPet.name);
-            //console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.date=', BlankService.detailPet.date);
-            //console.log('detailPetCtrl - camposIntroducidosOk - BlankService.detailPet.type=', BlankService.detailPet.type);
-
             if (BlankService.detailPet.name != undefined && BlankService.detailPet.name != '' && BlankService.detailPet.name != 'nombre') {
                 if (BlankService.detailPet.type != undefined && BlankService.detailPet.type != '') {
                     if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '') {
-                        //console.log('detailPetCtrl - camposIntroducidosOk-return true');
+                        console.log('detailPetCtrl - camposIntroducidosOk-return true');
                         return true;
                     } else {
-                        //console.log('detailPetCtrl - camposIntroducidosOk-pet.date');
+                        console.log('detailPetCtrl - camposIntroducidosOk-pet.date');
                     }
                 } else {
-                    //console.log('detailPetCtrl - camposIntroducidosOk-pet.type');
+                    console.log('detailPetCtrl - camposIntroducidosOk-pet.type');
                 }
             } else {
-                //console.log('detailPetCtrl - camposIntroducidosOk-pet.name');
+                console.log('detailPetCtrl - camposIntroducidosOk-pet.name');
             }
             var alertPopup = $ionicPopup.alert({
                 title: 'Modificar mascota',
@@ -868,11 +800,8 @@ angular.module('app.controllers', [])
             });
         };
 
-
         $scope.modifyPet = function () {
-            //console.log('detailPetCtrl - modifyPet');
             if (camposIntroducidosOk()) {
-
                 var i = 0;
                 var petFound = {};
                 for (i; i < BlankService.mascotas.length; i++) {
@@ -900,9 +829,6 @@ angular.module('app.controllers', [])
                     }
                 }
 
-                // //console.log('detailPetCtrl - actuaciones a borrar tamaño ',JSON.stringify(actuacionesToDeleteIndexes));
-                //  //console.log('detailPetCtrl - actuaciones a insertar tamaño ', JSON.stringify(actuacionesFound));
-
                 i = 0;
                 for (i; i < actuacionesToDeleteIndexes.length; i++) {
                     BlankService.actuacionesDeLasMascotas.splice(actuacionesToDeleteIndexes[i], 1);
@@ -911,8 +837,6 @@ angular.module('app.controllers', [])
                 for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                     actuacionesFound.push(BlankService.actuacionesDeLasMascotas[i]);
                 }
-
-                //console.log('detailPetCtrl - actuacionesDeLasMascotas final ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
 
                 BlankService.saveMascotas();
                 BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", actuacionesFound);
@@ -930,7 +854,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.launchCapturePhoto = function ($state) {
-            //console.log('CTRL - launchCapturePhoto');
             $scope.console = "launchCapturePhoto";
             if (navigator.camera) {
                 $scope.console = "launchCapturePhoto--1";
@@ -948,16 +871,13 @@ angular.module('app.controllers', [])
         };
 
         function onPhotoDataSuccess(imageData) {
-
             $scope.console = "onPhotoDataSuccess";
-            //console.log(imageData);
             var smallImage = document.getElementById('smallImage');
             smallImage.style.display = 'block';
             smallImage.src = "data:image/jpeg;base64," + imageData;
         }
 
         $scope.launchPhotoAlbum = function ($state) {
-            //console.log('addMyPetsCtrl - launchPhotoAlbum');
             $scope.console = "launchPhotoAlbum";
             if (navigator.camera) {
                 $scope.console = "launchPhotoAlbum--1";
@@ -976,7 +896,6 @@ angular.module('app.controllers', [])
             }
         };
         function onPhotoURISuccess(imageURI) {
-            //console.log('addMyPetsCtrl - onPhotoURISuccess');
             $scope.console = "onPhotoURISuccess";
             if (imageURI.substring(0, 21) == "content://com.android") {
                 var photo_split = imageURI.split("%3A");
@@ -989,19 +908,15 @@ angular.module('app.controllers', [])
         }
 
         function cameraError(message) {
-            //console.log('CTRL - cameraError');
             $scope.console = "cameraError";
             alert('Failed because: ' + message);
         }
-
-
 
         $scope.viewTreatmentsPet = function () {
             //TODO: redirect to home filtrando por pet
         }
 
         $scope.showPopupAddName = function () {
-            //console.log('detailPetCtrl - showPopupAddName');
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="service.detailPet.name">',
                 title: 'Nombre de tu mascota',
@@ -1018,7 +933,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1027,7 +941,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDate = function () {
-            //console.log('detailPetCtrl - showPopupAddDate');
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="service.detailPet.date">',
                 title: 'Fecha de tu mascota',
@@ -1044,7 +957,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1053,7 +965,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddType = function () {
-            //console.log('detailPetCtrl - showPopupAddType');
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="pet in typesPet" ng-model="service.detailPet.type" ng-value="pet.name">{{pet.name}} ' +
@@ -1072,7 +983,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1109,7 +1019,6 @@ angular.module('app.controllers', [])
 
 
         $scope.addActuacion = function () {
-            //console.log('addMyPetsCtrl - addPet');
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir actuacion',
@@ -1123,8 +1032,6 @@ angular.module('app.controllers', [])
             }
         };
         function initValues() {
-            //console.log('addTreatmentCtrl - initValues');
-
             $scope.interfaz = {};
             $scope.interfaz.nameAct = '';
             $scope.interfaz.dateAct = new Date;
@@ -1146,10 +1053,7 @@ angular.module('app.controllers', [])
 
             $scope.mascotasToShow = [];
             var i = 0;
-            //console.log('addTreatmentCtrl - initValues - i', i);
             for (mascota in BlankService.mascotas) {
-                //console.log('addTreatmentCtrl - initValues -inside- i', i);
-
                 $scope.mascotasToShow.push(
                     {
                         subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
@@ -1162,7 +1066,6 @@ angular.module('app.controllers', [])
         }
 
         $scope.showPopupAddNameAct = function () {
-            //console.log('addTreatmentCtrl - showPopupAddName');
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="interfaz.nameAct">',
                 title: 'Nombre de la actuacion',
@@ -1183,7 +1086,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1192,7 +1094,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDateAct = function () {
-            //console.log('addTreatmentCtrl - showPopupAddDate');
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="interfaz.dateAct">',
                 title: 'Fecha de la actuacion',
@@ -1213,7 +1114,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1223,8 +1123,6 @@ angular.module('app.controllers', [])
 
 
         $scope.showPopupAddMultiplePet = function () {
-            //console.log('addTreatmentCtrl - showPopupAddMultiplePet');
-            //console.log('addTreatmentCtrl - mascotasToShow', JSON.stringify($scope.mascotasToShow));
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="pet.selected" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
@@ -1242,7 +1140,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1251,7 +1148,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddAlarm = function () {
-            //console.log('addTreatmentCtrl - showPopupAddAlarm');
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="alarm in service.alarmas" ng-model="interfaz.alarmName" ng-value="alarm.name">{{alarm.name}} ' +
@@ -1274,7 +1170,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1283,7 +1178,6 @@ angular.module('app.controllers', [])
         };
 
         function saveActuacionInSystem() {
-            //console.log('addTreatmentCtrl - saveActuacionInSystem');
             //guardar una actuacion por cada mascota seleccionada
             var k = 0;
             for (k; k < $scope.mascotasToShow.length; k++) {
@@ -1295,7 +1189,6 @@ angular.module('app.controllers', [])
                     $scope.act.datePet = pet.date;
                     $scope.act.typePet = pet.type;
                     $scope.act.namePet = pet.name;
-                    //console.log('addTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify($scope.act));
                     BlankService.actuacionesDeLasMascotas.push($scope.act);
                 }
             }
@@ -1306,17 +1199,9 @@ angular.module('app.controllers', [])
         };
 
         function camposIntroducidosOk() {
-
-            //console.log('addTreatmentCtrl - camposIntroducidosOk');
-
             $scope.act.name = $scope.interfaz.nameAct;
             $scope.act.date = $scope.interfaz.dateAct;
             $scope.act.nameAlarm = $scope.interfaz.alarmName;
-
-            //console.log('addTreatmentCtrl - camposIntroducidosOk - $scope.act.name=', $scope.act.name);
-            //console.log('addTreatmentCtrl - camposIntroducidosOk - $scope.act.date=', $scope.act.date);
-            //console.log('addTreatmentCtrl - camposIntroducidosOk - $scope.act.nameAlarm=', $scope.act.nameAlarm);
-
             if ($scope.act.name != undefined && $scope.act.name != '' && $scope.act.name != 'nombre') {
                 if ($scope.act.date != undefined && $scope.act.date != '') {
                     if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
@@ -1328,29 +1213,25 @@ angular.module('app.controllers', [])
                             }
                         }
                         if (someSelected) {
-                            //console.log('addTreatmentCtrl - camposIntroducidosOk - 6');
                             var alarm = BlankService.findAlarmbyName($scope.act.nameAlarm);
-                            //console.log('addTreatmentCtrl - camposIntroducidosOk - 7');
                             if (alarm) {
                                 $scope.act.alarmId = alarm.id;
                                 return true;
                             } else {
-                                //console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por BlankService.findAlarmbyName');
+                                console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por BlankService.findAlarmbyName');
                             }
                         } else {
-                            //console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por NotPets');
+                            console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por NotPets');
                         }
                     } else {
-                        //console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
+                        console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
                     }
-
                 } else {
-                    //console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
+                    console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
                 }
             } else {
-                //console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
+                console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
             }
-
             var alertPopup = $ionicPopup.alert({
                 title: 'Añadir actuacion',
                 template: 'Error 1. Rellena todos los campos correctamente'
@@ -1359,8 +1240,6 @@ angular.module('app.controllers', [])
     })
 
     .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
-        //console.log('detailTreatmentCtrl - ', JSON.stringify(BlankService.detailTreatment));
-
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
@@ -1384,11 +1263,9 @@ angular.module('app.controllers', [])
 
 
         $scope.solicitarConsulta = function () {
-            //console.log('detailTreatmentCtrl - solicitarConsulta');
             $window.open('http:///tecuroencasa.com/consultas/', '_blank');
         };
         $scope.modifyTreatment = function () {
-            //console.log('detailTreatmentCtrl - modifyTreatment');
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir actuacion',
@@ -1413,25 +1290,17 @@ angular.module('app.controllers', [])
             $scope.newact.isVisible = $scope.act.isVisible;
             $scope.newact.nameAlarm = $scope.act.nameAlarm;
             $scope.newact.alarmId = $scope.act.alarmId;
-            //console.log('detailTreatmentCtrl - saveActuacionInSystem - RECEIVED PET ', JSON.stringify(pet));
-            //console.log('detailTreatmentCtrl - saveActuacionInSystem - selectec act ', JSON.stringify($scope.act));
-            //console.log('detailTreatmentCtrl - saveActuacionInSystem - created act ', JSON.stringify($scope.newact));
-
             return $scope.newact;
         }
 
         function saveActuacionInSystem() {
-            //console.log('detailTreatmentCtrl - saveActuacionInSystem');
             //guardar una actuacion por cada mascota seleccionada
             var k = 0;
             for (k; k < $scope.mascotasToShow.length; k++) {
                 if ($scope.mascotasToShow[k].selected) {
                     someSelected = true;
                     var act = getActuacion(BlankService.findPetbyName($scope.mascotasToShow[k].subId));
-                    // //console.log('detailTreatmentCtrl - saveActuacionInSystem - add in vector ', JSON.stringify(act));
-                    //console.log('detailTreatmentCtrl - saveActuacionInSystem - antes in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
                     BlankService.actuacionesDeLasMascotas.push(act);
-                    // //console.log('detailTreatmentCtrl - saveActuacionInSystem - despues in vector ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
                 }
             }
 
@@ -1444,9 +1313,7 @@ angular.module('app.controllers', [])
                     break;
                 }
             }
-            //console.log('detailTreatmentCtrl - saveActuacionInSystem - index to remove ', indexToDelete);
             if (indexToDelete != -1) {
-                //console.log('detailTreatmentCtrl - saveActuacionInSystem - remove in vector ', JSON.stringify(BlankService.detailTreatment));
                 BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
             }
 
@@ -1455,17 +1322,9 @@ angular.module('app.controllers', [])
         }
 
         function camposIntroducidosOk() {
-
-            //console.log('detailTreatmentCtrl - camposIntroducidosOk');
-
             $scope.act.name = BlankService.detailTreatment.name;
             $scope.act.date = BlankService.detailTreatment.date;
             $scope.act.nameAlarm = BlankService.detailTreatment.nameAlarm;
-
-            //console.log('detailTreatmentCtrl - camposIntroducidosOk - $scope.act.name=', $scope.act.name);
-            //console.log('detailTreatmentCtrl - camposIntroducidosOk - $scope.act.date=', $scope.act.date);
-            //console.log('detailTreatmentCtrl - camposIntroducidosOk - $scope.act.nameAlarm=', $scope.act.nameAlarm);
-
             if ($scope.act.name != undefined && $scope.act.name != '' && $scope.act.name != 'nombre') {
                 if ($scope.act.date != undefined && $scope.act.date != '') {
                     if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
@@ -1477,27 +1336,25 @@ angular.module('app.controllers', [])
                             }
                         }
                         if (someSelected) {
-                            //console.log('detailTreatmentCtrl - camposIntroducidosOk - 6');
                             var alarm = BlankService.findAlarmbyName($scope.act.nameAlarm);
-                            //console.log('detailTreatmentCtrl - camposIntroducidosOk - 7');
                             if (alarm) {
                                 $scope.act.alarmId = alarm.id;
                                 return true;
                             } else {
-                                //console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por BlankService.findAlarmbyName');
+                                console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por BlankService.findAlarmbyName');
                             }
                         } else {
-                            //console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por NotPets');
+                            console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por NotPets');
                         }
                     } else {
-                        //console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
+                        console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
                     }
 
                 } else {
-                    //console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
+                    console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
                 }
             } else {
-                //console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
+                console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
             }
 
             var alertPopup = $ionicPopup.alert({
@@ -1508,8 +1365,6 @@ angular.module('app.controllers', [])
 
 
         function initValues() {
-            //console.log('addTreatmentCtrl - initValues');
-
             $scope.interfaz = {};
             $scope.interfaz.nameAct = '';
             $scope.interfaz.dateAct = new Date;
@@ -1531,9 +1386,7 @@ angular.module('app.controllers', [])
 
             $scope.mascotasToShow = [];
             var i = 0;
-            //console.log('detailTreatmentCtrl - initValues - i', i);
             for (mascota in BlankService.mascotas) {
-                //console.log('detailTreatmentCtrl - initValues -inside- i', i);
                 subId = JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, "");
                 if (subId == BlankService.detailTreatment.namePet) {
                     $scope.mascotasToShow.push(
@@ -1544,7 +1397,6 @@ angular.module('app.controllers', [])
                         }
                     );
                 } else {
-
                     $scope.mascotasToShow.push(
                         {
                             subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
@@ -1552,15 +1404,12 @@ angular.module('app.controllers', [])
                             selected: false
                         }
                     );
-
                 }
-
                 i++;
             }
         }
 
         $scope.showPopupAddNameAct = function () {
-            //console.log('detailTreatmentCtrl - showPopupAddName');
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="actuacion.name">',
                 title: 'Nombre de la actuacion',
@@ -1581,7 +1430,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1590,7 +1438,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDateAct = function () {
-            //console.log('detailTreatmentCtrl - showPopupAddDate');
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="actuacion.date">',
                 title: 'Fecha de la actuacion',
@@ -1611,7 +1458,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1620,8 +1466,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddMultiplePet = function () {
-            //console.log('detailTreatmentCtrl - showPopupAddMultiplePet');
-            //console.log('detailTreatmentCtrl - mascotasToShow', JSON.stringify($scope.mascotasToShow));
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="pet.selected" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
@@ -1639,7 +1483,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1648,7 +1491,6 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddAlarm = function () {
-            //console.log('detailTreatmentCtrl - showPopupAddAlarm');
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="alarm in service.alarmas" ng-model="actuacion.nameAlarm" ng-value="alarm.name">{{alarm.name}} ' +
@@ -1666,7 +1508,6 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
-                //console.log('Tapped!', res);
             });
 
             $timeout(function () {
@@ -1674,5 +1515,4 @@ angular.module('app.controllers', [])
             }, 30000);
         };
     })
-
     ;

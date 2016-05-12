@@ -4,7 +4,7 @@ angular.module('app.services', [])
     }])
 
     .service('BlankService', [function () {
-        
+
         this.hayMascotas = false;
         this.noHayMascotas = false;
         this.hayActuaciones = false;
@@ -16,72 +16,54 @@ angular.module('app.services', [])
         this.mascotas = [];
         this.actuacionesDeLasMascotas = [];
 
-        this.reloadHome=true;
+        this.reloadHome = true;
 
         this.alarmas = [
             { "name": "Nunca", "id": "0" },
             { "name": "12 horas antes", "id": "1" },
             { "name": "1 día antes", "id": "2" },
             { "name": "2 días antes", "id": "3" }];
-            
+
         this.orders = [
-            { "name": "Fecha", "id": "0", "selected":"true" },
-            { "name": "Mascota", "id": "1", "selected":"false" },
-            { "name": "Actuacion", "id": "2", "selected":"false" }];
+            { "name": "Fecha", "id": "0", "selected": "true" },
+            { "name": "Mascota", "id": "1", "selected": "false" },
+            { "name": "Actuacion", "id": "2", "selected": "false" }];
 
         this.initValuesFromMemory = function () {
-            console.log('BlankService - initValuesFromMemory');
-
-            //console.log('BlankService - mascotas.length antes ', this.mascotas.length);
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");
             }
-            console.log('BlankService - initValuesFromMemory- mascotas.length despues ', this.mascotas.length);
-
-            //console.log('BlankService - actuacionesDeLasMascotas.length qntes ', this.actuacionesDeLasMascotas.length);
             if (localStorage.getItem("actuacionesDeLasMascotas") !== null) {
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
-            console.log('BlankService - initValuesFromMemory- actuacionesDeLasMascotas.length despues ', this.actuacionesDeLasMascotas.length);
-
-            this.ocultarBotonera=true;
+            this.ocultarBotonera = true;
             if ((this.mascotas != undefined) && (this.mascotas.length > 0)) {
                 this.hayMascotas = true; this.noHayMascotas = false;
                 if ((this.actuacionesDeLasMascotas != undefined) && (this.actuacionesDeLasMascotas.length > 0)) {
                     this.hayActuaciones = true; this.noHayActuaciones = false;
-                    this.ocultarBotonera=false;
+                    this.ocultarBotonera = false;
                 } else {
                     this.hayActuaciones = false; this.noHayActuaciones = true;
                 }
             } else {
-               this. hayMascotas = false; this.noHayMascotas = true; this.noHayActuaciones = false; this.hayActuaciones = true;
+                this.hayMascotas = false; this.noHayMascotas = true; this.noHayActuaciones = false; this.hayActuaciones = true;
             }
-            console.log('BlankService - initValuesFromMemory- hayMascotas  ', this.hayMascotas);
-            console.log('BlankService - initValuesFromMemory- noHayMascotas  ', this.noHayMascotas);
-            console.log('BlankService - initValuesFromMemory- hayActuaciones  ', this.hayActuaciones);
-            console.log('BlankService - initValuesFromMemory- noHayActuaciones  ', this.noHayActuaciones);
         }
-        
+
         this.saveActuacionesDeMascota = function () {
-            //console.log('BlankService - saveActuacionesDeMascota before toSave ', JSON.stringify(this.actuacionesDeLasMascotas));
             this.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", this.actuacionesDeLasMascotas);
             this.initValuesFromMemory();
-            //console.log('BlankService - saveActuacionesDeMascota after toSave ', JSON.stringify(this.actuacionesDeLasMascotas));
             return true;
         };
 
 
         this.saveMascotas = function () {
-            //console.log('BlankService - saveMascotas before toSave ', JSON.stringify(this.mascotas));
             this.saveDataInInternalPhoneMemory("mascotas", this.mascotas);
             this.initValuesFromMemory()
-                        //console.log('BlankService - saveMascotas after toSave ', JSON.stringify(this.mascotas));
-
             return true;
         };
 
         this.saveDataInInternalPhoneMemory = function (key, value) {
-            //console.log('BlankService -saveDataInInternalPhoneMemory');
             var antes = [];
             var despues = [];
             if (this.getDataFromInternalPhoneMemory(key) !== null) {
@@ -91,29 +73,21 @@ angular.module('app.services', [])
             if (this.getDataFromInternalPhoneMemory(key) !== null) {
                 despues = this.getDataFromInternalPhoneMemory(key);
             }
-            //console.log('BlankService -saveDataInInternalPhoneMemory- antes ', antes.length);
-            //console.log('BlankService -saveDataInInternalPhoneMemory- despues ', despues.length);
         }
         this.getDataFromInternalPhoneMemory = function (key) {
             var retrievedObject = localStorage.getItem(key);
             return JSON.parse(retrievedObject);
         }
         this.saveDataEndInInternalPhoneMemory = function (key, value) {
-            //console.log('BlankService - saveDataEndInInternalPhoneMemory...');
             localStorage.setItem(key, JSON.stringify(value));
-            //console.log('BlankService - saveDataEndInInternalPhoneMemory ok --', JSON.stringify(value));
         }
         this.clearData = function () {
-            //console.log('BlankService - clearData...');
             localStorage.clear();
         }
         this.savePetInSystem = function (pet) {
-            //console.log('BlankService - savePetInSystem');
-            //console.log('BlankService - savePetInSystem', this.mascotas);
             this.mascotas.push(pet);
             this.saveDataInInternalPhoneMemory("mascotas", this.mascotas);
             return true;
-
         };
 
         this.findPetbyName = function (name) {
@@ -136,17 +110,11 @@ angular.module('app.services', [])
             return false;
         }
         this.IDGenerator = function () {
-            //console.log('addTreatmentCtrl - IDGenerator -  ');
             this.length = 8;
             this.timestamp = +new Date;
-
             var _getRandomInt = function (min, max) {
-                //console.log('addTreatmentCtrl - IDGenerator -  _getRandomInt');
                 return Math.floor(Math.random() * (max - min + 1)) + min;
-
             }
-
-            //console.log('addTreatmentCtrl - IDGenerator -  function');
             var ts = this.timestamp.toString();
             var parts = ts.split("").reverse();
             var id = "";
@@ -155,16 +123,6 @@ angular.module('app.services', [])
                 var index = _getRandomInt(0, parts.length - 1);
                 id += parts[index];
             }
-            //console.log('addTreatmentCtrl - IDGenerator - return id ', id);
-
             return id;
-
-
-
         }
-
-
-
-
     }]);
-
