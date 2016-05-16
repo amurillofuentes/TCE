@@ -409,7 +409,7 @@ angular.module('app.controllers', [])
 
         BlankService.initValuesFromMemory();
         $scope.interfaz = {};
-        $scope.interfaz.order = '';
+        $scope.interfaz.order = 'Mascota';
         mascotas = [];
         var retrievedObject = localStorage.getItem("mascotas");
         mascotas = JSON.parse(retrievedObject);
