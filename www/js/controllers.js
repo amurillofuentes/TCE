@@ -3,8 +3,6 @@ HOME:
 
 evento onview en cada ventana y así, 
         para cada una, reload the memory
-        para home order inicial
-        para home filtro inicial
         
 que la busqueda se la pele si son mayusculas o minusculaa
 Navegabilidad?
