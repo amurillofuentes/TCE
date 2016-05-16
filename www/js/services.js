@@ -25,9 +25,35 @@ angular.module('app.services', [])
             { "name": "2 días antes", "id": "3" }];
 
         this.orders = [
-            { "name": "Fecha", "id": "0", "selected": "true" },
-            { "name": "Mascota", "id": "1", "selected": "false" },
-            { "name": "Actuacion", "id": "2", "selected": "false" }];
+            { "name": "Fecha", "id": "0", "seleccionado": "true" },
+            { "name": "Mascota", "id": "1", "seleccionado": "false" },
+            { "name": "Actuacion", "id": "2", "seleccionado": "false" }];
+
+        var sort_by = function (field, reverse, primer) {
+            var key = primer ?
+                function (x) { return primer(x[field]) } :
+                function (x) { return x[field] };
+            reverse = !reverse ? 1 : -1;
+            return function (a, b) {
+                return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+            }
+        }
+
+        this.changeOrder = function (order) {
+            if (order == 'ordernombremascota') {
+                console.log("service -- changeOrder--ordernombremascota ");
+                this.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
+            } else if (order == 'orderfechamascota') {
+                console.log("service -- changeOrder--orderfechamascota ");
+                this.actuacionesDeLasMascotas.sort(sort_by('date', false, function (a) { return a }));
+            } else if (order == 'ordernombreactuacion') {
+                console.log("service -- changeOrder--ordernombreactuacion ");
+                this.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a }));
+            } else {
+                console.log("service -- changeOrder--NOT FOUND ");
+            }
+        };
+
 
         this.initValuesFromMemory = function () {
             if (localStorage.getItem("mascotas") !== null) {

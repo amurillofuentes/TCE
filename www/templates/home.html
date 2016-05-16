@@ -1,13 +1,11 @@
-<!--
-Sacar las imagenes reales de las mascotas
--->
 <ion-view title="AgenDog">
     <ion-nav-buttons side="right">
-
         <!--<button class="button button-icon ion-android-calendar" ng-click="TODO()"></button>-->
         <button class="button button-icon ion-plus-round" ng-click="redirectToaddTreatment()" ng-hide="{{service.ocultarBotonera}}">
         </button>
-        <button class="button button-icon icon ion-settings" ng-click="openModal()" ng-hide="{{service.ocultarBotonera}}">
+        <button class="button button-icon icon ion-stats-bars" ng-click="showFilterGroup()" ng-hide="{{service.ocultarBotonera}}">
+        </button>
+        <button class="button-icon icon ion-connection-bars" ng-click="showFilterOrder()" ng-hide="{{service.ocultarBotonera}}">
         </button>
         <button class="button-icon icon ion-ios-search" ng-click="showFilterBar()" ng-hide="{{service.ocultarBotonera}}">
         </button>
@@ -24,7 +22,7 @@ Sacar las imagenes reales de las mascotas
                 </div>
             </div>
             <div id="showNoHayMascotas" ng-hide="{{service.noHayActuaciones}}">
-                <h4>Próximas Actuaciones</h4>
+                <h4>Próximas Actuaciones - {{service.ordenacionMascotas}}</h4>
                 <div class="spacer" style="width: 285px; height: 3px;"></div>
                 <ion-list>
                     <ion-list ng-controller="homeCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
