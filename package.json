@@ -1,7 +1,7 @@
 {
-  "name": "myapp",
+  "name": "AgenDog",
   "version": "1.1.1",
-  "description": "myApp: An Ionic project",
+  "description": "La agenda de tu mascota",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
@@ -23,5 +23,7 @@
     "ionic-plugin-keyboard",
     "cordova-sqlite-storage"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

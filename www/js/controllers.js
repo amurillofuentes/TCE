@@ -1,9 +1,15 @@
 /*
 HOME: 
 
+--refresco de las pantallas cuando añades (puto vector)
+--test alarmas
+--modifcar actucacion?
+--search???
+--badge para iOS
+
 evento onview en cada ventana y así, 
         para cada una, reload the memory
-        
+
 que la busqueda se la pele si son mayusculas o minusculaa
 Navegabilidad?
      
@@ -14,15 +20,10 @@ Fotos/imagenes
 	Listado home
 	Listado mascotas
 	
-Test añadirActuacion
-Test movil
-
-Asignar alarmas	
 Investigar calendario
 Estadisticas
 Sistema de errores
 
-Fase de pruebas con stephan
 */
 
 angular.module('app.controllers', [])
@@ -72,8 +73,6 @@ angular.module('app.controllers', [])
             $scope.pet.date = '';
             $scope.pet.type = '';
 
-
-
             $scope.interfaz.ocultarFinish = false;
 
             if (BlankService.mascotas.length == 0) {
@@ -96,7 +95,7 @@ angular.module('app.controllers', [])
             $scope.pet.name = $scope.interfaz.namePet;
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
-            $scope.pet.id = BlankService.IDGenerator();
+            $scope.pet.id = BlankService.IDGenerator(8);
 
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
                 if ($scope.pet.type != undefined && $scope.pet.type != '') {
@@ -119,7 +118,7 @@ angular.module('app.controllers', [])
 
         function createActuacion(nombre, fecha) {
             $scope.act = {};
-            $scope.act.id = BlankService.IDGenerator();
+            $scope.act.id = BlankService.IDGenerator(8);
             $scope.act.name = nombre;
             $scope.act.date = fecha;
             $scope.act.idPet = $scope.pet.id;
@@ -129,6 +128,7 @@ angular.module('app.controllers', [])
             $scope.act.isVisible = true;
             $scope.act.nameAlarm = "Nunca";
             $scope.act.alarmId = "0";
+            $scope.act.alarmSystemId = "0";
             return $scope.act;
         }
 
@@ -393,29 +393,66 @@ angular.module('app.controllers', [])
         });
 
         $scope.$on('$ionicView.loaded', function () {
-            BlankService.reloadHome = true;
-            BlankService.initValuesFromMemory();
+
         });
 
         $scope.$on('$ionicView.beforeEnter', function () {
             BlankService.initValuesFromMemory();
         });
+
         $scope.$on('$ionicView.enter', function () {
-            BlankService.initValuesFromMemory();
+            $scope.interfaz = {};
+            $scope.interfaz.order = 'Mascota';
+            mascotas = [];
+            var retrievedObject = localStorage.getItem("mascotas");
+            mascotas = JSON.parse(retrievedObject);
+            var filterBarInstance;
+            getItems();
+            if (processIfComeFromNotification() == false) {
+                if ((mascotas == undefined) || (mascotas.length == 0)) {
+                    $state.go('menu.addMyPets');
+                }
+            }
         });
 
-
+        BlankService.reloadHome = true;
         BlankService.initValuesFromMemory();
-        $scope.interfaz = {};
-        $scope.interfaz.order = 'Mascota';
-        mascotas = [];
-        var retrievedObject = localStorage.getItem("mascotas");
-        mascotas = JSON.parse(retrievedObject);
-        var filterBarInstance;
-        getItems();
 
-        if ((mascotas == undefined) || (mascotas.length == 0)) {
-            $state.go('menu.addMyPets');
+        function processIfComeFromNotification() {
+            console.log("homeCtrl -- processIfComeFromNotification");
+            found = false;
+            if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
+                BlankService.treatmentId_notif = BlankService.getDataFromInternalPhoneMemory("treatmentId_notif");
+                if ((BlankService.treatmentId_notif != undefined) && (BlankService.treatmentId_notif != null) && (BlankService.treatmentId_notif != '')) {
+                    console.log('homeCtrl -- hay id desde notificacion valido');
+                    var i = 0;
+                    index = -1;
+                    for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                        if ((BlankService.actuacionesDeLasMascotas[i] != undefined) && (BlankService.actuacionesDeLasMascotas[i] != null)) {
+                            if (BlankService.actuacionesDeLasMascotas[i].id == BlankService.treatmentId_notif) {
+                                console.log('homeCtrl -- Actuacion encontrada. Redirigiendo a detalle');
+                                found = true;
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
+                    if (found) {
+                        BlankService.detailTreatment = BlankService.actuacionesDeLasMascotas[index];
+                        $state.go('menu.detailTreatment');
+                    } else {
+                        console.log('homeCtrl -- el id recibido no concuerda con ninguna actuacion del sistema');
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Actuación no encontrada',
+                            template: 'La actuación de la notificación no existe'
+                        });
+                        alertPopup.then(function (res) {
+                            console.log('homeCtrl--popup -- el id recibido no existe');
+                        });
+                    }
+                }
+            }
+            return found;
         }
 
         $scope.$on('$ionicView.loaded', function (viewInfo, state) {
@@ -520,13 +557,13 @@ angular.module('app.controllers', [])
 
         function processOrder() {
             console.log("processOrder--interfaz.order ", JSON.stringify($scope.interfaz.order));
-            
+
             if ($scope.interfaz.order == "Mascota") {
                 BlankService.changeOrder('ordernombremascota');
-                
+
             } else if ($scope.interfaz.order == "Fecha") {
                 BlankService.changeOrder('orderfechamascota');
-                
+
             } else if ($scope.interfaz.order == "Actuacion") {
                 BlankService.changeOrder('ordernombreactuacion');
             }
@@ -570,6 +607,42 @@ angular.module('app.controllers', [])
 
         function getItems() {
             $scope.items = BlankService.actuacionesDeLasMascotas;
+        }
+
+        function testFilter(filterText) {
+            var i = 0;
+            var size = BlankService.actuacionesDeLasMascotas.length;
+
+            for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                //1 chequeo si es visible o no.
+                var k = 0;
+                for (k; k < $scope.elemes.length; k++) {
+                    if (BlankService.actuacionesDeLasMascotas[i] != undefined) {
+                        if (BlankService.actuacionesDeLasMascotas[i].namePet == $scope.elemes[k].subId) {
+                            //establezco si es visible o no
+                            BlankService.actuacionesDeLasMascotas[i].isVisible = $scope.elemes[k].selected;
+                            //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
+
+                            //si es visible
+                            if ($scope.elemes[k].selected) {
+                                if (filterText == undefined | '') {
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
+                                } else if (((BlankService.actuacionesDeLasMascotas[i].namePet)).indexOf(filterText) != -1) {
+                                    //es visible y hay filtro
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
+                                } else if (((BlankService.actuacionesDeLasMascotas[i].name)).indexOf(filterText) != -1) {
+                                    //es visible y hay filtro
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
+                                } else {
+                                    //ya es visible pero no coincide con filtro. la oculto
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = false;
+                                }
+                            }
+                        }
+                    } else {
+                    }
+                }
+            }
         }
 
         $scope.showFilterBar = function ($filter) {
@@ -681,12 +754,10 @@ angular.module('app.controllers', [])
         $scope.service = BlankService;
 
         $scope.$on('$ionicView.afterEnter', function () {
-
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
-
         });
 
         $scope.$on('$ionicView.loaded', function () {
@@ -927,7 +998,7 @@ angular.module('app.controllers', [])
     .controller('menuCtrl', function ($scope) {
     })
 
-    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
+    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
         $scope.service = BlankService;
 
         $scope.$on('$ionicView.afterEnter', function () {
@@ -1113,11 +1184,12 @@ angular.module('app.controllers', [])
                 if ($scope.mascotasToShow[k].selected) {
                     someSelected = true;
                     var pet = BlankService.findPetbyName($scope.mascotasToShow[k].subId);
-                    $scope.act.id = BlankService.IDGenerator();
+                    $scope.act.id = BlankService.IDGenerator(8);
                     $scope.act.idPet = pet.id;
                     $scope.act.datePet = pet.date;
                     $scope.act.typePet = pet.type;
                     $scope.act.namePet = pet.name;
+                    $scope.act.alarmSystemId = processAssignAlarm($scope.act);
                     BlankService.actuacionesDeLasMascotas.push($scope.act);
                 }
             }
@@ -1125,6 +1197,54 @@ angular.module('app.controllers', [])
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
 
             return true;
+        };
+
+        function processAssignAlarm(actuacion) {
+            if (actuacion != undefined) {
+                if (actuacion.nameAlarm != undefined) {
+                    if (actuacion.alarmId != "0") {
+                        var now = actuacion.date.getTime();
+                        var timeAlarm;
+                        if (actuacion.alarmId == "1") {
+                            //12 horas antes
+                            timeAlarm = new Date(now - 12 * 60 * 60 * 1000);
+                        } else if (actuacion.alarmId == "2") {
+                            //1 dia antes
+                            var now = actuacion.date.getTime();
+                            timeAlarm = new Date(now - 24 * 60 * 60 * 1000);
+                        } else if (actuacion.alarmId == "3") {
+                            //2 dias antes
+                            timeAlarm = new Date(now - 48 * 60 * 60 * 1000);
+                        }
+                        var idAlarmaInSystem = BlankService.IDGenerator(4);
+                        var text = actuacion.namePet + " - " + actuacion.name;
+                        asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
+                        return idAlarmaInSystem;
+                    }
+                }
+            }
+        }
+
+        function asignoAlarmaInSystem(cuando, idAlarm, treatmentId, text) {
+            console.log('asignoAlarmaInSystem with');
+            console.log('text: ', text);
+            console.log('idAlarm: ', idAlarm);
+            console.log('treatmentId: ', treatmentId);
+            console.log('cuando: ', cuando);
+            try {
+                $cordovaLocalNotification.schedule({
+                    id: idAlarm,
+                    title: 'AgenDog',
+                    text: text,
+                    at: cuando,
+                    //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
+                    data: { treatmentId: treatmentId }
+                }).then(function (result) {
+                    console.log('asignoAlarmaInSystem - Notification launched');
+                });
+            } catch (e) {
+                console.log('asignoAlarmaInSystem - ha petao', e);
+            }
         };
 
         function camposIntroducidosOk() {
@@ -1168,18 +1288,9 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
+    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
-
-        $scope.$on('$ionicView.afterEnter', function () {
-
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-
-        });
 
         $scope.$on('$ionicView.loaded', function () {
             initValues();
@@ -1187,6 +1298,39 @@ angular.module('app.controllers', [])
             BlankService.initValuesFromMemory();
         });
 
+        $scope.$on('$ionicView.enter', function () {
+            console.log('detailPetCtrl -- $ionicView.enter');
+
+            if (BlankService.treatmentId_notif == BlankService.detailTreatment.id) {
+                console.log('detailPetCtrl -- viene de notificacion. borro la memoria de la notificacion y muestro popup');
+
+                //viene de notificacion. borro la memoria de la notificacion y muestro popup
+                BlankService.treatmentId_notif = undefined;
+                BlankService.removeDataFromInternalPhoneMemory("treatmentId_notif");
+
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Detalle de actuacion',
+                    template: '¿Quieres utilizar los servicios de TeCuroEnCasa para esta actuación de tu mascota?'
+                });
+
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+                        console.log('Compraaaaa');
+                    } else {
+                        console.log('No compra');
+                    }
+                });
+            }
+        });
+
+        $scope.$on('$ionicView.afterEnter', function () {
+            if (BlankService.reloadHome) {
+                $state.go($state.current, {}, { reload: true });
+                BlankService.reloadHome = false;
+            }
+
+        });
 
         $scope.solicitarConsulta = function () {
             $window.open('http:///tecuroencasa.com/consultas/', '_blank');
@@ -1203,10 +1347,21 @@ angular.module('app.controllers', [])
                 });
             }
         };
+        $scope.forwardAlarm = function (secondsForward) {
+            if (BlankService.detailTreatment.alarmId != undefined) {
+                if (BlankService.detailTreatment.alarmId != "0") {
+                    var idAlarmaInSystem = BlankService.detailTreatment.alarmSystemId;
+                    var now = new Date().getTime();
+                    var timeAlarm = new Date(now + secondsForward * 1000);
+                    var text = BlankService.detailTreatment.namePet + " - " + BlankService.detailTreatment.name;
+                    asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, BlankService.detailTreatment.id, text)
+                }
+            }
+        };
 
         function getActuacion(pet) {
             $scope.newact = {};
-            $scope.newact.id = BlankService.IDGenerator();
+            $scope.newact.id = BlankService.IDGenerator(8);
             $scope.newact.name = $scope.act.name;
             $scope.newact.date = $scope.act.date;
             $scope.newact.idPet = pet.id;
@@ -1218,7 +1373,6 @@ angular.module('app.controllers', [])
             $scope.newact.alarmId = $scope.act.alarmId;
             return $scope.newact;
         }
-
         function saveActuacionInSystem() {
             //guardar una actuacion por cada mascota seleccionada
             var k = 0;
@@ -1226,6 +1380,8 @@ angular.module('app.controllers', [])
                 if ($scope.mascotasToShow[k].selected) {
                     someSelected = true;
                     var act = getActuacion(BlankService.findPetbyName($scope.mascotasToShow[k].subId));
+                    //añado alarma
+                    act.alarmSystemId = processAssignAlarm(act);
                     BlankService.actuacionesDeLasMascotas.push(act);
                 }
             }
@@ -1240,12 +1396,80 @@ angular.module('app.controllers', [])
                 }
             }
             if (indexToDelete != -1) {
+                //borro alarma anterior
+                processDeleteAlarm(BlankService.actuacionesDeLasMascotas[indexToDelete]);
                 BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
             }
 
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
             return true;
         }
+        function processDeleteAlarm(actuacion) {
+            if (actuacion != undefined) {
+                if (actuacion.alarmSystemId != undefined) {
+                    borroAlarmaInSystem(actuacion.alarmSystemId)
+                }
+            }
+        }
+        function borroAlarmaInSystem(idAlarm) {
+            console.log('borroAlarmaInSystem with');
+            console.log('idAlarm: ', idAlarm);
+            try {
+                $scope.cancelSingleNotification = function (idAlarm) {
+                    $cordovaLocalNotification.cancel(idAlarm).then(function (result) {
+                        console.log('Notification Canceled ', idAlarm);
+                    });
+                };
+            } catch (e) { }
+        };
+        function processAssignAlarm(actuacion) {
+            if (actuacion != undefined) {
+                if (actuacion.nameAlarm != undefined) {
+                    if (actuacion.alarmId != "0") {
+                        var now = actuacion.date.getTime();
+                        var timeAlarm;
+                        if (actuacion.alarmId == "1") {
+                            //12 horas antes
+                            timeAlarm = new Date(now - 12 * 60 * 60 * 1000);
+                        } else if (actuacion.alarmId == "2") {
+                            //1 dia antes
+                            var now = actuacion.date.getTime();
+                            timeAlarm = new Date(now - 24 * 60 * 60 * 1000);
+                        } else if (actuacion.alarmId == "3") {
+                            //2 dias antes
+                            timeAlarm = new Date(now - 48 * 60 * 60 * 1000);
+                        }
+                        var idAlarmaInSystem = BlankService.IDGenerator(4);
+                        var text = actuacion.namePet + " - " + actuacion.name;
+                        asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
+                        return idAlarmaInSystem;
+                    }
+                }
+            }
+        }
+
+        function asignoAlarmaInSystem(cuando, idAlarm, treatmentId, text) {
+            console.log('asignoAlarmaInSystem with...');
+            console.log('text: ', text);
+            console.log('idAlarm: ', idAlarm);
+            console.log('treatmentId: ', treatmentId);
+            console.log('cuando: ', cuando);
+            try {
+                $cordovaLocalNotification.schedule({
+                    //id: idAlarm,
+                    id: 10,
+                    title: 'AgenDog',
+                    text: text,
+                    at: cuando,
+                    //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
+                    //data: { treatmentId: treatmentId }
+                    data: { "treatmentId": treatmentId }
+                });
+
+
+            } catch (e) {
+            }
+        };
 
         function camposIntroducidosOk() {
             $scope.act.name = BlankService.detailTreatment.name;
@@ -1440,5 +1664,45 @@ angular.module('app.controllers', [])
                 myPopup.close();
             }, 30000);
         };
+    })
+
+    .controller('alarmasCtrl', function ($scope, $cordovaLocalNotification, $ionicPlatform, $ionicPopup, $timeout) {
+
+        $scope.scheduleDelayedNotification = function (treatmentId) {
+            var now = new Date().getTime();
+            var _5SecondsFromNow = new Date(now + 5 * 1000);
+
+            $cordovaLocalNotification.schedule({
+                id: 2,
+                title: 'AgenDog Notofication',
+                text: 'Recordatorio de actuacion',
+                at: _5SecondsFromNow
+            }).then(function (result) {
+                console.log('Notification 2 triggered');
+            });
+        };
+
+        $scope.scheduleNotification = function (cuando, treatmentId) {
+            var now = new Date().getTime();
+            var _10SecondsFromNow = new Date(now + 10 * 1000);
+
+            $cordovaLocalNotification.schedule({
+                id: 2,
+                title: 'AgenDog Notofication',
+                text: 'Recordatorio de actuacion',
+                at: cuando,
+                //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
+                data: { treatmentId: treatmentId }
+            }).then(function (result) {
+                console.log('Notification ok');
+            });
+        };
+
+        $scope.cancelSingleNotification = function () {
+            $cordovaLocalNotification.cancel(3).then(function (result) {
+                console.log('Notification 3 Canceled');
+            });
+        };
+
     })
     ;
