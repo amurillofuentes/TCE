@@ -4,8 +4,6 @@ HOME:
 --test alarmas
 --badge para iOS
 
-Navegabilidad?
-     
 Fotos/imagenes
 	Añadir mascotas
 	Añadir actuacion
@@ -21,7 +19,7 @@ Sistema de errores
 
 angular.module('app.controllers', [])
 
-    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
+    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
 
         $scope.$on('$ionicView.afterEnter', function () {
             if (BlankService.reloadHome) {
@@ -204,6 +202,9 @@ angular.module('app.controllers', [])
 
         $scope.finishPet = function () {
             BlankService.initValuesFromMemory();
+            $ionicHistory.nextViewOptions({
+    disableBack: true
+  });
             $state.go('menu.home');
         };
 
@@ -412,7 +413,7 @@ angular.module('app.controllers', [])
             }
             return ocultarBotonera;
         };
-
+/*
         function setHayActuaciones(hayActuaciones) {
             console.log("homeCtrl -- setHayActuaciones", hayActuaciones);
             if (hayActuaciones) {
@@ -432,7 +433,7 @@ angular.module('app.controllers', [])
                 BlankService.hayMascotas = false;
                 BlankService.noHayMascotas = true;
             }
-        }
+        }*/
         $scope.$on('$ionicView.loaded', function () {
             BlankService.initValuesFromMemory();
 
@@ -797,7 +798,7 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailPetCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
+    .controller('detailPetCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
         $scope.service = BlankService;
 
         $scope.$on('$ionicView.afterEnter', function () {
@@ -897,6 +898,11 @@ angular.module('app.controllers', [])
                 });
                 alertPopup.then(function (res) {
                     BlankService.initValuesFromMemory();
+
+                    $ionicHistory.nextViewOptions({
+    disableBack: true
+  });
+
                     $state.go("menu.home")
                 });
 
