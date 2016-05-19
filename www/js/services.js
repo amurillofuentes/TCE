@@ -7,11 +7,12 @@ angular.module('app.services', [])
 
         this.treatmentId_notif;
 
+/*
         this.hayMascotas = false;
         this.noHayMascotas = false;
         this.hayActuaciones = false;
         this.noHayActuaciones = false;
-
+*/
         this.detailTreatment = {};
         this.detailPet = {};
 
@@ -56,7 +57,6 @@ angular.module('app.services', [])
             }
         };
 
-
         this.initValuesFromMemory = function () {
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");
@@ -64,6 +64,7 @@ angular.module('app.services', [])
             if (localStorage.getItem("actuacionesDeLasMascotas") !== null) {
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
+            /*
             this.ocultarBotonera = true;
             if ((this.mascotas != undefined) && (this.mascotas.length > 0)) {
                 this.hayMascotas = true; this.noHayMascotas = false;
@@ -76,6 +77,7 @@ angular.module('app.services', [])
             } else {
                 this.hayMascotas = false; this.noHayMascotas = true; this.noHayActuaciones = false; this.hayActuaciones = true;
             }
+            */
         }
 
         this.saveActuacionesDeMascota = function () {

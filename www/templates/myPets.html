@@ -8,7 +8,7 @@
         <div class="spacer" style="width: 285px; height: 9px;"></div>
         <h4>Listado de mascotas</h4>
         <div class="spacer" style="width: 285px; height: 3px;"></div>
-        <div id="showHayMascotas" ng-hide="{{service.noHayMascotas}}">
+        <div id="showHayMascotas" ng-hide="hayMascotasFunct()">
 
         <ion-list>
             <ion-list ng-controller="myPetsCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
@@ -27,7 +27,7 @@
         </ion-list>
         </div>
         
-        <div id="showNoHayMascotas" ng-hide="{{service.hayMascotas}}">
+        <div id="showNoHayMascotas" ng-show="hayMascotasFunct()">
             <h4><p><center>No se ha encontrado ninguna mascota en el sistema. Deberías añadir al menos una a la app.</center></p></h4>
             <div class="button-bar">
                 <button class="button button-stable button-block " ng-click="addPet()">AÑADIR MASCOTA</button>

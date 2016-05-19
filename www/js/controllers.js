@@ -1,16 +1,9 @@
 /*
 HOME: 
 
---refresco de las pantallas cuando añades (puto vector)
 --test alarmas
---modifcar actucacion?
---search???
 --badge para iOS
 
-evento onview en cada ventana y así, 
-        para cada una, reload the memory
-
-que la busqueda se la pele si son mayusculas o minusculaa
 Navegabilidad?
      
 Fotos/imagenes
@@ -392,8 +385,71 @@ angular.module('app.controllers', [])
             }
         });
 
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.hayMascotaFunct = function (value) {
+            try {
+                if (BlankService.mascotas.length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (e) { return false; }
+        };
 
+        $scope.hayActuacionesFunct = function (value) {
+            try {
+                if (BlankService.actuacionesDeLasMascotas.length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (e) { return false; }
+        };
+
+        $scope.ocultarBotoneraFunct = function (value) {
+            var ocultarBotonera = true;
+            if ((BlankService.mascotas != undefined) && (BlankService.mascotas.length > 0) && (BlankService.actuacionesDeLasMascotas != undefined) && (BlankService.actuacionesDeLasMascotas.length > 0)) {
+                ocultarBotonera = false;
+            }
+            return ocultarBotonera;
+        };
+
+        function setHayActuaciones(hayActuaciones) {
+            console.log("homeCtrl -- setHayActuaciones", hayActuaciones);
+            if (hayActuaciones) {
+                BlankService.hayActuaciones = true;
+                BlankService.noHayActuaciones = false;
+            } else {
+                BlankService.hayActuaciones = false;
+                BlankService.noHayActuaciones = true;
+            }
+        }
+        function setHayMascotas(hayMascotas) {
+            console.log("homeCtrl -- setHayMascotas", hayMascotas);
+            if (hayMascotas) {
+                BlankService.hayMascotas = true;
+                BlankService.noHayMascotas = false;
+            } else {
+                BlankService.hayMascotas = false;
+                BlankService.noHayMascotas = true;
+            }
+        }
+        $scope.$on('$ionicView.loaded', function () {
+            BlankService.initValuesFromMemory();
+
+            $scope.choice = '';
+            $scope.elemes = [];
+            var i = 0;
+            var name = '';
+            for (mascota in BlankService.mascotas) {
+                $scope.elemes.push(
+                    {
+                        subName: 'SubGrup1',
+                        subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
+                        id: i,
+                        selected: true
+                    });
+                i++;
+            }
         });
 
         $scope.$on('$ionicView.beforeEnter', function () {
@@ -455,25 +511,7 @@ angular.module('app.controllers', [])
             return found;
         }
 
-        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
 
-            BlankService.initValuesFromMemory();
-
-            $scope.choice = '';
-            $scope.elemes = [];
-            var i = 0;
-            var name = '';
-            for (mascota in BlankService.mascotas) {
-                $scope.elemes.push(
-                    {
-                        subName: 'SubGrup1',
-                        subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
-                        id: i,
-                        selected: true
-                    });
-                i++;
-            }
-        });
 
         $scope.showFilterOrder = function () {
             var myPopup = $ionicPopup.show({
@@ -686,12 +724,21 @@ angular.module('app.controllers', [])
         BlankService.initValuesFromMemory();
 
         $scope.$on('$ionicView.afterEnter', function () {
-
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
         });
+
+        $scope.hayMascotaFunct = function (value) {
+            try {
+                if (BlankService.mascotas.length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (e) { return false; }
+        };
 
         $scope.$on('$ionicView.loaded', function () {
             BlankService.reloadHome = true;

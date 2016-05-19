@@ -1,27 +1,27 @@
 <ion-view title="AgenDog">
     <ion-nav-buttons side="right">
         <!--<button class="button button-icon ion-android-calendar" ng-click="TODO()"></button>-->
-        <button class="button button-icon ion-plus-round" ng-click="redirectToaddTreatment()" ng-hide="{{service.ocultarBotonera}}">
+        <button class="button button-icon ion-plus-round" ng-click="redirectToaddTreatment()" ng-hide="ocultarBotoneraFunct()">
         </button>
-        <button class="button button-icon icon ion-stats-bars" ng-click="showFilterGroup()" ng-hide="{{service.ocultarBotonera}}">
+        <button class="button button-icon icon ion-stats-bars" ng-click="showFilterGroup()" ng-hide="ocultarBotoneraFunct()">
         </button>
-        <button class="button-icon icon ion-connection-bars" ng-click="showFilterOrder()" ng-hide="{{service.ocultarBotonera}}">
+        <button class="button-icon icon ion-connection-bars" ng-click="showFilterOrder()" ng-hide="ocultarBotoneraFunct()">
         </button>
-        <button class="button-icon icon ion-ios-search" ng-click="showFilterBar()" ng-hide="{{service.ocultarBotonera}}">
+        <button class="button-icon icon ion-ios-search" ng-click="showFilterBar()" ng-hide="ocultarBotoneraFunct()">
         </button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
 
         <div class="spacer" style="width: 285px; height: 9px;"></div>
 
-        <div id="showHayMascotas" ng-hide="{{service.noHayMascotas}}">
-            <div id="showNoHayMascotas" ng-hide="{{service.hayActuaciones}}">
+        <div id="showHayMascotas" ng-show="hayMascotaFunct()">
+            <div id="showNoHayActuaciones" ng-hide="hayActuacionesFunct()">
                 <h4><p><center>No se ha encontrado ninguna actuación para ninguna mascota en el sistema. Deberías añadir al menos una a la app.</center></p></h4>
                 <div class="button-bar">
                     <button class="button button-stable button-block " ng-click="redirectToaddTreatment()">AÑADIR ACTUACION</button>
                 </div>
             </div>
-            <div id="showNoHayMascotas" ng-hide="{{service.noHayActuaciones}}">
+            <div id="showHayActuaciones" ng-show="hayActuacionesFunct()">
                 <h4>Próximas Actuaciones</h4>
                 <div class="spacer" style="width: 285px; height: 3px;"></div>
                 <ion-list>
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div id="showNoHayMascotas" ng-hide="{{service.hayMascotas}}">
+        <div id="showNoHayMascotas" ng-hide="hayMascotaFunct()">
             <h4><p><center>No se ha encontrado ninguna mascota en el sistema. Deberías añadir al menos una a la app.</center></p></h4>
             <div class="button-bar">
                 <button class="button button-stable button-block " ng-click="redirectToaddPet()">AÑADIR MASCOTA</button>
