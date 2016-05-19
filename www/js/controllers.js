@@ -627,10 +627,10 @@ angular.module('app.controllers', [])
                             if ($scope.elemes[k].selected) {
                                 if (filterText == undefined | '') {
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = true;
-                                } else if (((BlankService.actuacionesDeLasMascotas[i].namePet)).indexOf(filterText) != -1) {
+                                } else if (((BlankService.actuacionesDeLasMascotas[i].namePet.toLowerCase())).indexOf(filterText.toLowerCase()) != -1) {
                                     //es visible y hay filtro
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = true;
-                                } else if (((BlankService.actuacionesDeLasMascotas[i].name)).indexOf(filterText) != -1) {
+                                } else if (((BlankService.actuacionesDeLasMascotas[i].name.toLowerCase())).indexOf(filterText.toLowerCase()) != -1) {
                                     //es visible y hay filtro
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = true;
                                 } else {

@@ -450,7 +450,7 @@ angular.module('app.controllers', [])
                             console.log('homeCtrl--popup -- el id recibido no existe');
                         });
                     }
-                } 
+                }
             }
             return found;
         }
@@ -607,6 +607,42 @@ angular.module('app.controllers', [])
 
         function getItems() {
             $scope.items = BlankService.actuacionesDeLasMascotas;
+        }
+
+        function testFilter(filterText) {
+            var i = 0;
+            var size = BlankService.actuacionesDeLasMascotas.length;
+
+            for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                //1 chequeo si es visible o no.
+                var k = 0;
+                for (k; k < $scope.elemes.length; k++) {
+                    if (BlankService.actuacionesDeLasMascotas[i] != undefined) {
+                        if (BlankService.actuacionesDeLasMascotas[i].namePet == $scope.elemes[k].subId) {
+                            //establezco si es visible o no
+                            BlankService.actuacionesDeLasMascotas[i].isVisible = $scope.elemes[k].selected;
+                            //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
+
+                            //si es visible
+                            if ($scope.elemes[k].selected) {
+                                if (filterText == undefined | '') {
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
+                                } else if (((BlankService.actuacionesDeLasMascotas[i].namePet)).indexOf(filterText) != -1) {
+                                    //es visible y hay filtro
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
+                                } else if (((BlankService.actuacionesDeLasMascotas[i].name)).indexOf(filterText) != -1) {
+                                    //es visible y hay filtro
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
+                                } else {
+                                    //ya es visible pero no coincide con filtro. la oculto
+                                    BlankService.actuacionesDeLasMascotas[i].isVisible = false;
+                                }
+                            }
+                        }
+                    } else {
+                    }
+                }
+            }
         }
 
         $scope.showFilterBar = function ($filter) {
@@ -1430,7 +1466,7 @@ angular.module('app.controllers', [])
                     data: { "treatmentId": treatmentId }
                 });
 
-               
+
             } catch (e) {
             }
         };
