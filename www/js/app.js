@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'ngCordova', 'jett.ionic.filter.bar', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
 
-  .run(function ($ionicPlatform, $state, BlankService) {
+  .run(function ($ionicPlatform, $state) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -19,18 +19,7 @@ angular.module('app', ['ionic', 'ngCordova', 'jett.ionic.filter.bar', 'app.contr
         StatusBar.styleDefault();
       }
 
-      cordova.plugins.notification.local.on("click", function (notification, BlankService) {
-        console.log('asignoAlarmaInSystem - pulsoooooooooooooooo en notificacion');
-
-        var unpackedData = JSON.parse(notification.data);
-        var notificationProfilID = unpackedData['treatmentId'];
-        
-        localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
-
-        console.log('homeCtrl -- asignoAlarmaInSystem -- todo ok. redirigiendo');
-        $state.go('menu.home');
-
-      });
+      
 
     });
   })

@@ -37,10 +37,10 @@ angular.module('app.services', [])
             }
         }
 
-        
-        
-         this.removeByAttr = function (arr, attr, value) {
-             var i = arr.length;
+
+
+        this.removeByAttr = function (arr, attr, value) {
+            var i = arr.length;
             while (i--) {
                 if (arr[i]
                     && arr[i].hasOwnProperty(attr)
@@ -52,7 +52,19 @@ angular.module('app.services', [])
             }
             return arr;
         };
-        
+
+        this.comesFromNotification = function () {
+            var treatmentId_notif_memory = localStorage.getItem("treatmentId_notif");
+            if ((treatmentId_notif_memory != undefined) && (treatmentId_notif_memory != null) && (treatmentId_notif_memory != '')) {
+                if ((this.detailTreatment.id != undefined) && (this.detailTreatment.id != null) && (this.detailTreatment.id != '')) {
+                    if (this.treatmentId_notif == this.detailTreatment.id) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         this.changeOrder = function (order) {
             if (order == 'ordernombremascota') {
                 this.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
@@ -63,8 +75,6 @@ angular.module('app.services', [])
             } else {
             }
         };
-
-
 
         this.setViewGroupForDetailPet = function () {
             var i = 0;
@@ -101,6 +111,19 @@ angular.module('app.services', [])
                 i++;
             }
         }
+
+
+        this.initDetailTreatment = function () {
+            this.initValuesFromMemory();
+            if (this.getDataFromInternalPhoneMemory("detailTreatmentId") != null) {
+                if (this.getDataFromInternalPhoneMemory("detailTreatmentId") != undefined) {
+                    if (this.getDataFromInternalPhoneMemory("detailTreatmentId") != '') {
+                        this.detailTreatment = this.findActbyId(this.getDataFromInternalPhoneMemory("detailTreatmentId"));
+                        this.removeDataFromInternalPhoneMemory("detailTreatmentId");
+                    }
+                }
+            }
+        };
 
         this.saveActuacionesDeMascota = function () {
             this.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", this.actuacionesDeLasMascotas);
@@ -160,6 +183,15 @@ angular.module('app.services', [])
             for (i; i < this.mascotas.length; i++) {
                 if (this.mascotas[i].name == name) {
                     return this.mascotas[i];
+                }
+            }
+            return false;
+        }
+        this.findActbyId = function (id) {
+            var i = 0;
+            for (i; i < this.actuacionesDeLasMascotas.length; i++) {
+                if (this.actuacionesDeLasMascotas[i].id == id) {
+                    return this.actuacionesDeLasMascotas[i];
                 }
             }
             return false;

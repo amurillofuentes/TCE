@@ -112,6 +112,19 @@ angular.module('app.services', [])
             }
         }
 
+
+        this.initDetailTreatment = function () {
+            this.initValuesFromMemory();
+            if (this.getDataFromInternalPhoneMemory("detailTreatmentId") != null) {
+                if (this.getDataFromInternalPhoneMemory("detailTreatmentId") != undefined) {
+                    if (this.getDataFromInternalPhoneMemory("detailTreatmentId") != '') {
+                        this.detailTreatment = this.findActbyId(this.getDataFromInternalPhoneMemory("detailTreatmentId"));
+                        this.removeDataFromInternalPhoneMemory("detailTreatmentId");
+                    }
+                }
+            }
+        };
+
         this.saveActuacionesDeMascota = function () {
             this.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", this.actuacionesDeLasMascotas);
             this.initValuesFromMemory();
@@ -170,6 +183,15 @@ angular.module('app.services', [])
             for (i; i < this.mascotas.length; i++) {
                 if (this.mascotas[i].name == name) {
                     return this.mascotas[i];
+                }
+            }
+            return false;
+        }
+        this.findActbyId = function (id) {
+            var i = 0;
+            for (i; i < this.actuacionesDeLasMascotas.length; i++) {
+                if (this.actuacionesDeLasMascotas[i].id == id) {
+                    return this.actuacionesDeLasMascotas[i];
                 }
             }
             return false;

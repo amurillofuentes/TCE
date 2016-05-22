@@ -10,18 +10,17 @@ Sistema de errores
 
 angular.module('app.controllers', [])
 
-
-
-
     .controller('myPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
         BlankService.initValuesFromMemory();
 
         $scope.$on('$ionicView.afterEnter', function () {
+            /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
+            */
         });
 
         $scope.hayMascotaFunct = function (value) {
@@ -103,10 +102,12 @@ angular.module('app.controllers', [])
     .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
 
         $scope.$on('$ionicView.afterEnter', function () {
+            /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
+            */
         });
 
         $scope.$on('$ionicView.loaded', function () {
@@ -457,10 +458,12 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
             console.log('detailPetCtrl - $ionicView.afterEnter');
+            /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
+            */
         });
 
         $scope.$on('$ionicView.loaded', function () {
@@ -740,13 +743,31 @@ angular.module('app.controllers', [])
     .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
         $scope.service = BlankService;
 
+        cordova.plugins.notification.local.on("click", function (notification) {
+            console.log('homeCtrl - pulso en notificacion');
+
+            var unpackedData = JSON.parse(notification.data);
+            var notificationProfilID = unpackedData['treatmentId'];
+
+            localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
+
+            console.log('homeCtrl -- asignoAlarmaInSystem -- todo ok.');
+            initSystem();
+
+            //$state.go('menu.home');
+        });
+
         // BlankService.clearData();
 
         $scope.$on('$ionicView.afterEnter', function () {
+            console.log("homeCtrl -- $ionicView.afterEnter");
+
+            /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
+            */
         });
 
         $scope.hayMascotaFunct = function (value) {
@@ -778,18 +799,24 @@ angular.module('app.controllers', [])
         };
 
         $scope.$on('$ionicView.loaded', function () {
+            console.log("homeCtrl -- $ionicView.loaded");
             BlankService.initValuesFromMemory();
             $scope.choice = '';
         });
 
         $scope.$on('$ionicView.beforeEnter', function () {
+            console.log("homeCtrl -- $ionicView.beforeEnter");
             BlankService.initValuesFromMemory();
         });
 
         $scope.$on('$ionicView.enter', function () {
 
             console.log("homeCtrl -- $ionicView.enter");
+            initSystem();
 
+        });
+
+        function initSystem() {
             $scope.interfaz = {};
             $scope.interfaz.order = 'Mascota';
             mascotas = [];
@@ -804,8 +831,7 @@ angular.module('app.controllers', [])
                 // $state.go('menu.addMyPets');
                 //}
             }
-        });
-
+        }
         BlankService.reloadHome = true;
         BlankService.initValuesFromMemory();
 
@@ -1061,10 +1087,12 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
 
+            /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
+            */
 
         });
 
@@ -1352,6 +1380,7 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.loaded', function () {
             console.log('detailTreatmentCtrl -- $ionicView.loaded');
+            BlankService.initDetailTreatment();
             initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
@@ -1360,9 +1389,9 @@ angular.module('app.controllers', [])
         $scope.$on('$ionicView.enter', function () {
             console.log('detailTreatmentCtrl -- $ionicView.enter');
 
-            if (BlankService.treatmentId_notif == BlankService.detailTreatment.id) {
-                console.log('detailTreatmentCtrl -- viene de notificacion. borro la memoria de la notificacion y muestro popup');
-
+            //Hay Notificacion
+            if (BlankService.comesFromNotification()) {
+                console.log('detailTreatmentCtrl -- comesFromNotification = true');
                 //viene de notificacion. borro la memoria de la notificacion y muestro popup
                 BlankService.treatmentId_notif = undefined;
                 BlankService.removeDataFromInternalPhoneMemory("treatmentId_notif");
@@ -1374,6 +1403,7 @@ angular.module('app.controllers', [])
 
                 confirmPopup.then(function (res) {
                     if (res) {
+                        BlankService.saveDataInInternalPhoneMemory("detailTreatmentId",BlankService.detailTreatment.id );
                         $window.open('http:///tecuroencasa.com/consultas/', '_blank');
                         console.log('detailTreatmentCtrl -- Compraaaaa');
                     } else {
@@ -1385,16 +1415,17 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
             console.log('detailTreatmentCtrl -- $ionicView.afterEnter');
+            /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
                 BlankService.reloadHome = false;
             }
-
+            */
         });
 
         $scope.solicitarConsulta = function () {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
-
+            BlankService.saveDataInInternalPhoneMemory("detailTreatmentId",BlankService.detailTreatment.id );
             $window.open('http:///tecuroencasa.com/consultas/', '_blank');
         };
         $scope.modifyTreatment = function () {
