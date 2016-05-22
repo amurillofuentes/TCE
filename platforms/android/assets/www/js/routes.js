@@ -1,5 +1,3 @@
-//TODO: Meter redrirección al inicio si hay mascota añadida o no
-
 angular.module('app.routes', [])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -74,6 +72,7 @@ $stateProvider
     views: {
       'side-menu21': {
         templateUrl: 'templates/versions.html',
+        controller: 'versionsCtrl',
       }
     }
   })

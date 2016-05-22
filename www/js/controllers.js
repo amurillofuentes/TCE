@@ -53,7 +53,7 @@ angular.module('app.controllers', [])
             $scope.imagestring = "img/perroIcon.jpg";
 
             $scope.interfaz = {};
-            $scope.interfaz.namePet = 'nombre';
+            $scope.interfaz.namePet = '';
             $scope.interfaz.datePet = new Date;
             $scope.interfaz.typePet = 'Perro';
             $scope.interfaz.typesPet = [{ "name": "Perro" }, { "name": "Gato" }];
@@ -71,9 +71,6 @@ angular.module('app.controllers', [])
             }
             selectIfDefaultImage();
         }
-
-
-
         function selectIfDefaultImage() {
             if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
                 $scope.imagestring = "img/perroIcon.jpg";
@@ -203,8 +200,8 @@ angular.module('app.controllers', [])
         $scope.finishPet = function () {
             BlankService.initValuesFromMemory();
             $ionicHistory.nextViewOptions({
-    disableBack: true
-  });
+                disableBack: true
+            });
             $state.go('menu.home');
         };
 
@@ -413,44 +410,30 @@ angular.module('app.controllers', [])
             }
             return ocultarBotonera;
         };
-/*
-        function setHayActuaciones(hayActuaciones) {
-            console.log("homeCtrl -- setHayActuaciones", hayActuaciones);
-            if (hayActuaciones) {
-                BlankService.hayActuaciones = true;
-                BlankService.noHayActuaciones = false;
-            } else {
-                BlankService.hayActuaciones = false;
-                BlankService.noHayActuaciones = true;
-            }
-        }
-        function setHayMascotas(hayMascotas) {
-            console.log("homeCtrl -- setHayMascotas", hayMascotas);
-            if (hayMascotas) {
-                BlankService.hayMascotas = true;
-                BlankService.noHayMascotas = false;
-            } else {
-                BlankService.hayMascotas = false;
-                BlankService.noHayMascotas = true;
-            }
-        }*/
+        /*
+                function setHayActuaciones(hayActuaciones) {
+                    console.log("homeCtrl -- setHayActuaciones", hayActuaciones);
+                    if (hayActuaciones) {
+                        BlankService.hayActuaciones = true;
+                        BlankService.noHayActuaciones = false;
+                    } else {
+                        BlankService.hayActuaciones = false;
+                        BlankService.noHayActuaciones = true;
+                    }
+                }
+                function setHayMascotas(hayMascotas) {
+                    console.log("homeCtrl -- setHayMascotas", hayMascotas);
+                    if (hayMascotas) {
+                        BlankService.hayMascotas = true;
+                        BlankService.noHayMascotas = false;
+                    } else {
+                        BlankService.hayMascotas = false;
+                        BlankService.noHayMascotas = true;
+                    }
+                }*/
         $scope.$on('$ionicView.loaded', function () {
             BlankService.initValuesFromMemory();
-
             $scope.choice = '';
-            $scope.elemes = [];
-            var i = 0;
-            var name = '';
-            for (mascota in BlankService.mascotas) {
-                $scope.elemes.push(
-                    {
-                        subName: 'SubGrup1',
-                        subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
-                        id: i,
-                        selected: true
-                    });
-                i++;
-            }
         });
 
         $scope.$on('$ionicView.beforeEnter', function () {
@@ -458,6 +441,9 @@ angular.module('app.controllers', [])
         });
 
         $scope.$on('$ionicView.enter', function () {
+            
+ console.log("homeCtrl -- $ionicView.enter");
+
             $scope.interfaz = {};
             $scope.interfaz.order = 'Mascota';
             mascotas = [];
@@ -465,9 +451,11 @@ angular.module('app.controllers', [])
             mascotas = JSON.parse(retrievedObject);
             var filterBarInstance;
             getItems();
+            processGroup();
+             console.log("homeCtrl -- check if come from notification");
             if (processIfComeFromNotification() == false) {
                 if ((mascotas == undefined) || (mascotas.length == 0)) {
-                    $state.go('menu.addMyPets');
+                    // $state.go('menu.addMyPets');
                 }
             }
         });
@@ -548,7 +536,7 @@ angular.module('app.controllers', [])
         $scope.showFilterGroup = function () {
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
-                '  <ion-checkbox ng-repeat="item in elemes" ng-model="item.selected">{{item.subId}}  ' +
+                '  <ion-checkbox ng-repeat="item in service.elemes" ng-model="item.selected">{{item.subId}}  ' +
                 '</ion-list>                               ',
                 title: 'Mostrar actuaciones de ...',
                 subTitle: '',
@@ -609,22 +597,22 @@ angular.module('app.controllers', [])
         }
 
         function processGroup(filterText) {
-            console.log("processGroup--", JSON.stringify($scope.elemes));
+            console.log("processGroup--", JSON.stringify(BlankService.elemes));
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
 
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                 //1 chequeo si es visible o no.
                 var k = 0;
-                for (k; k < $scope.elemes.length; k++) {
+                for (k; k < BlankService.elemes.length; k++) {
                     if (BlankService.actuacionesDeLasMascotas[i] != undefined) {
-                        if (BlankService.actuacionesDeLasMascotas[i].namePet == $scope.elemes[k].subId) {
+                        if (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.elemes[k].subId) {
                             //establezco si es visible o no
-                            BlankService.actuacionesDeLasMascotas[i].isVisible = $scope.elemes[k].selected;
+                            BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.elemes[k].selected;
                             //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
 
                             //si es visible
-                            if ($scope.elemes[k].selected) {
+                            if (BlankService.elemes[k].selected) {
                                 if (filterText == undefined | '') {
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = true;
                                 } else if (((BlankService.actuacionesDeLasMascotas[i].namePet)).indexOf(filterText) != -1) {
@@ -655,15 +643,15 @@ angular.module('app.controllers', [])
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                 //1 chequeo si es visible o no.
                 var k = 0;
-                for (k; k < $scope.elemes.length; k++) {
+                for (k; k < BlankService.elemes.length; k++) {
                     if (BlankService.actuacionesDeLasMascotas[i] != undefined) {
-                        if (BlankService.actuacionesDeLasMascotas[i].namePet == $scope.elemes[k].subId) {
+                        if (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.elemes[k].subId) {
                             //establezco si es visible o no
-                            BlankService.actuacionesDeLasMascotas[i].isVisible = $scope.elemes[k].selected;
+                            BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.elemes[k].selected;
                             //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
 
                             //si es visible
-                            if ($scope.elemes[k].selected) {
+                            if (BlankService.elemes[k].selected) {
                                 if (filterText == undefined | '') {
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = true;
                                 } else if (((BlankService.actuacionesDeLasMascotas[i].namePet.toLowerCase())).indexOf(filterText.toLowerCase()) != -1) {
@@ -900,8 +888,8 @@ angular.module('app.controllers', [])
                     BlankService.initValuesFromMemory();
 
                     $ionicHistory.nextViewOptions({
-    disableBack: true
-  });
+                        disableBack: true
+                    });
 
                     $state.go("menu.home")
                 });
@@ -969,7 +957,11 @@ angular.module('app.controllers', [])
         }
 
         $scope.viewTreatmentsPet = function () {
-            //TODO: redirect to home filtrando por pet
+            BlankService.setViewGroupForDetailPet();
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+            $state.go('menu.home');
         }
 
         $scope.showPopupAddName = function () {
@@ -1049,6 +1041,13 @@ angular.module('app.controllers', [])
     })
 
     .controller('menuCtrl', function ($scope) {
+    })
+
+    .controller('versionsCtrl', function ($scope, BlankService) {
+        $scope.service = BlankService;
+        $scope.borrarDatos = function () {
+            BlankService.clearData();
+        }
     })
 
     .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
@@ -1641,6 +1640,7 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDateAct = function () {
+            console.log("ssssssssssssssssss");
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="actuacion.date">',
                 title: 'Fecha de la actuacion',

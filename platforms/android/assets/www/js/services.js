@@ -6,11 +6,7 @@ angular.module('app.services', [])
     .service('BlankService', [function () {
 
         this.treatmentId_notif;
-
-        this.hayMascotas = false;
-        this.noHayMascotas = false;
-        this.hayActuaciones = false;
-        this.noHayActuaciones = false;
+        this.elemes = [];
 
         this.detailTreatment = {};
         this.detailPet = {};
@@ -57,6 +53,20 @@ angular.module('app.services', [])
         };
 
 
+
+        this.setViewGroupForDetailPet = function () {
+            var i = 0;
+            var nameDetailePet = JSON.stringify(this.detailPet.name).replace(/\"/g, "");
+
+            for (i; i < this.elemes.lenght; i++) {
+                if (this.elemes[i].subId == nameDetailePet) {
+                    this.elemes[i].selected = true;
+                } else {
+                    this.elemes[i].selected = false;
+                }
+            }
+
+        }
         this.initValuesFromMemory = function () {
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");
@@ -64,17 +74,19 @@ angular.module('app.services', [])
             if (localStorage.getItem("actuacionesDeLasMascotas") !== null) {
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
-            this.ocultarBotonera = true;
-            if ((this.mascotas != undefined) && (this.mascotas.length > 0)) {
-                this.hayMascotas = true; this.noHayMascotas = false;
-                if ((this.actuacionesDeLasMascotas != undefined) && (this.actuacionesDeLasMascotas.length > 0)) {
-                    this.hayActuaciones = true; this.noHayActuaciones = false;
-                    this.ocultarBotonera = false;
-                } else {
-                    this.hayActuaciones = false; this.noHayActuaciones = true;
-                }
-            } else {
-                this.hayMascotas = false; this.noHayMascotas = true; this.noHayActuaciones = false; this.hayActuaciones = true;
+
+            this.elemes = [];
+            var i = 0;
+            var name = '';
+            for (mascota in this.mascotas) {
+                this.elemes.push(
+                    {
+                        subName: 'SubGrup1',
+                        subId: JSON.stringify(this.mascotas[i].name).replace(/\"/g, ""),
+                        id: i,
+                        selected: true
+                    });
+                i++;
             }
         }
 
@@ -102,12 +114,12 @@ angular.module('app.services', [])
                 despues = this.getDataFromInternalPhoneMemory(key);
             }
         }
-        
+
         this.existsDataFromInternalPhoneMemory = function (key) {
             var retrievedObject = localStorage.getItem(key);
-            if(retrievedObject==null){
+            if (retrievedObject == null) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }
@@ -116,13 +128,15 @@ angular.module('app.services', [])
             return JSON.parse(retrievedObject);
         }
         this.removeDataFromInternalPhoneMemory = function (key) {
-            localStorage.removeItem(key);           
+            localStorage.removeItem(key);
         }
         this.saveDataEndInInternalPhoneMemory = function (key, value) {
             localStorage.setItem(key, JSON.stringify(value));
         }
         this.clearData = function () {
+            console.log("clearando dataaa")
             localStorage.clear();
+            this.initValuesFromMemory();
         }
         this.savePetInSystem = function (pet) {
             this.mascotas.push(pet);
