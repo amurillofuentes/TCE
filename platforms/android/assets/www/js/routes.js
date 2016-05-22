@@ -77,15 +77,6 @@ $stateProvider
     }
   })
   
-  .state('menu.alarmas', {
-    url: '/alarmas',
-    views: {
-      'side-menu21': {
-        templateUrl: 'templates/alarmas.html',
-        controller: 'alarmasCtrl',
-      }
-    }
-  })
 
   .state('menu', {
     url: '/side-menu21',

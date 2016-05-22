@@ -7,8 +7,11 @@
   <author email="amurillofuentes@gmail.com" href="http://www.tecuroencasa.com/">
       Administrador AgenDog
     </author>
+	
   <content src="index.html"/>
-  <access origin="*"/>
+  <access origin="*" launch-external="yes"/>
+<allow-navigation href="*"/>
+
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

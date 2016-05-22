@@ -37,22 +37,44 @@ angular.module('app.services', [])
             }
         }
 
-        this.changeOrder = function (order) {
-            if (order == 'ordernombremascota') {
-                console.log("service -- changeOrder--ordernombremascota ");
-                this.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
-            } else if (order == 'orderfechamascota') {
-                console.log("service -- changeOrder--orderfechamascota ");
-                this.actuacionesDeLasMascotas.sort(sort_by('date', false, function (a) { return a }));
-            } else if (order == 'ordernombreactuacion') {
-                console.log("service -- changeOrder--ordernombreactuacion ");
-                this.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a }));
-            } else {
-                console.log("service -- changeOrder--NOT FOUND ");
+
+
+        this.removeByAttr = function (arr, attr, value) {
+            var i = arr.length;
+            while (i--) {
+                if (arr[i]
+                    && arr[i].hasOwnProperty(attr)
+                    && (arguments.length > 2 && arr[i][attr] === value)) {
+
+                    arr.splice(i, 1);
+
+                }
             }
+            return arr;
         };
 
+        this.comesFromNotification = function () {
+            var treatmentId_notif_memory = localStorage.getItem("treatmentId_notif");
+            if ((treatmentId_notif_memory != undefined) && (treatmentId_notif_memory != null) && (treatmentId_notif_memory != '')) {
+                if ((this.detailTreatment.id != undefined) && (this.detailTreatment.id != null) && (this.detailTreatment.id != '')) {
+                    if (this.treatmentId_notif == this.detailTreatment.id) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
+        this.changeOrder = function (order) {
+            if (order == 'ordernombremascota') {
+                this.actuacionesDeLasMascotas.sort(sort_by('namePet', false, function (a) { return a }));
+            } else if (order == 'orderfechamascota') {
+                this.actuacionesDeLasMascotas.sort(sort_by('date', false, function (a) { return a }));
+            } else if (order == 'ordernombreactuacion') {
+                this.actuacionesDeLasMascotas.sort(sort_by('name', false, function (a) { return a }));
+            } else {
+            }
+        };
 
         this.setViewGroupForDetailPet = function () {
             var i = 0;
@@ -134,7 +156,6 @@ angular.module('app.services', [])
             localStorage.setItem(key, JSON.stringify(value));
         }
         this.clearData = function () {
-            console.log("clearando dataaa")
             localStorage.clear();
             this.initValuesFromMemory();
         }

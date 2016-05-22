@@ -27,7 +27,6 @@ angular.module('app', ['ionic', 'ngCordova', 'jett.ionic.filter.bar', 'app.contr
         
         localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
 
-        //BlankService.saveDataEndInInternalPhoneMemory("treatmentId_notif", notificationProfilID);
         console.log('homeCtrl -- asignoAlarmaInSystem -- todo ok. redirigiendo');
         $state.go('menu.home');
 
