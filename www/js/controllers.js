@@ -15,6 +15,7 @@ angular.module('app.controllers', [])
         BlankService.initValuesFromMemory();
 
         $scope.$on('$ionicView.afterEnter', function () {
+            console.log('myPetsCtrl -- $ionicView.afterEnter');
             /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
@@ -23,7 +24,25 @@ angular.module('app.controllers', [])
             */
         });
 
+        $scope.$on('$ionicView.loaded', function () {
+            console.log('myPetsCtrl -- $ionicView.loaded');
+            BlankService.reloadHome = true;
+            BlankService.initValuesFromMemory();
+        });
+
+        $scope.addPet = function () {
+            console.log('myPetsCtrl -- addPet');
+            $state.go('menu.addMyPets');
+        };
+
+        $scope.showDetailPet = function (pet) {
+            console.log('myPetsCtrl -- showDetailPet');
+            BlankService.detailPet = pet;
+            $state.go('menu.detailPet');
+        };
+
         $scope.hayMascotaFunct = function (value) {
+            console.log('myPetsCtrl -- hayMascotaFunct');
             try {
                 if (BlankService.mascotas.length > 0) {
                     return true;
@@ -33,24 +52,9 @@ angular.module('app.controllers', [])
             } catch (e) { return false; }
         };
 
-        $scope.$on('$ionicView.loaded', function () {
-            BlankService.reloadHome = true;
-            BlankService.initValuesFromMemory();
-        });
-
-        $scope.addPet = function () {
-            $state.go('menu.addMyPets');
-        };
-
-        $scope.showDetailPet = function (pet) {
-            BlankService.detailPet = pet;
-            $state.go('menu.detailPet');
-        };
-
-
-
 
         $scope.borrarMascota = function (pet) {
+            console.log('myPetsCtrl -- borrarMascota');
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Borrar Mascota',
                 template: 'Al borrar la mascota también se borrarán todas sus actuaciones. ¿Quieres continuar?'
@@ -102,6 +106,8 @@ angular.module('app.controllers', [])
     .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
 
         $scope.$on('$ionicView.afterEnter', function () {
+            console.log('addMyPetsCtrl -- $ionicView.afterEnter');
+
             /*
             if (BlankService.reloadHome) {
                 $state.go($state.current, {}, { reload: true });
@@ -111,24 +117,32 @@ angular.module('app.controllers', [])
         });
 
         $scope.$on('$ionicView.loaded', function () {
+            console.log('addMyPetsCtrl -- $ionicView.loaded');
+            initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
         });
-
-        $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-            initValues();
-            BlankService.initValuesFromMemory();
-        });
-
+        /*
+                $scope.$on('$ionicView.loaded', function (viewInfo, state) {
+                    initValues();
+                    BlankService.initValuesFromMemory();
+                });
+        */
         $scope.$on('$ionicView.beforeLeave', function () {
+            console.log('addMyPetsCtrl -- $ionicView.beforeLeave');
+
             BlankService.initValuesFromMemory();
         });
         $scope.$on('$ionicView.leave', function () {
+            console.log('addMyPetsCtrl -- $ionicView.leave');
+
             BlankService.initValuesFromMemory();
 
         });
         BlankService.initValuesFromMemory();
         function initValues() {
+            console.log('addMyPetsCtrl -- initValues');
+
             $scope.imagestring = {};
             $scope.console = {};
             $scope.lastPhoto = "init";
@@ -154,6 +168,8 @@ angular.module('app.controllers', [])
             selectIfDefaultImage();
         }
         function selectIfDefaultImage() {
+            console.log('addMyPetsCtrl -- selectIfDefaultImage');
+
             if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
                 $scope.imagestring = "img/perroIcon.jpg";
                 if ($scope.interfaz.typePet == 'Gato') {
@@ -162,6 +178,8 @@ angular.module('app.controllers', [])
             }
         }
         function camposIntroducidosOk() {
+            console.log('addMyPetsCtrl -- camposIntroducidosOk');
+
             $scope.pet.name = $scope.interfaz.namePet;
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
@@ -187,6 +205,8 @@ angular.module('app.controllers', [])
         };
 
         function createActuacion(nombre, fecha) {
+            console.log('addMyPetsCtrl -- createActuacion');
+
             $scope.act = {};
             $scope.act.id = BlankService.IDGenerator(8);
             $scope.act.name = nombre;
@@ -203,6 +223,8 @@ angular.module('app.controllers', [])
         }
 
         function createActuacionesDeMascota() {
+            console.log('addMyPetsCtrl -- createActuacionesDeMascota');
+
             //creo las actuaciones depende de si es perro o gatoIcon
             if ($scope.pet.type = 'perro') {
                 //10 de enero: desparasitación interna
@@ -280,6 +302,8 @@ angular.module('app.controllers', [])
         }
 
         $scope.finishPet = function () {
+            console.log('addMyPetsCtrl -- finishPet');
+
             BlankService.initValuesFromMemory();
             $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -288,6 +312,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.addPet = function () {
+            console.log('addMyPetsCtrl -- addPet');
+
             if (camposIntroducidosOk()) {
                 if (BlankService.savePetInSystem($scope.pet)) {
                     if (createActuacionesDeMascota()) {
@@ -365,6 +391,8 @@ angular.module('app.controllers', [])
         }
 
         $scope.showPopupAddName = function () {
+            console.log('addMyPetsCtrl -- showPopupAddName');
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="interfaz.namePet">',
                 title: 'Nombre de tu mascota',
@@ -393,6 +421,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDate = function () {
+            console.log('addMyPetsCtrl -- showPopupAddDate');
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="interfaz.datePet">',
                 title: 'Fecha de tu mascota',
@@ -421,6 +451,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddType = function () {
+            console.log('addMyPetsCtrl -- showPopupAddType');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="pet in interfaz.typesPet" ng-model="interfaz.typePet" ng-value="pet.name">{{pet.name}} ' +
@@ -474,7 +506,8 @@ angular.module('app.controllers', [])
         });
 
         function initValues() {
-            console.log('detailPetCtrl - initValues');
+            console.log('detailPetCtrl -- initValues');
+
             $scope.imagestring = {};
             $scope.lastPhoto = "init";
             $scope.imagestring = "img/perroIcon.jpg";
@@ -483,6 +516,7 @@ angular.module('app.controllers', [])
         }
 
         function selectIfDefaultImage() {
+            console.log('detailPetCtrl -- selectIfDefaultImage');
 
             if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
                 $scope.imagestring = "img/perroIcon.jpg";
@@ -655,6 +689,8 @@ angular.module('app.controllers', [])
         }
 
         $scope.showPopupAddName = function () {
+            console.log('detailPetCtrl -- showPopupAddName');
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="service.detailPet.name">',
                 title: 'Nombre de tu mascota',
@@ -679,6 +715,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDate = function () {
+            console.log('detailPetCtrl -- showPopupAddDate');
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="service.detailPet.date">',
                 title: 'Fecha de tu mascota',
@@ -703,6 +741,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddType = function () {
+            console.log('detailPetCtrl -- showPopupAddType');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="pet in typesPet" ng-model="service.detailPet.type" ng-value="pet.name">{{pet.name}} ' +
@@ -736,27 +776,29 @@ angular.module('app.controllers', [])
     .controller('versionsCtrl', function ($scope, BlankService) {
         $scope.service = BlankService;
         $scope.borrarDatos = function () {
+            console.log('versionsCtrl -- borrarDatos');
+
             BlankService.clearData();
         }
     })
 
     .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
         $scope.service = BlankService;
-
-        cordova.plugins.notification.local.on("click", function (notification) {
-            console.log('homeCtrl - pulso en notificacion');
-
-            var unpackedData = JSON.parse(notification.data);
-            var notificationProfilID = unpackedData['treatmentId'];
-
-            localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
-
-            console.log('homeCtrl -- asignoAlarmaInSystem -- todo ok.');
-            initSystem();
-
-            //$state.go('menu.home');
-        });
-
+        /*
+                cordova.plugins.notification.local.on("click", function (notification) {
+                    console.log('homeCtrl - Notificacion  -  pulso en notificacion');
+        
+                    var unpackedData = JSON.parse(notification.data);
+                    var notificationProfilID = unpackedData['treatmentId'];
+        
+                    localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
+        
+                    console.log('homeCtrl -- Notificacion -- todo ok.');
+                    initSystem();
+        
+                    //$state.go('menu.home');
+                });
+        */
         // BlankService.clearData();
 
         $scope.$on('$ionicView.afterEnter', function () {
@@ -771,6 +813,8 @@ angular.module('app.controllers', [])
         });
 
         $scope.hayMascotaFunct = function (value) {
+            console.log('homeCtrl -- hayMascotaFunct');
+
             try {
                 if (BlankService.mascotas.length > 0) {
                     return true;
@@ -781,6 +825,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.hayActuacionesFunct = function (value) {
+            console.log('homeCtrl -- hayActuacionesFunct');
+
             try {
                 if (BlankService.actuacionesDeLasMascotas.length > 0) {
                     return true;
@@ -791,6 +837,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.ocultarBotoneraFunct = function (value) {
+            console.log('homeCtrl -- ocultarBotoneraFunct');
+
             var ocultarBotonera = true;
             if ((BlankService.mascotas != undefined) && (BlankService.mascotas.length > 0) && (BlankService.actuacionesDeLasMascotas != undefined) && (BlankService.actuacionesDeLasMascotas.length > 0)) {
                 ocultarBotonera = false;
@@ -817,6 +865,8 @@ angular.module('app.controllers', [])
         });
 
         function initSystem() {
+            console.log('homeCtrl -- initSystem');
+
             $scope.interfaz = {};
             $scope.interfaz.order = 'Mascota';
             mascotas = [];
@@ -836,6 +886,8 @@ angular.module('app.controllers', [])
         BlankService.initValuesFromMemory();
 
         function processIfComeFromNotification() {
+            console.log('homeCtrl -- processIfComeFromNotification');
+
             console.log("homeCtrl -- processIfComeFromNotification");
             found = false;
             if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
@@ -875,6 +927,8 @@ angular.module('app.controllers', [])
 
 
         $scope.showFilterOrder = function () {
+            console.log('homeCtrl -- showFilterOrder');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="order in service.orders" ng-model="interfaz.order" ng-value="order.name">{{order.name}} ' +
@@ -906,6 +960,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showFilterGroup = function () {
+            console.log('homeCtrl -- showFilterGroup');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-checkbox ng-repeat="item in service.elemes" ng-model="item.selected">{{item.subId}}  ' +
@@ -932,14 +988,20 @@ angular.module('app.controllers', [])
         };
 
         $scope.redirectToaddTreatment = function () {
+            console.log('homeCtrl -- redirectToaddTreatment');
+
             $state.go('menu.addTreatment');
         };
 
         $scope.redirectToaddPet = function () {
+            console.log('homeCtrl -- redirectToaddPet');
+
             $state.go('menu.addMyPets');
         };
 
         $scope.borrarActuacion = function ($item) {
+            console.log('homeCtrl -- borrarActuacion');
+
             BlankService.initValuesFromMemory();
 
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', $item.id);
@@ -959,6 +1021,8 @@ angular.module('app.controllers', [])
         };
 
         function processOrder() {
+            console.log('homeCtrl -- processOrder');
+
 
             if ($scope.interfaz.order == "Mascota") {
                 BlankService.changeOrder('ordernombremascota');
@@ -972,6 +1036,8 @@ angular.module('app.controllers', [])
         }
 
         function processGroup(filterText) {
+            console.log('homeCtrl -- processGroup');
+
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
 
@@ -1007,10 +1073,14 @@ angular.module('app.controllers', [])
         }
 
         function getItems() {
+            console.log('homeCtrl -- getItems');
+
             $scope.items = BlankService.actuacionesDeLasMascotas;
         }
 
         function testFilter(filterText) {
+            console.log('homeCtrl -- testFilter');
+
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
 
@@ -1047,6 +1117,8 @@ angular.module('app.controllers', [])
         }
 
         $scope.showFilterBar = function ($filter) {
+            console.log('homeCtrl -- showFilterBar');
+
             BlankService.initValuesFromMemory();
 
             filterBarInstance = $ionicFilterBar.show({
@@ -1064,6 +1136,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.refreshItems = function () {
+            console.log('homeCtrl -- refreshItems');
+
             if (filterBarInstance) {
                 filterBarInstance();
                 filterBarInstance = null;
@@ -1076,6 +1150,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showDetail = function ($item) {
+            console.log('homeCtrl -- showDetail');
+
             BlankService.initValuesFromMemory();
             BlankService.detailTreatment = $item;
             $state.go('menu.detailTreatment');
@@ -1097,6 +1173,8 @@ angular.module('app.controllers', [])
         });
 
         $scope.$on('$ionicView.loaded', function () {
+            console.log('addTreatmentCtrl -- $ionicView.loaded');
+
             initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
@@ -1105,6 +1183,8 @@ angular.module('app.controllers', [])
 
 
         $scope.addActuacion = function () {
+            console.log('addTreatmentCtrl -- addActuacion');
+
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir actuacion',
@@ -1118,6 +1198,8 @@ angular.module('app.controllers', [])
             }
         };
         function initValues() {
+            console.log('addTreatmentCtrl -- initValues');
+
             $scope.interfaz = {};
             $scope.interfaz.nameAct = '';
             $scope.interfaz.dateAct = new Date;
@@ -1152,6 +1234,8 @@ angular.module('app.controllers', [])
         }
 
         $scope.showPopupAddNameAct = function () {
+            console.log('addTreatmentCtrl -- showPopupAddNameAct');
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="interfaz.nameAct">',
                 title: 'Nombre de la actuacion',
@@ -1180,6 +1264,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDateAct = function () {
+            console.log('addTreatmentCtrl -- showPopupAddDateAct');
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="interfaz.dateAct">',
                 title: 'Fecha de la actuacion',
@@ -1209,6 +1295,8 @@ angular.module('app.controllers', [])
 
 
         $scope.showPopupAddMultiplePet = function () {
+            console.log('addTreatmentCtrl -- showPopupAddMultiplePet');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="pet.selected" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
@@ -1234,6 +1322,8 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddAlarm = function () {
+            console.log('addTreatmentCtrl -- showPopupAddAlarm');
+
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="alarm in service.alarmas" ng-model="interfaz.alarmName" ng-value="alarm.name">{{alarm.name}} ' +
@@ -1264,6 +1354,8 @@ angular.module('app.controllers', [])
         };
 
         function saveActuacionInSystem() {
+            console.log('addTreatmentCtrl -- saveActuacionInSystem');
+
             //guardar una actuacion por cada mascota seleccionada
             var k = 0;
             for (k; k < $scope.mascotasToShow.length; k++) {
@@ -1286,6 +1378,8 @@ angular.module('app.controllers', [])
         };
 
         function processAssignAlarm(actuacion) {
+            console.log('addTreatmentCtrl -- processAssignAlarm');
+
             if (actuacion != undefined) {
                 if (actuacion.nameAlarm != undefined) {
                     if (actuacion.alarmId != "0") {
@@ -1312,6 +1406,7 @@ angular.module('app.controllers', [])
         }
 
         function asignoAlarmaInSystem(cuando, idAlarm, treatmentId, text) {
+
             console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
             console.log('addTreatmentCtrl -- text: ', text);
             console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
@@ -1334,6 +1429,8 @@ angular.module('app.controllers', [])
         };
 
         function camposIntroducidosOk() {
+            console.log('addTreatmentCtrl -- camposIntroducidosOk');
+
             $scope.act.name = $scope.interfaz.nameAct;
             $scope.act.date = $scope.interfaz.dateAct;
             $scope.act.nameAlarm = $scope.interfaz.alarmName;
@@ -1374,10 +1471,45 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
+    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification, $ionicPlatform) {
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
+        $ionicPlatform.ready(function () {
+
+            $scope.scheduleInstantNotification = function (idAlarm, text, at, treatmentId) {
+                $cordovaLocalNotification.schedule({
+                    //id: idAlarm,
+                    id: idAlarm,
+                    title: 'AgenDog',
+                    text: text,
+                    at: at,
+                    //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
+                    //data: { treatmentId: treatmentId }
+                    data: { "treatmentId": treatmentId }
+                });
+
+                cordova.plugins.notification.local.on("click", function (notification) {
+                    console.log('detailTreatmentCtrl - Notificacion  -  pulso en notificacion');
+
+                    var unpackedData = JSON.parse(notification.data);
+                    var notificationProfilID = unpackedData['treatmentId'];
+
+                    localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
+
+                    console.log('detailTreatmentCtrl -- Notificacion -- todo ok.');
+                    initSystem();
+
+                    //$state.go('menu.home');
+                });
+            };
+
+            $scope.cancelSingleNotification = function (idAlarm) {
+                $cordovaLocalNotification.cancel(idAlarm).then(function (result) {
+                    console.log('detailPetCtrl -- Notification Canceled ', idAlarm);
+                });
+            };
+        });
         $scope.$on('$ionicView.loaded', function () {
             console.log('detailTreatmentCtrl -- $ionicView.loaded');
             BlankService.initDetailTreatment();
@@ -1403,7 +1535,7 @@ angular.module('app.controllers', [])
 
                 confirmPopup.then(function (res) {
                     if (res) {
-                        BlankService.saveDataInInternalPhoneMemory("detailTreatmentId",BlankService.detailTreatment.id );
+                        BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
                         $window.open('http:///tecuroencasa.com/consultas/', '_blank');
                         console.log('detailTreatmentCtrl -- Compraaaaa');
                     } else {
@@ -1425,7 +1557,7 @@ angular.module('app.controllers', [])
 
         $scope.solicitarConsulta = function () {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
-            BlankService.saveDataInInternalPhoneMemory("detailTreatmentId",BlankService.detailTreatment.id );
+            BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
             $window.open('http:///tecuroencasa.com/consultas/', '_blank');
         };
         $scope.modifyTreatment = function () {
@@ -1523,11 +1655,7 @@ angular.module('app.controllers', [])
             console.log('detailPetCtrl -- borroAlarmaInSystem with');
             console.log('detailPetCtrl -- idAlarm: ', idAlarm);
             try {
-                $scope.cancelSingleNotification = function (idAlarm) {
-                    $cordovaLocalNotification.cancel(idAlarm).then(function (result) {
-                        console.log('detailPetCtrl -- Notification Canceled ', idAlarm);
-                    });
-                };
+                $scope.cancelSingleNotification(idAlarm);
             } catch (e) { }
         };
         function processAssignAlarm(actuacion) {
@@ -1565,18 +1693,7 @@ angular.module('app.controllers', [])
             console.log('detailTreatmentCtrl -- treatmentId: ', treatmentId);
             console.log('detailTreatmentCtrl -- cuando: ', cuando);
             try {
-                $cordovaLocalNotification.schedule({
-                    //id: idAlarm,
-                    id: 10,
-                    title: 'AgenDog',
-                    text: text,
-                    at: cuando,
-                    //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
-                    //data: { treatmentId: treatmentId }
-                    data: { "treatmentId": treatmentId }
-                });
-
-
+                $scope.scheduleInstantNotification(10, text, cuando, treatmentId);
             } catch (e) {
             }
         };
@@ -1702,6 +1819,15 @@ angular.module('app.controllers', [])
         };
 
         $scope.showPopupAddDateAct = function () {
+            console.log("detailTreatmentCtrl -- $scope.showPopupAddDateAct");
+            console.log("detailTreatmentCtrl -- $scope.showPopupAddDateAct", $scope.actuacion);
+            console.log("detailTreatmentCtrl -- $scope.showPopupAddDateAct", $scope.actuacion.date);
+
+            if (($scope.actuacion != null) && ($scope.actuacion != undefined) && ($scope.actuacion.date != null) && ($scope.actuacion.date != undefined)) {
+                var newfecha = new Date($scope.actuacion.date);
+                $scope.actuacion.date = newfecha;
+            }
+
             var myPopup = $ionicPopup.show({
                 template: '<input type="date" ng-model="actuacion.date">',
                 title: 'Fecha de la actuacion',
