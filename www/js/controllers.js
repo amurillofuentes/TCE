@@ -1498,9 +1498,9 @@ angular.module('app.controllers', [])
                     localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
 
                     console.log('detailTreatmentCtrl -- Notificacion -- todo ok.');
-                    initSystem();
+                    //initSystem();
 
-                    //$state.go('menu.home');
+                    $state.go('menu.detailTreatment');
                 });
             };
 
@@ -1661,10 +1661,10 @@ angular.module('app.controllers', [])
         function processAssignAlarm(actuacion) {
             console.log('detailTreatmentCtrl -- processAssignAlarm');
 
-            if (actuacion != undefined) {
+            if ((actuacion != undefined)&&(actuacion.date!=undefined)) {
                 if (actuacion.nameAlarm != undefined) {
                     if (actuacion.alarmId != "0") {
-                        var now = actuacion.date.getTime();
+                        var now = new Date(actuacion.date).getTime();
                         var timeAlarm;
                         if (actuacion.alarmId == "1") {
                             //12 horas antes
