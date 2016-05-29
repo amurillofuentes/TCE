@@ -5,7 +5,7 @@
     </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <div>
-            <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+            <img style="display:none;width:60px;height:60px;" id="smallImage" ng-src="{{collection.selectedImage}}" />
             <img style="display:none;" id="largeImage" src="" />
             <p>
                 Introduce los datos de tu mascota. Presiona "añadir otra" para añadir más de una y presiona "Terminar" cuando hayas acabado</p>
@@ -29,11 +29,13 @@
             </ion-item>
         </ion-list>
 
-        <div class="item item-thumbnail-left">
-            <img ng-model="image" src="{{imagestring}}" id="imageSelected">
-            <button class="button button-stable button-block " ng-click="launchPhotoAlbum()">Imagen desde tu telefono(no funciona)</button>
-            <button class="button button-stable button-block " ng-click="launchCapturePhoto()">Imagen desde la camara (no funciona)</button>
+               
+        <div class="item item-thumbnail-left" ng-controller="ImagePickerController">
+            <img ng-src="{{collection.selectedImage}}" style="width:100%; height: auto;"/>
+            <img ng-src="{{collection.selectedImage}}" style="width:60px;height:60px;"/>
 
+            <button class="button button-stable button-block " ng-click="getImageSaveContact()()">Imagen desde tu telefono(no funciona)</button>
+            <button class="button button-stable button-block " ng-click="launchCapturePhoto()">Imagen desde la camara (no funciona)</button>
         </div>
 
         <div class="button-bar">

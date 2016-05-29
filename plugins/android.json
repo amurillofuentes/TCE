@@ -33,6 +33,12 @@
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "com-badrit-base64": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
         }
     },
     "dependent_plugins": {
