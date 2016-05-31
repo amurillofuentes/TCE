@@ -1,4 +1,16 @@
 /*
+
+//alarmas!!!
+//VOLVER DE UNA WEB
+//VER ACTUACIONES DESDE DETALLE DE MASCOTA
+//CAMARA
+
+
+//TODO: Buscar el TODO
+refs por si acaso
+https://github.com/JrSchild/jr-crop/tree/master/examples
+http://ngcordova.com/docs/plugins/imagePicker/
+
 HOME: 
 
 Badge para iOS	
@@ -16,12 +28,7 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
             console.log('myPetsCtrl -- $ionicView.afterEnter');
-            /*
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-            */
+
         });
 
         $scope.$on('$ionicView.loaded', function () {
@@ -66,36 +73,6 @@ angular.module('app.controllers', [])
                     BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'idPet', pet.id);
                     BlankService.saveDataInInternalPhoneMemory("mascotas", BlankService.mascotas);
                     BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
-
-                    /*
-                    var i = 0;
-                    var indexToDelete = -1;
-                    for (i; i < BlankService.mascotas.length; i++) {
-                        if (BlankService.mascotas[i].id = pet.id) {
-                            indexToDelete = i;
-                            break;
-                        }
-                    }
-                    BlankService.mascotas.splice(indexToDelete, 1);
-                    */
-
-                    /*
-                                       var indexActuacionesToDelete = [];
-                                       i = 0;
-                   
-                                       for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
-                                           if (BlankService.actuacionesDeLasMascotas[i].idPet == pet.id) {
-                                               indexActuacionesToDelete.push(i);
-                                           }
-                                       }
-                   
-                                       i = 0;
-                                       for (i; i < indexActuacionesToDelete.length; i++) {
-                                           if (indexActuacionesToDelete[i] != -1) {
-                                               BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
-                                           }
-                                       }
-                   */
                     return true;
 
                 }
@@ -107,13 +84,6 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
             console.log('addMyPetsCtrl -- $ionicView.afterEnter');
-
-            /*
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-            */
         });
 
         $scope.$on('$ionicView.loaded', function () {
@@ -122,12 +92,7 @@ angular.module('app.controllers', [])
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
         });
-        /*
-                $scope.$on('$ionicView.loaded', function (viewInfo, state) {
-                    initValues();
-                    BlankService.initValuesFromMemory();
-                });
-        */
+
         $scope.$on('$ionicView.beforeLeave', function () {
             console.log('addMyPetsCtrl -- $ionicView.beforeLeave');
 
@@ -139,26 +104,27 @@ angular.module('app.controllers', [])
             BlankService.initValuesFromMemory();
 
         });
+
         BlankService.initValuesFromMemory();
         function initValues() {
             console.log('addMyPetsCtrl -- initValues');
 
-            $scope.imagestring = {};
             $scope.console = {};
             $scope.lastPhoto = "init";
-            $scope.imagestring = "img/perroIcon.jpg";
 
             $scope.interfaz = {};
             $scope.interfaz.namePet = '';
             $scope.interfaz.datePet = new Date;
             $scope.interfaz.typePet = 'Perro';
             $scope.interfaz.typesPet = [{ "name": "Perro" }, { "name": "Gato" }];
+            $scope.interfaz.imagePet = "img/perroIcon.jpg";
 
             $scope.pet = {};
             $scope.pet.id = '';
             $scope.pet.name = '';
             $scope.pet.date = '';
             $scope.pet.type = '';
+            $scope.pet.image = '';
 
             $scope.interfaz.ocultarFinish = false;
 
@@ -167,22 +133,24 @@ angular.module('app.controllers', [])
             }
             selectIfDefaultImage();
         }
+
         function selectIfDefaultImage() {
             console.log('addMyPetsCtrl -- selectIfDefaultImage');
-
-            if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
-                $scope.imagestring = "img/perroIcon.jpg";
+            if ($scope.interfaz.imagePet == "img/perroIcon.jpg" || $scope.interfaz.imagePet == "img/gatoIcon.jpg") {
+                $scope.interfaz.imagePet = "img/perroIcon.jpg";
                 if ($scope.interfaz.typePet == 'Gato') {
-                    $scope.imagestring = "img/gatoIcon.jpg";
+                    $scope.interfaz.imagePet = "img/gatoIcon.jpg";
                 }
             }
         }
+
         function camposIntroducidosOk() {
             console.log('addMyPetsCtrl -- camposIntroducidosOk');
 
             $scope.pet.name = $scope.interfaz.namePet;
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
+            $scope.pet.image = $scope.interfaz.imagePet;
             $scope.pet.id = BlankService.IDGenerator(8);
 
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
@@ -190,13 +158,13 @@ angular.module('app.controllers', [])
                     if ($scope.pet.date != undefined && $scope.pet.date != '') {
                         return true;
                     } else {
-                        //console.log('addMyPetsCtrl - addPetInSystem-pet.date');
+                        console.log('addMyPetsCtrl - addPetInSystem-pet.date');
                     }
                 } else {
-                    // console.log('addMyPetsCtrl - addPetInSystem-pet.type');
+                    console.log('addMyPetsCtrl - addPetInSystem-pet.type');
                 }
             } else {
-                // console.log('addMyPetsCtrl - addPetInSystem-pet.name');
+                console.log('addMyPetsCtrl - addPetInSystem-pet.name');
             }
             var alertPopup = $ionicPopup.alert({
                 title: 'Añadir mascotas',
@@ -215,6 +183,7 @@ angular.module('app.controllers', [])
             $scope.act.namePet = $scope.pet.name;
             $scope.act.datePet = $scope.pet.date;
             $scope.act.typePet = $scope.pet.type;
+            $scope.act.imagePet = $scope.pet.image;
             $scope.act.isVisible = true;
             $scope.act.nameAlarm = "Nunca";
             $scope.act.alarmId = "0";
@@ -331,65 +300,66 @@ angular.module('app.controllers', [])
             }
         };
 
-        $scope.launchCapturePhoto = function ($state) {
-            $scope.console = "launchCapturePhoto";
-            if (navigator.camera) {
-                $scope.console = "launchCapturePhoto--1";
-                navigator.camera.getPicture(
-                    onPhotoDataSuccess,
-                    cameraError,
-                    {
-                        quality: 50,
-                        destinationType: destinationType.DATA_URL
-                    });
-            } else {
-                $scope.console = "launchCapturePhoto-selectIfDefaultImage";
-                selectIfDefaultImage();
-            }
-        };
-
-        function onPhotoDataSuccess(imageData) {
-            $scope.console = "onPhotoDataSuccess";
-            var smallImage = document.getElementById('smallImage');
-            smallImage.style.display = 'block';
-            smallImage.src = "data:image/jpeg;base64," + imageData;
-        }
-
-        $scope.launchPhotoAlbum = function ($state) {
-            $scope.console = "launchPhotoAlbum";
-            if (navigator.camera) {
-                $scope.console = "launchPhotoAlbum--1";
-                navigator.camera.getPicture(
-                    onPhotoURISuccess,
-                    cameraError,
-                    {
-                        sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
-                        quality: 50,
-                        destinationType: destinationType.FILE_URI
+        /*
+                $scope.launchCapturePhoto = function ($state) {
+                    $scope.console = "launchCapturePhoto";
+                    if (navigator.camera) {
+                        $scope.console = "launchCapturePhoto--1";
+                        navigator.camera.getPicture(
+                            onPhotoDataSuccess,
+                            cameraError,
+                            {
+                                quality: 50,
+                                destinationType: destinationType.DATA_URL
+                            });
+                    } else {
+                        $scope.console = "launchCapturePhoto-selectIfDefaultImage";
+                        selectIfDefaultImage();
                     }
-                );
-            } else {
-                $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
-                selectIfDefaultImage();
-            }
-        };
-        function onPhotoURISuccess(imageURI) {
-            $scope.console = "onPhotoURISuccess";
-            if (imageURI.substring(0, 21) == "content://com.android") {
-                var photo_split = imageURI.split("%3A");
-                imageURI = "content://media/external/images/media/" + photo_split[1];
-            }
-            $scope.imagestring = imageURI;
-            var largeImage = document.getElementById('largeImage');
-            largeImage.style.display = 'block';
-            largeImage.src = imageURI;
-        }
-
-        function cameraError(message) {
-            $scope.console = "cameraError";
-            alert('Failed because: ' + message);
-        }
-
+                };
+        
+                function onPhotoDataSuccess(imageData) {
+                    $scope.console = "onPhotoDataSuccess";
+                    var smallImage = document.getElementById('smallImage');
+                    smallImage.style.display = 'block';
+                    smallImage.src = "data:image/jpeg;base64," + imageData;
+                }
+        
+                $scope.launchPhotoAlbum = function ($state) {
+                    $scope.console = "launchPhotoAlbum";
+                    if (navigator.camera) {
+                        $scope.console = "launchPhotoAlbum--1";
+                        navigator.camera.getPicture(
+                            onPhotoURISuccess,
+                            cameraError,
+                            {
+                                sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
+                                quality: 50,
+                                destinationType: destinationType.FILE_URI
+                            }
+                        );
+                    } else {
+                        $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
+                        selectIfDefaultImage();
+                    }
+                };
+                function onPhotoURISuccess(imageURI) {
+                    $scope.console = "onPhotoURISuccess";
+                    if (imageURI.substring(0, 21) == "content://com.android") {
+                        var photo_split = imageURI.split("%3A");
+                        imageURI = "content://media/external/images/media/" + photo_split[1];
+                    }
+                    $scope.imagestring = imageURI;
+                    var largeImage = document.getElementById('largeImage');
+                    largeImage.style.display = 'block';
+                    largeImage.src = imageURI;
+                }
+        
+                function cameraError(message) {
+                    $scope.console = "cameraError";
+                    alert('Failed because: ' + message);
+                }
+        */
         $scope.showPopupAddName = function () {
             console.log('addMyPetsCtrl -- showPopupAddName');
 
@@ -490,12 +460,6 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
             console.log('detailPetCtrl - $ionicView.afterEnter');
-            /*
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-            */
         });
 
         $scope.$on('$ionicView.loaded', function () {
@@ -507,40 +471,24 @@ angular.module('app.controllers', [])
 
         function initValues() {
             console.log('detailPetCtrl -- initValues');
-
-            $scope.imagestring = {};
             $scope.lastPhoto = "init";
-            $scope.imagestring = "img/perroIcon.jpg";
             $scope.typesPet = [{ "name": "Perro" }, { "name": "Gato" }];
-            selectIfDefaultImage();
-        }
-
-        function selectIfDefaultImage() {
-            console.log('detailPetCtrl -- selectIfDefaultImage');
-
-            if ($scope.imagestring == "img/perroIcon.jpg" || $scope.imagestring == "img/gatoIcon.jpg") {
-                $scope.imagestring = "img/perroIcon.jpg";
-                if (BlankService.type == 'Gato') {
-                    $scope.imagestring = "img/gatoIcon.jpg";
-                }
-            }
         }
 
         function camposIntroducidosOk() {
             console.log('detailPetCtrl - camposIntroducidosOk');
-
             if (BlankService.detailPet.name != undefined && BlankService.detailPet.name != '' && BlankService.detailPet.name != 'nombre') {
                 if (BlankService.detailPet.type != undefined && BlankService.detailPet.type != '') {
                     if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '') {
                         return true;
                     } else {
-                        //console.log('detailPetCtrl - camposIntroducidosOk-pet.date');
+                        console.log('detailPetCtrl - camposIntroducidosOk-pet.date');
                     }
                 } else {
-                    //console.log('detailPetCtrl - camposIntroducidosOk-pet.type');
+                    console.log('detailPetCtrl - camposIntroducidosOk-pet.type');
                 }
             } else {
-                //console.log('detailPetCtrl - camposIntroducidosOk-pet.name');
+                console.log('detailPetCtrl - camposIntroducidosOk-pet.name');
             }
             var alertPopup = $ionicPopup.alert({
                 title: 'Modificar mascota',
@@ -554,43 +502,21 @@ angular.module('app.controllers', [])
             if (camposIntroducidosOk()) {
 
                 BlankService.removeByAttr(BlankService.mascotas, 'id', BlankService.detailPet.id);
-                /*
-                
-                                var i = 0;
-                                var petFound = {};
-                                for (i; i < BlankService.mascotas.length; i++) {
-                                    if (BlankService.mascotas[i].id == BlankService.detailPet.id) {
-                                        break;
-                                    }
-                                }
-                                
-                                BlankService.mascotas.splice(i, 1);
-                                */
                 BlankService.mascotas.push(BlankService.detailPet);
 
                 var actuacionesFound = [];
-                // var actuacionesToDeleteIndexes = [];
                 var actuacionFound = {};
                 i = 0;
                 for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                     if (BlankService.actuacionesDeLasMascotas[i].idPet == BlankService.detailPet.id) {
-
                         actuacionFound = BlankService.actuacionesDeLasMascotas[i];
-
                         actuacionFound.namePet = BlankService.detailPet.name;
                         actuacionFound.datePet = BlankService.detailPet.date;
                         actuacionFound.typePet = BlankService.detailPet.type;
+                        actuacionFound.imagePet = BlankService.detailPet.image;
                         actuacionesFound.push(actuacionFound);
-                        //actuacionesToDeleteIndexes.push(i);
                     }
                 }
-
-                /*
-                                i = 0;
-                                for (i; i < actuacionesToDeleteIndexes.length; i++) {
-                                    BlankService.actuacionesDeLasMascotas.splice(actuacionesToDeleteIndexes[i], 1);
-                                }
-                                */
 
                 BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'idPet', BlankService.detailPet.id);
 
@@ -618,66 +544,66 @@ angular.module('app.controllers', [])
 
             }
         };
-
-        $scope.launchCapturePhoto = function ($state) {
-            $scope.console = "launchCapturePhoto";
-            if (navigator.camera) {
-                $scope.console = "launchCapturePhoto--1";
-                navigator.camera.getPicture(
-                    onPhotoDataSuccess,
-                    cameraError,
-                    {
-                        quality: 50,
-                        destinationType: destinationType.DATA_URL
-                    });
-            } else {
-                $scope.console = "launchCapturePhoto-selectIfDefaultImage";
-                selectIfDefaultImage();
-            }
-        };
-
-        function onPhotoDataSuccess(imageData) {
-            $scope.console = "onPhotoDataSuccess";
-            var smallImage = document.getElementById('smallImage');
-            smallImage.style.display = 'block';
-            smallImage.src = "data:image/jpeg;base64," + imageData;
-        }
-
-        $scope.launchPhotoAlbum = function ($state) {
-            $scope.console = "launchPhotoAlbum";
-            if (navigator.camera) {
-                $scope.console = "launchPhotoAlbum--1";
-                navigator.camera.getPicture(
-                    onPhotoURISuccess,
-                    cameraError,
-                    {
-                        sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
-                        quality: 50,
-                        destinationType: destinationType.FILE_URI
+        /*
+                $scope.launchCapturePhoto = function ($state) {
+                    $scope.console = "launchCapturePhoto";
+                    if (navigator.camera) {
+                        $scope.console = "launchCapturePhoto--1";
+                        navigator.camera.getPicture(
+                            onPhotoDataSuccess,
+                            cameraError,
+                            {
+                                quality: 50,
+                                destinationType: destinationType.DATA_URL
+                            });
+                    } else {
+                        $scope.console = "launchCapturePhoto-selectIfDefaultImage";
+                        selectIfDefaultImage();
                     }
-                );
-            } else {
-                $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
-                selectIfDefaultImage();
-            }
-        };
-        function onPhotoURISuccess(imageURI) {
-            $scope.console = "onPhotoURISuccess";
-            if (imageURI.substring(0, 21) == "content://com.android") {
-                var photo_split = imageURI.split("%3A");
-                imageURI = "content://media/external/images/media/" + photo_split[1];
-            }
-            $scope.imagestring = imageURI;
-            var largeImage = document.getElementById('largeImage');
-            largeImage.style.display = 'block';
-            largeImage.src = imageURI;
-        }
-
-        function cameraError(message) {
-            $scope.console = "cameraError";
-            alert('Failed because: ' + message);
-        }
-
+                };
+        
+                function onPhotoDataSuccess(imageData) {
+                    $scope.console = "onPhotoDataSuccess";
+                    var smallImage = document.getElementById('smallImage');
+                    smallImage.style.display = 'block';
+                    smallImage.src = "data:image/jpeg;base64," + imageData;
+                }
+        
+                $scope.launchPhotoAlbum = function ($state) {
+                    $scope.console = "launchPhotoAlbum";
+                    if (navigator.camera) {
+                        $scope.console = "launchPhotoAlbum--1";
+                        navigator.camera.getPicture(
+                            onPhotoURISuccess,
+                            cameraError,
+                            {
+                                sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
+                                quality: 50,
+                                destinationType: destinationType.FILE_URI
+                            }
+                        );
+                    } else {
+                        $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
+                        selectIfDefaultImage();
+                    }
+                };
+                function onPhotoURISuccess(imageURI) {
+                    $scope.console = "onPhotoURISuccess";
+                    if (imageURI.substring(0, 21) == "content://com.android") {
+                        var photo_split = imageURI.split("%3A");
+                        imageURI = "content://media/external/images/media/" + photo_split[1];
+                    }
+                    $scope.imagestring = imageURI;
+                    var largeImage = document.getElementById('largeImage');
+                    largeImage.style.display = 'block';
+                    largeImage.src = imageURI;
+                }
+        
+                function cameraError(message) {
+                    $scope.console = "cameraError";
+                    alert('Failed because: ' + message);
+                }
+        */
         $scope.viewTreatmentsPet = function () {
             console.log('detailPetCtrl - viewTreatmentsPet');
 
@@ -773,148 +699,130 @@ angular.module('app.controllers', [])
     .controller('menuCtrl', function ($scope) {
     })
 
-.controller('ImagePickerController', function($scope, $cordovaImagePicker, $ionicPlatform, $cordovaContacts) {
-     $scope.collection = {
-        selectedImage : ''
-    };
- 
-    $ionicPlatform.ready(function() {
- 
-        $scope.getImageSaveContact = function() {       
-            // Image picker will load images according to these settings
-            var options = {
-                maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-                width: 800,
-                height: 800,
-                quality: 80            // Higher is better
+    .controller('ImagePickerController', function ($scope, $cordovaImagePicker, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
+
+
+        $ionicPlatform.ready(function () {
+
+
+
+            $scope.getImageSaveContact = function () {
+
+                cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
+                    for (var permission in statuses) {
+                        switch (statuses[permission]) {
+                            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                                console.log("ImagePickerController -- Permission granted to use " + permission);
+                                var options = {
+                                    maximumImagesCount: 1,
+                                    width: 800,
+                                    height: 800,
+                                    quality: 80
+                                };
+                                $cordovaImagePicker.getPictures(options).then(function (results) {
+                                    console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                                    for (var i = 0; i < results.length; i++) {
+                                        $jrCrop.crop({
+                                            url: results[i],
+                                            width: 60,
+                                            height: 60,
+                                            title: 'Selecciona'
+                                        }).then(function (canvas) {
+                                            console.log("ImagePickerController -- $cordovaImagePicker.getPictures function ok ");
+                                            $scope.interfaz.imagePet = canvas;
+                                            console.log("ImagePickerController -- saveImageDataToLibrary ");
+                                            window.canvas2ImagePlugin.saveImageDataToLibrary(
+                                                function (msg) {
+                                                    console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
+                                                    $scope.interfaz.imagePet=msg;
+                                                },
+                                                function (err) {
+                                                    console.log("ImagePickerController -- saveImageDataToLibrary error ", err);
+                                                },
+                                                $scope.interfaz.imagePet
+                                            );
+                                        }, function () {
+                                        });
+                                    }
+                                }, function (error) {
+                                    console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                                });
+                                break;
+                            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                                console.log("ImagePickerController -- Permission to use " + permission + " has not been requested yet");
+                                break;
+                            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                                console.log("ImagePickerController -- Permission denied to use " + permission + " - ask again?");
+                                break;
+                            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                                console.log("ImagePickerController -- Permission permanently denied to use " + permission + " - guess we won't be using it then!");
+                                break;
+                        }
+                    }
+                }, function (error) {
+                    console.error("ImagePickerController -- The following error occurred: " + error);
+                }, [
+                        cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
+                    ]);
+                /*
+                                $jrCrop.crop({
+                                    url: "http://4.bp.blogspot.com/-IfHY-H-TWk8/UkhWU3NIrgI/AAAAAAAAAtw/cMcIMHfrFH0/s1600/kariniwiii+blog.jpg",
+                                    width: 60,
+                                    height: 60
+                                }).then(function (canvas) {
+                                    // success!
+                                    // var image = canvas.toDataURL();
+                                    // $scope.imagestring = "http://4.bp.blogspot.com/-IfHY-H-TWk8/UkhWU3NIrgI/AAAAAAAAAtw/cMcIMHfrFH0/s1600/kariniwiii+blog.jpg";
+                                    $scope.interfaz.imagePet = canvas.toDataURL();
+                                    $scope.interfaz.imagePet = "http://4.bp.blogspot.com/-IfHY-H-TWk8/UkhWU3NIrgI/AAAAAAAAAtw/cMcIMHfrFH0/s1600/kariniwiii+blog.jpg";
+                                    //console.log("ImagePickerController.... image selected $scope.imagestring,", $scope.imagestring);
+                
+                                }, function () {
+                                    // User canceled or couldn't load image.
+                                });
+                
+                                // Image picker will load images according to these settings
+                                var options = {
+                                    maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+                                    width: 800,
+                                    height: 800,
+                                    quality: 80            // Higher is better
+                                };
+                
+                                $cordovaImagePicker.getPictures(options).then(function (results) {
+                                    // Loop through acquired images
+                                    for (var i = 0; i < results.length; i++) {
+                                        $scope.imagestring = results[i];   // We loading only one image so we can use it like this
+                
+                                        window.plugins.Base64.encodeFile($scope.imagestring, function (base64) {  // Encode URI to Base64 needed for contacts plugin
+                                            $scope.imagestring = base64;
+                                            $scope.addContact();    // Save contact
+                                        });
+                                    }
+                                }, function (error) {
+                                    console.log('Error: ' + JSON.stringify(error));    // In case of error
+                                });
+                */
             };
- 
-            $cordovaImagePicker.getPictures(options).then(function (results) {
-                // Loop through acquired images
-                for (var i = 0; i < results.length; i++) {
-                    $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
- 
-                    window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
-                        $scope.collection.selectedImage = base64;
-                        $scope.addContact();    // Save contact
-                    });
-                }
-            }, function(error) {
-                console.log('Error: ' + JSON.stringify(error));    // In case of error
-            });
-        };  
- 
-    }); 
- 
-    $scope.contact = {     // We will use it to save a contact
- 
-        "displayName": "Gajotres",
-        "name": {
-            "givenName"  : "Dragannn",
-            "familyName" : "Gaiccc",
-            "formatted"  : "Dragannn Gaiccc"
-        },
-        "nickname": 'Gajotres',
-        "phoneNumbers": [
-            {
-                "value": "+385959052082",
-                "type": "mobile"
-            },
-            {
-                "value": "+385914600731",
-                "type": "phone"
-            }               
-        ],
-        "emails": [
-            {
-                "value": "dragan.gaic@gmail.com",
-                "type": "home"
-            }
-        ],
-        "addresses": [
-            {
-                "type": "home",
-                "formatted": "Some Address",
-                "streetAddress": "Some Address",
-                "locality":"Zagreb",
-                "region":"Zagreb",
-                "postalCode":"10000",
-                "country":"Croatia"
-            }
-        ],
-        "ims": null,
-        "organizations": [
-            {
-                "type": "Company",
-                "name": "Generali",
-                "department": "IT",
-                "title":"Senior Java Developer"
-            }
-        ],
-        "birthday": Date("08/01/1980"),
-        "note": "",
-        "photos": [
-            {
-                "type": "base64",
-                "value": $scope.collection.selectedImage
- 
-            }
-        ],
-        "categories": null,
-        "urls": null
-    }           
- 
-    $scope.addContact = function() {
-        $cordovaContacts.save($scope.contact).then(function(result) {
-            console.log('Contact Saved!');
-        }, function(err) {
-            console.log('An error has occured while saving contact data!');
         });
-    };
     })
-    
+
     .controller('versionsCtrl', function ($scope, BlankService) {
         $scope.service = BlankService;
         $scope.borrarDatos = function () {
             console.log('versionsCtrl -- borrarDatos');
-
             BlankService.clearData();
         }
     })
 
     .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
         $scope.service = BlankService;
-        /*
-                cordova.plugins.notification.local.on("click", function (notification) {
-                    console.log('homeCtrl - Notificacion  -  pulso en notificacion');
-        
-                    var unpackedData = JSON.parse(notification.data);
-                    var notificationProfilID = unpackedData['treatmentId'];
-        
-                    localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
-        
-                    console.log('homeCtrl -- Notificacion -- todo ok.');
-                    initSystem();
-        
-                    //$state.go('menu.home');
-                });
-        */
-        // BlankService.clearData();
-
         $scope.$on('$ionicView.afterEnter', function () {
             console.log("homeCtrl -- $ionicView.afterEnter");
-
-            /*
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-            */
         });
 
         $scope.hayMascotaFunct = function (value) {
             console.log('homeCtrl -- hayMascotaFunct');
-
             try {
                 if (BlankService.mascotas.length > 0) {
                     return true;
@@ -926,7 +834,6 @@ angular.module('app.controllers', [])
 
         $scope.hayActuacionesFunct = function (value) {
             console.log('homeCtrl -- hayActuacionesFunct');
-
             try {
                 if (BlankService.actuacionesDeLasMascotas.length > 0) {
                     return true;
@@ -938,7 +845,6 @@ angular.module('app.controllers', [])
 
         $scope.ocultarBotoneraFunct = function (value) {
             console.log('homeCtrl -- ocultarBotoneraFunct');
-
             var ocultarBotonera = true;
             if ((BlankService.mascotas != undefined) && (BlankService.mascotas.length > 0) && (BlankService.actuacionesDeLasMascotas != undefined) && (BlankService.actuacionesDeLasMascotas.length > 0)) {
                 ocultarBotonera = false;
@@ -958,15 +864,12 @@ angular.module('app.controllers', [])
         });
 
         $scope.$on('$ionicView.enter', function () {
-
             console.log("homeCtrl -- $ionicView.enter");
             initSystem();
-
         });
 
         function initSystem() {
             console.log('homeCtrl -- initSystem');
-
             $scope.interfaz = {};
             $scope.interfaz.order = 'Mascota';
             mascotas = [];
@@ -977,9 +880,6 @@ angular.module('app.controllers', [])
             processGroup();
             console.log("homeCtrl -- check if come from notification");
             if (processIfComeFromNotification() == false) {
-                //if ((mascotas == undefined) || (mascotas.length == 0)) {
-                // $state.go('menu.addMyPets');
-                //}
             }
         }
         BlankService.reloadHome = true;
@@ -987,8 +887,6 @@ angular.module('app.controllers', [])
 
         function processIfComeFromNotification() {
             console.log('homeCtrl -- processIfComeFromNotification');
-
-            console.log("homeCtrl -- processIfComeFromNotification");
             found = false;
             if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
                 BlankService.treatmentId_notif = BlankService.getDataFromInternalPhoneMemory("treatmentId_notif");
@@ -1089,47 +987,28 @@ angular.module('app.controllers', [])
 
         $scope.redirectToaddTreatment = function () {
             console.log('homeCtrl -- redirectToaddTreatment');
-
             $state.go('menu.addTreatment');
         };
 
         $scope.redirectToaddPet = function () {
             console.log('homeCtrl -- redirectToaddPet');
-
             $state.go('menu.addMyPets');
         };
 
         $scope.borrarActuacion = function ($item) {
             console.log('homeCtrl -- borrarActuacion');
-
             BlankService.initValuesFromMemory();
-
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', $item.id);
-
-            /*
-                      var i = 0;
-                      var indexToDelete = -1;
-                      for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
-                          if (BlankService.actuacionesDeLasMascotas[i].id = $item.id) {
-                              indexToDelete = i;
-                              break;
-                          }
-                      }
-                      BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
-                      */
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
         };
 
         function processOrder() {
             console.log('homeCtrl -- processOrder');
 
-
             if ($scope.interfaz.order == "Mascota") {
                 BlankService.changeOrder('ordernombremascota');
-
             } else if ($scope.interfaz.order == "Fecha") {
                 BlankService.changeOrder('orderfechamascota');
-
             } else if ($scope.interfaz.order == "Actuacion") {
                 BlankService.changeOrder('ordernombreactuacion');
             }
@@ -1260,31 +1139,18 @@ angular.module('app.controllers', [])
 
     .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
         $scope.service = BlankService;
-
         $scope.$on('$ionicView.afterEnter', function () {
-
-            /*
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-            */
-
         });
 
         $scope.$on('$ionicView.loaded', function () {
             console.log('addTreatmentCtrl -- $ionicView.loaded');
-
             initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
         });
 
-
-
         $scope.addActuacion = function () {
             console.log('addTreatmentCtrl -- addActuacion');
-
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir actuacion',
@@ -1310,13 +1176,13 @@ angular.module('app.controllers', [])
             $scope.act.id = '';
             $scope.act.name = '';
             $scope.act.date = '';
-            $scope.act.namePet = '';
             $scope.act.nameAlarm = '';
             $scope.act.alarmId = '';
             $scope.act.idPet = '';
             $scope.act.namePet = '';
             $scope.act.datePet = '';
             $scope.act.typePet = '';
+            $scope.act.imagePet = '';
             $scope.act.isVisible = true;
 
             $scope.mascotasToShow = [];
@@ -1467,6 +1333,7 @@ angular.module('app.controllers', [])
                     $scope.act.datePet = pet.date;
                     $scope.act.typePet = pet.type;
                     $scope.act.namePet = pet.name;
+                    $scope.act.imagePet = pet.image;
                     $scope.act.alarmSystemId = processAssignAlarm($scope.act);
                     BlankService.actuacionesDeLasMascotas.push($scope.act);
                 }
@@ -1647,12 +1514,6 @@ angular.module('app.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function () {
             console.log('detailTreatmentCtrl -- $ionicView.afterEnter');
-            /*
-            if (BlankService.reloadHome) {
-                $state.go($state.current, {}, { reload: true });
-                BlankService.reloadHome = false;
-            }
-            */
         });
 
         $scope.solicitarConsulta = function () {
@@ -1690,7 +1551,6 @@ angular.module('app.controllers', [])
 
         function getActuacion(pet) {
             console.log('detailTreatmentCtrl -- getActuacion');
-
             $scope.newact = {};
             $scope.newact.id = BlankService.IDGenerator(8);
             $scope.newact.name = $scope.act.name;
@@ -1699,6 +1559,7 @@ angular.module('app.controllers', [])
             $scope.newact.namePet = pet.name;
             $scope.newact.datePet = pet.date;
             $scope.newact.typePet = pet.type;
+            $scope.newact.imagePet = pet.image;
             $scope.newact.isVisible = $scope.act.isVisible;
             $scope.newact.nameAlarm = $scope.act.nameAlarm;
             $scope.newact.alarmId = $scope.act.alarmId;
@@ -1720,21 +1581,6 @@ angular.module('app.controllers', [])
             }
 
             //borro la antigua
-            /*
-            var i = 0;
-            var indexToDelete = -1;
-            for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
-                if (BlankService.actuacionesDeLasMascotas[i].id == BlankService.detailTreatment.id) {
-                    indexToDelete = i;
-                    break;
-                }
-            }
-            if (indexToDelete != -1) {
-                //borro alarma anterior
-                processDeleteAlarm(BlankService.actuacionesDeLasMascotas[indexToDelete]);
-                BlankService.actuacionesDeLasMascotas.splice(indexToDelete, 1);
-            }
-            */
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', BlankService.detailTreatment.id);
 
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
@@ -1758,10 +1604,11 @@ angular.module('app.controllers', [])
                 $scope.cancelSingleNotification(idAlarm);
             } catch (e) { }
         };
+
         function processAssignAlarm(actuacion) {
             console.log('detailTreatmentCtrl -- processAssignAlarm');
 
-            if ((actuacion != undefined)&&(actuacion.date!=undefined)) {
+            if ((actuacion != undefined) && (actuacion.date != undefined)) {
                 if (actuacion.nameAlarm != undefined) {
                     if (actuacion.alarmId != "0") {
                         var now = new Date(actuacion.date).getTime();
@@ -1863,6 +1710,7 @@ angular.module('app.controllers', [])
             $scope.act.namePet = '';
             $scope.act.datePet = '';
             $scope.act.typePet = '';
+            $scope.act.imagePet = '';
             $scope.act.isVisible = true;
 
             $scope.mascotasToShow = [];

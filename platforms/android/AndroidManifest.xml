@@ -24,6 +24,11 @@
         </receiver>
         <activity android:exported="false" android:launchMode="singleInstance" android:name="de.appplant.cordova.plugin.notification.ClickActivity" android:theme="@android:style/Theme.NoDisplay" />
         <activity android:label="@string/multi_app_name" android:name="com.synconset.MultiImageChooserActivity" android:theme="@android:style/Theme.Holo.Light" />
+        <receiver android:name="cordova.plugins.Diagnostic$LocationProviderChangedReceiver">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="23" />
 </manifest>

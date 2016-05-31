@@ -4,10 +4,6 @@
         </button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <div>
-            <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-            <img style="display:none;" id="largeImage" src="" />
-        </div>
         <div class="spacer" style="width: 285px; height: 18px;"></div>
 
         <ion-list>
@@ -28,7 +24,7 @@
         </ion-list>
 
         <div class="item item-thumbnail-left">
-            <img ng-model="image" src="{{imagestring}}" id="imageSelected">
+            <img ng-model="image" src="{{service.detailPet.image}}" id="imageSelected">
             <button class="button button-stable button-block " ng-click="launchPhotoAlbum()">Imagen desde tu telefono(no funciona)</button>
             <button class="button button-stable button-block " ng-click="launchCapturePhoto()">Imagen desde la camara (no funciona)</button>
 

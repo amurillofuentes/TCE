@@ -39,10 +39,22 @@
         },
         "com-badrit-base64": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova.plugins.diagnostic": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "org.devgeeks.Canvas2ImagePlugin": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         }
     }
