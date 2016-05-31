@@ -25,7 +25,7 @@
 
         <div class="item item-thumbnail-left" ng-controller="ImagePickerController">
             <img ng-model="image" src="{{service.detailPet.image}}" id="imageSelected">
-            <button class="button button-stable button-block " ng-click="getImageSaveContact()">Imagen desde tu telefono(no funciona)</button>
+            <button class="button button-stable button-block " ng-click="getImageSaveContact(true)">Imagen desde tu telefono(no funciona)</button>
             <button class="button button-stable button-block " ng-click="launchCapturePhoto()">Imagen desde la camara (no funciona)</button>
 
         </div>

@@ -5,12 +5,6 @@
 //VER ACTUACIONES DESDE DETALLE DE MASCOTA
 //CAMARA
 
-
-//TODO: Buscar el TODO
-refs por si acaso
-https://github.com/JrSchild/jr-crop/tree/master/examples
-http://ngcordova.com/docs/plugins/imagePicker/
-
 HOME: 
 
 Badge para iOS	
@@ -700,9 +694,8 @@ angular.module('app.controllers', [])
     })
 
     .controller('ImagePickerController', function ($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
-        $scope.service = BlankService;
         $ionicPlatform.ready(function () {
-            $scope.getImageSaveContact = function () {
+            $scope.getImageSaveContact = function (comeFromDetail) {
                 cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
                     for (var permission in statuses) {
                         switch (statuses[permission]) {
@@ -724,16 +717,19 @@ angular.module('app.controllers', [])
                                             title: 'Selecciona'
                                         }).then(function (canvas) {
                                             console.log("ImagePickerController -- $cordovaImagePicker.getPictures function ok ");
-                                            $scope.interfaz.imagePet = canvas;
-                                            console.log("ImagePickerController -- saveImageDataToLibrary ");
                                             window.canvas2ImagePlugin.saveImageDataToLibrary(
                                                 function (msg) {
                                                     console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
-                                                    if (($scope.interfaz != undefined) && ($scope.interfaz != null)) {
-                                                        $scope.interfaz.imagePet = msg;
-                                                    }
-                                                    if (($service.detailPet != undefined) && ($service.detailPet != null)) {
-                                                        service.detailPet.image = msg;
+                                                    if (comeFromDetail) {
+                                                        if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
+                                                            console.log("ImagePickerController -- asignando a BlankService detailpet image ");
+                                                            BlankService.detailPet.image = msg;
+                                                        }
+                                                    } else {
+                                                        if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
+                                                            console.log("ImagePickerController -- asignando a interfaz imagePet ");
+                                                            $scope.interfaz.imagePet = msg;
+                                                        }
                                                     }
                                                 },
                                                 function (err) {

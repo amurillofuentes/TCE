@@ -5,12 +5,6 @@
 //VER ACTUACIONES DESDE DETALLE DE MASCOTA
 //CAMARA
 
-
-//TODO: Buscar el TODO
-refs por si acaso
-https://github.com/JrSchild/jr-crop/tree/master/examples
-http://ngcordova.com/docs/plugins/imagePicker/
-
 HOME: 
 
 Badge para iOS	
@@ -699,15 +693,9 @@ angular.module('app.controllers', [])
     .controller('menuCtrl', function ($scope) {
     })
 
-    .controller('ImagePickerController', function ($scope, $cordovaImagePicker, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
-
-
+    .controller('ImagePickerController', function ($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
         $ionicPlatform.ready(function () {
-
-
-
-            $scope.getImageSaveContact = function () {
-
+            $scope.getImageSaveContact = function (comeFromDetail) {
                 cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
                     for (var permission in statuses) {
                         switch (statuses[permission]) {
@@ -729,17 +717,25 @@ angular.module('app.controllers', [])
                                             title: 'Selecciona'
                                         }).then(function (canvas) {
                                             console.log("ImagePickerController -- $cordovaImagePicker.getPictures function ok ");
-                                            $scope.interfaz.imagePet = canvas;
-                                            console.log("ImagePickerController -- saveImageDataToLibrary ");
                                             window.canvas2ImagePlugin.saveImageDataToLibrary(
                                                 function (msg) {
                                                     console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
-                                                    $scope.interfaz.imagePet=msg;
+                                                    if (comeFromDetail) {
+                                                        if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
+                                                            console.log("ImagePickerController -- asignando a BlankService detailpet image ");
+                                                            BlankService.detailPet.image = msg;
+                                                        }
+                                                    } else {
+                                                        if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
+                                                            console.log("ImagePickerController -- asignando a interfaz imagePet ");
+                                                            $scope.interfaz.imagePet = msg;
+                                                        }
+                                                    }
                                                 },
                                                 function (err) {
                                                     console.log("ImagePickerController -- saveImageDataToLibrary error ", err);
                                                 },
-                                                $scope.interfaz.imagePet
+                                                canvas
                                             );
                                         }, function () {
                                         });
@@ -764,45 +760,6 @@ angular.module('app.controllers', [])
                 }, [
                         cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
                     ]);
-                /*
-                                $jrCrop.crop({
-                                    url: "http://4.bp.blogspot.com/-IfHY-H-TWk8/UkhWU3NIrgI/AAAAAAAAAtw/cMcIMHfrFH0/s1600/kariniwiii+blog.jpg",
-                                    width: 60,
-                                    height: 60
-                                }).then(function (canvas) {
-                                    // success!
-                                    // var image = canvas.toDataURL();
-                                    // $scope.imagestring = "http://4.bp.blogspot.com/-IfHY-H-TWk8/UkhWU3NIrgI/AAAAAAAAAtw/cMcIMHfrFH0/s1600/kariniwiii+blog.jpg";
-                                    $scope.interfaz.imagePet = canvas.toDataURL();
-                                    $scope.interfaz.imagePet = "http://4.bp.blogspot.com/-IfHY-H-TWk8/UkhWU3NIrgI/AAAAAAAAAtw/cMcIMHfrFH0/s1600/kariniwiii+blog.jpg";
-                                    //console.log("ImagePickerController.... image selected $scope.imagestring,", $scope.imagestring);
-                
-                                }, function () {
-                                    // User canceled or couldn't load image.
-                                });
-                
-                                // Image picker will load images according to these settings
-                                var options = {
-                                    maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-                                    width: 800,
-                                    height: 800,
-                                    quality: 80            // Higher is better
-                                };
-                
-                                $cordovaImagePicker.getPictures(options).then(function (results) {
-                                    // Loop through acquired images
-                                    for (var i = 0; i < results.length; i++) {
-                                        $scope.imagestring = results[i];   // We loading only one image so we can use it like this
-                
-                                        window.plugins.Base64.encodeFile($scope.imagestring, function (base64) {  // Encode URI to Base64 needed for contacts plugin
-                                            $scope.imagestring = base64;
-                                            $scope.addContact();    // Save contact
-                                        });
-                                    }
-                                }, function (error) {
-                                    console.log('Error: ' + JSON.stringify(error));    // In case of error
-                                });
-                */
             };
         });
     })
