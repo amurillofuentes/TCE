@@ -77,18 +77,61 @@ angular.module('app.services', [])
         };
 
         this.setViewGroupForDetailPet = function () {
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- setViewGroupForDetailPet");
             var i = 0;
-            var nameDetailePet = JSON.stringify(this.detailPet.name).replace(/\"/g, "");
 
-            for (i; i < this.elemes.lenght; i++) {
-                if (this.elemes[i].subId == nameDetailePet) {
-                    this.elemes[i].selected = true;
+            var nameDetailePet = JSON.stringify(this.detailPet.name).replace(/\"/g, "");
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- this.elemes before", JSON.stringify(this.elemes));
+            //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- nameDetailePet", nameDetailePet);
+
+            var i = this.elemes.length;
+            while (i--) {
+                // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- this.elemes[i]", JSON.stringify(this.elemes[i]));
+                //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- this.elemes[i].hasOwnProperty('subId')", this.elemes[i].hasOwnProperty('subId'));
+                //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- arguments.length > 2", arguments.length > 2);
+                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- this.elemes[i]['subId']", this.elemes[i]['subId']);
+                if (this.elemes[i] && this.elemes[i].hasOwnProperty('subId')
+                    && (this.elemes[i]['subId'] == nameDetailePet)) {
+                    // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- cambiando a true");
+
+                    this.elemes[i]['selected'] = true;
                 } else {
-                    this.elemes[i].selected = false;
+                    // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- cambiando a false");
+                    this.elemes[i]['selected'] = false;
                 }
             }
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- this.elemes after", JSON.stringify(this.elemes));
 
+            /*
+                    for (eleme in this.elemes) {
+                        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- iteracion", i);
+                        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- eleme", JSON.stringify(eleme));
+                        console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- eleme.subId", eleme.subId);
+                        if (eleme.subId == nameDetailePet) {
+                            eleme.selected = true;
+                            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- cambiando a ", this.elemes[i].selected);
+                        } else {
+                            eleme.selected = false;
+                            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- cambiando a ", this.elemes[i].selected);
+                        }
+                        i++;
+                    }
+            */
+            /*
+                        for (i; i < this.elemes.lenght; i++) {
+                            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- iteracion", i);
+                            
+                            if (this.elemes[i].subId == nameDetailePet) {
+                                this.elemes[i].selected = true;
+                                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- cambiando a ", this.elemes[i].selected);
+                            } else {
+                                this.elemes[i].selected = false;
+                                console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- cambiando a ", this.elemes[i].selected);
+                            }
+                        }
+                        */
         }
+
         this.initValuesFromMemory = function () {
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");
@@ -97,7 +140,19 @@ angular.module('app.services', [])
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
 
-            this.elemes = [];
+
+            //TODO: Esto me jode el filtro si esta marcada alkgna. hay dos opciones. o guardo el filtro en memoria con un campo del objeto mascota en selected=true/false, o bien tengo en cuenta cuando inicializo si ya e4xiste elemes. Me gusta mas lo segundo. No lo, segundo no mola porque cuando añadas una nueva mascota no se actualizara la lista. hay que guardar en memoria los valores de las mascotas.
+            
+/*
+            if 
+            (this.elemes != undefined)
+            (this.elemes != null)
+            (this.elemes.length>0)
+            
+
+                
+            }
+            */
             var i = 0;
             var name = '';
             for (mascota in this.mascotas) {

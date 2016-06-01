@@ -55,6 +55,10 @@
                         {
                             "xml": "<feature name=\"Canvas2ImagePlugin\"><param name=\"android-package\" value=\"org.devgeeks.Canvas2ImagePlugin.Canvas2ImagePlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -176,6 +180,9 @@
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
         "org.devgeeks.Canvas2ImagePlugin": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         }
     },
@@ -452,6 +459,14 @@
             "clobbers": [
                 "window.canvas2ImagePlugin"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -470,6 +485,7 @@
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-file": "4.2.0",
         "cordova.plugins.diagnostic": "3.0.2",
-        "org.devgeeks.Canvas2ImagePlugin": "0.6.0"
+        "org.devgeeks.Canvas2ImagePlugin": "0.6.0",
+        "cordova-plugin-inappbrowser": "1.4.0"
     }
 }

@@ -48,6 +48,9 @@
         },
         "org.devgeeks.Canvas2ImagePlugin": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
         }
     },
     "dependent_plugins": {

@@ -1,16 +1,13 @@
 /*
 
-//alarmas!!!
-//VOLVER DE UNA WEB
-//VER ACTUACIONES DESDE DETALLE DE MASCOTA
-//CAMARA
-
-HOME: 
-
-Badge para iOS	
-Investigar calendario
-Estadisticas
-Sistema de errores
+    //ALARMAS!!!
+    //VOLVER DE UNA WEB
+    //VER ACTUACIONES DESDE DETALLE DE MASCOTA
+    //CAMARA
+    //Badge para iOS	
+    //Investigar calendario
+    //Estadisticas
+    //Sistema de errores
 
 */
 
@@ -972,8 +969,8 @@ angular.module('app.controllers', [])
         }
 
         function processGroup(filterText) {
-            console.log('homeCtrl -- processGroup');
-
+            console.log('homeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrl -- processGroup');
+            console.log('homeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrl -- BlankService.elemes', JSON.stringify(BlankService.elemes));
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
 
@@ -985,6 +982,8 @@ angular.module('app.controllers', [])
                         if (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.elemes[k].subId) {
                             //establezco si es visible o no
                             BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.elemes[k].selected;
+
+                            /*
                             //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
 
                             //si es visible
@@ -1002,6 +1001,7 @@ angular.module('app.controllers', [])
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = false;
                                 }
                             }
+                            */
                         }
                     }
                 }
@@ -1460,7 +1460,8 @@ angular.module('app.controllers', [])
                 confirmPopup.then(function (res) {
                     if (res) {
                         BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-                        $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+                        //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
+                        cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas/', '_self');
                         console.log('detailTreatmentCtrl -- Compraaaaa');
                     } else {
                         console.log('detailTreatmentCtrl -- No compra');
@@ -1476,7 +1477,8 @@ angular.module('app.controllers', [])
         $scope.solicitarConsulta = function () {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+            //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
+            cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas/', '_self');
         };
         $scope.modifyTreatment = function () {
             console.log('detailTreatmentCtrl -- modifyTreatment');

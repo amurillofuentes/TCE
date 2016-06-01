@@ -1,16 +1,12 @@
 /*
 
-//alarmas!!!
-//VOLVER DE UNA WEB
-//VER ACTUACIONES DESDE DETALLE DE MASCOTA
-//CAMARA
-
-HOME: 
-
-Badge para iOS	
-Investigar calendario
-Estadisticas
-Sistema de errores
+    //ALARMAS!!!
+    //VOLVER DE UNA WEB
+    //CAMARA
+    //Badge para iOS	
+    //Investigar calendario
+    //Estadisticas
+    //Sistema de errores
 
 */
 
@@ -118,6 +114,7 @@ angular.module('app.controllers', [])
             $scope.pet.name = '';
             $scope.pet.date = '';
             $scope.pet.type = '';
+            $scope.pet.selected = '';
             $scope.pet.image = '';
 
             $scope.interfaz.ocultarFinish = false;
@@ -145,6 +142,7 @@ angular.module('app.controllers', [])
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
             $scope.pet.image = $scope.interfaz.imagePet;
+            $scope.pet.selected = true;
             $scope.pet.id = BlankService.IDGenerator(8);
 
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
@@ -178,7 +176,7 @@ angular.module('app.controllers', [])
             $scope.act.datePet = $scope.pet.date;
             $scope.act.typePet = $scope.pet.type;
             $scope.act.imagePet = $scope.pet.image;
-            $scope.act.isVisible = true;
+            $scope.act.isVisible = $scope.pet.selected;
             $scope.act.nameAlarm = "Nunca";
             $scope.act.alarmId = "0";
             $scope.act.alarmSystemId = "0";
@@ -914,12 +912,13 @@ angular.module('app.controllers', [])
             }, 30000);
         };
 
+        //TODO: meterenos aqui
         $scope.showFilterGroup = function () {
             console.log('homeCtrl -- showFilterGroup');
 
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
-                '  <ion-checkbox ng-repeat="item in service.elemes" ng-model="item.selected">{{item.subId}}  ' +
+                '  <ion-checkbox ng-repeat="item in service.mascotas" ng-model="item.selected">{{item.name}}  ' +
                 '</ion-list>                               ',
                 title: 'Mostrar actuaciones de ...',
                 subTitle: '',
@@ -934,6 +933,7 @@ angular.module('app.controllers', [])
                 ]
             });
             myPopup.then(function (res) {
+                BlankService.saveMascotas();
                 processGroup();
             });
 
@@ -971,38 +971,18 @@ angular.module('app.controllers', [])
             }
         }
 
-        function processGroup(filterText) {
-            console.log('homeCtrl -- processGroup');
-
+        //TODO: METERNOS AQUI
+        function processGroup() {
+            console.log('homeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrl -- processGroup');
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
 
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                 //1 chequeo si es visible o no.
                 var k = 0;
-                for (k; k < BlankService.elemes.length; k++) {
-                    if (BlankService.actuacionesDeLasMascotas[i] != undefined) {
-                        if (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.elemes[k].subId) {
-                            //establezco si es visible o no
-                            BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.elemes[k].selected;
-                            //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
-
-                            //si es visible
-                            if (BlankService.elemes[k].selected) {
-                                if (filterText == undefined | '') {
-                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
-                                } else if (((BlankService.actuacionesDeLasMascotas[i].namePet)).indexOf(filterText) != -1) {
-                                    //es visible y hay filtro
-                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
-                                } else if (((BlankService.actuacionesDeLasMascotas[i].name)).indexOf(filterText) != -1) {
-                                    //es visible y hay filtro
-                                    BlankService.actuacionesDeLasMascotas[i].isVisible = true;
-                                } else {
-                                    //ya es visible pero no coincide con filtro. la oculto
-                                    BlankService.actuacionesDeLasMascotas[i].isVisible = false;
-                                }
-                            }
-                        }
+                for (k; k < BlankService.mascotas.length; k++) {
+                    if ((BlankService.actuacionesDeLasMascotas[i] != undefined) && (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.mascotas[k].name)) {
+                        BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.mascotas[k].selected;
                     }
                 }
             }
@@ -1014,8 +994,9 @@ angular.module('app.controllers', [])
             $scope.items = BlankService.actuacionesDeLasMascotas;
         }
 
-        function testFilter(filterText) {
-            console.log('homeCtrl -- testFilter');
+        //TODO: METERNOS AQUI
+        function filtroTextoSearchFunction(filterText) {
+            console.log('homeCtrl -- filtroTextoSearchFunction');
 
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
@@ -1023,15 +1004,15 @@ angular.module('app.controllers', [])
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
                 //1 chequeo si es visible o no.
                 var k = 0;
-                for (k; k < BlankService.elemes.length; k++) {
+                for (k; k < BlankService.mascotas.length; k++) {
                     if (BlankService.actuacionesDeLasMascotas[i] != undefined) {
-                        if (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.elemes[k].subId) {
+                        if (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.mascotas[k].name) {
                             //establezco si es visible o no
-                            BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.elemes[k].selected;
+                            BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.mascotas[k].selected;
                             //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
 
                             //si es visible
-                            if (BlankService.elemes[k].selected) {
+                            if (BlankService.mascotas[k].selected) {
                                 if (filterText == undefined | '') {
                                     BlankService.actuacionesDeLasMascotas[i].isVisible = true;
                                 } else if (((BlankService.actuacionesDeLasMascotas[i].namePet.toLowerCase())).indexOf(filterText.toLowerCase()) != -1) {
@@ -1062,11 +1043,11 @@ angular.module('app.controllers', [])
                 update: function (filteredItems, filterText) {
                     $scope.items = filteredItems;
                     if (filterText) {
-                        testFilter(filterText);
+                        filtroTextoSearchFunction(filterText);
                     }
                 },
                 cancel: function (filteredItems) {
-                    testFilter();
+                    filtroTextoSearchFunction();
                 }
             });
         };
@@ -1149,7 +1130,7 @@ angular.module('app.controllers', [])
                     {
                         subId: JSON.stringify(BlankService.mascotas[i].name).replace(/\"/g, ""),
                         id: i,
-                        selected: true
+                        selected: BlankService.mascotas[i].selected
                     }
                 );
                 i++;
@@ -1460,7 +1441,8 @@ angular.module('app.controllers', [])
                 confirmPopup.then(function (res) {
                     if (res) {
                         BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-                        $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+                        //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
+                        cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas/', '_self');
                         console.log('detailTreatmentCtrl -- Compraaaaa');
                     } else {
                         console.log('detailTreatmentCtrl -- No compra');
@@ -1476,7 +1458,8 @@ angular.module('app.controllers', [])
         $scope.solicitarConsulta = function () {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            $window.open('http:///tecuroencasa.com/consultas/', '_blank');
+            //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
+            cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas/', '_self');
         };
         $scope.modifyTreatment = function () {
             console.log('detailTreatmentCtrl -- modifyTreatment');

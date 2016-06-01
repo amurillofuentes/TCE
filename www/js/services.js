@@ -6,7 +6,6 @@ angular.module('app.services', [])
     .service('BlankService', [function () {
 
         this.treatmentId_notif;
-        this.elemes = [];
 
         this.detailTreatment = {};
         this.detailPet = {};
@@ -77,38 +76,28 @@ angular.module('app.services', [])
         };
 
         this.setViewGroupForDetailPet = function () {
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- setViewGroupForDetailPet");
             var i = 0;
             var nameDetailePet = JSON.stringify(this.detailPet.name).replace(/\"/g, "");
-
-            for (i; i < this.elemes.lenght; i++) {
-                if (this.elemes[i].subId == nameDetailePet) {
-                    this.elemes[i].selected = true;
+           
+            var i = this.mascotas.length;
+            while (i--) {
+                if (this.mascotas[i] && this.mascotas[i].hasOwnProperty('name')
+                    && (this.mascotas[i]['name'] == nameDetailePet)) {
+                    this.mascotas[i]['selected'] = true;
                 } else {
-                    this.elemes[i].selected = false;
+                    this.mascotas[i]['selected'] = false;
                 }
             }
-
+            this.saveMascotas();
         }
+
         this.initValuesFromMemory = function () {
             if (localStorage.getItem("mascotas") !== null) {
                 this.mascotas = this.getDataFromInternalPhoneMemory("mascotas");
             }
             if (localStorage.getItem("actuacionesDeLasMascotas") !== null) {
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
-            }
-
-            this.elemes = [];
-            var i = 0;
-            var name = '';
-            for (mascota in this.mascotas) {
-                this.elemes.push(
-                    {
-                        subName: 'SubGrup1',
-                        subId: JSON.stringify(this.mascotas[i].name).replace(/\"/g, ""),
-                        id: i,
-                        selected: true
-                    });
-                i++;
             }
         }
 
