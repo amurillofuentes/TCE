@@ -1,5 +1,4 @@
 /*
-
     //ALARMAS!!!
     //VOLVER DE UNA WEB
     //CAMARA
@@ -7,7 +6,6 @@
     //Investigar calendario
     //Estadisticas
     //Sistema de errores
-
 */
 
 angular.module('app.controllers', [])
@@ -292,66 +290,8 @@ angular.module('app.controllers', [])
             }
         };
 
-        /*
-                $scope.launchCapturePhoto = function ($state) {
-                    $scope.console = "launchCapturePhoto";
-                    if (navigator.camera) {
-                        $scope.console = "launchCapturePhoto--1";
-                        navigator.camera.getPicture(
-                            onPhotoDataSuccess,
-                            cameraError,
-                            {
-                                quality: 50,
-                                destinationType: destinationType.DATA_URL
-                            });
-                    } else {
-                        $scope.console = "launchCapturePhoto-selectIfDefaultImage";
-                        selectIfDefaultImage();
-                    }
-                };
-        
-                function onPhotoDataSuccess(imageData) {
-                    $scope.console = "onPhotoDataSuccess";
-                    var smallImage = document.getElementById('smallImage');
-                    smallImage.style.display = 'block';
-                    smallImage.src = "data:image/jpeg;base64," + imageData;
-                }
-        
-                $scope.launchPhotoAlbum = function ($state) {
-                    $scope.console = "launchPhotoAlbum";
-                    if (navigator.camera) {
-                        $scope.console = "launchPhotoAlbum--1";
-                        navigator.camera.getPicture(
-                            onPhotoURISuccess,
-                            cameraError,
-                            {
-                                sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
-                                quality: 50,
-                                destinationType: destinationType.FILE_URI
-                            }
-                        );
-                    } else {
-                        $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
-                        selectIfDefaultImage();
-                    }
-                };
-                function onPhotoURISuccess(imageURI) {
-                    $scope.console = "onPhotoURISuccess";
-                    if (imageURI.substring(0, 21) == "content://com.android") {
-                        var photo_split = imageURI.split("%3A");
-                        imageURI = "content://media/external/images/media/" + photo_split[1];
-                    }
-                    $scope.imagestring = imageURI;
-                    var largeImage = document.getElementById('largeImage');
-                    largeImage.style.display = 'block';
-                    largeImage.src = imageURI;
-                }
-        
-                function cameraError(message) {
-                    $scope.console = "cameraError";
-                    alert('Failed because: ' + message);
-                }
-        */
+
+
         $scope.showPopupAddName = function () {
             console.log('addMyPetsCtrl -- showPopupAddName');
 
@@ -693,7 +633,37 @@ angular.module('app.controllers', [])
 
     .controller('ImagePickerController', function ($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
         $ionicPlatform.ready(function () {
+
+
+            $scope.comeFromDetail = false;
+
+            $scope.launchCapturePhoto = function (comeFromDetail) {
+                $scope.comeFromDetail = comeFromDetail;
+                console.log("ImagePickerController - launchCapturePhoto");
+                if (navigator.camera) {
+                    console.log("ImagePickerController -launchCapturePhoto- hay camara");
+
+                    navigator.camera.getPicture(onSuccess, onFail, {
+                        quality: 80,
+                        destinationType: Camera.DestinationType.FILE_URI
+                    });
+
+                    function onSuccess(imageURI) {
+                        console.log("ImagePickerController -launchCapturePhoto- onSuccess");
+                        sendImageToCrop(imageURI);
+                    }
+                    function onFail(message) {
+                        console.log("ImagePickerController -launchCapturePhoto- onFail");
+                        alert(' falló porque: ' + mensaje);
+                    }
+
+                } else {
+                    console.log("ImagePickerController - no hay camara");
+                    alert('No hay cámara disponible');
+                }
+            };
             $scope.getImageSaveContact = function (comeFromDetail) {
+                $scope.comeFromDetail = comeFromDetail;
                 cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
                     for (var permission in statuses) {
                         switch (statuses[permission]) {
@@ -707,36 +677,8 @@ angular.module('app.controllers', [])
                                 };
                                 $cordovaImagePicker.getPictures(options).then(function (results) {
                                     console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
-                                    for (var i = 0; i < results.length; i++) {
-                                        $jrCrop.crop({
-                                            url: results[i],
-                                            width: 60,
-                                            height: 60,
-                                            title: 'Selecciona'
-                                        }).then(function (canvas) {
-                                            console.log("ImagePickerController -- $cordovaImagePicker.getPictures function ok ");
-                                            window.canvas2ImagePlugin.saveImageDataToLibrary(
-                                                function (msg) {
-                                                    console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
-                                                    if (comeFromDetail) {
-                                                        if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
-                                                            console.log("ImagePickerController -- asignando a BlankService detailpet image ");
-                                                            BlankService.detailPet.image = msg;
-                                                        }
-                                                    } else {
-                                                        if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
-                                                            console.log("ImagePickerController -- asignando a interfaz imagePet ");
-                                                            $scope.interfaz.imagePet = msg;
-                                                        }
-                                                    }
-                                                },
-                                                function (err) {
-                                                    console.log("ImagePickerController -- saveImageDataToLibrary error ", err);
-                                                },
-                                                canvas
-                                            );
-                                        }, function () {
-                                        });
+                                    if ((results != undefined) && (results.length > 0)) {
+                                        sendImageToCrop(results[0]);
                                     }
                                 }, function (error) {
                                     console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
@@ -759,6 +701,43 @@ angular.module('app.controllers', [])
                         cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
                     ]);
             };
+            function sendImageToCrop(image) {
+                $jrCrop.crop({
+                    url: image,
+                    width: 60,
+                    height: 60,
+                    title: 'Selecciona'
+                }).then(function (canvas) {
+                    console.log("ImagePickerController -- $cordovaImagePicker.getPictures function ok ");
+                    window.canvas2ImagePlugin.saveImageDataToLibrary(
+                        function (msg) {
+                            console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
+                            assignImageToView(msg);
+                        },
+                        function (err) {
+                            console.log("ImagePickerController -- saveImageDataToLibrary error ", err);
+                        },
+                        canvas
+                    );
+                }, function () {
+                });
+            }
+
+            function assignImageToView(msg) {
+                if ($scope.comeFromDetail) {
+                    if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
+                        console.log("ImagePickerController -- asignando a BlankService detailpet image ");
+                        BlankService.detailPet.image = msg;
+                    }
+                } else {
+                    if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
+                        console.log("ImagePickerController -- asignando a interfaz imagePet ");
+                        $scope.interfaz.imagePet = msg;
+                    }
+                }
+            }
+
+
         });
     })
 
@@ -912,7 +891,6 @@ angular.module('app.controllers', [])
             }, 30000);
         };
 
-        //TODO: meterenos aqui
         $scope.showFilterGroup = function () {
             console.log('homeCtrl -- showFilterGroup');
 
@@ -971,7 +949,6 @@ angular.module('app.controllers', [])
             }
         }
 
-        //TODO: METERNOS AQUI
         function processGroup() {
             console.log('homeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrl -- processGroup');
             var i = 0;
@@ -994,7 +971,6 @@ angular.module('app.controllers', [])
             $scope.items = BlankService.actuacionesDeLasMascotas;
         }
 
-        //TODO: METERNOS AQUI
         function filtroTextoSearchFunction(filterText) {
             console.log('homeCtrl -- filtroTextoSearchFunction');
 
