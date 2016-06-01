@@ -475,66 +475,7 @@ angular.module('app.controllers', [])
 
             }
         };
-        /*
-                $scope.launchCapturePhoto = function ($state) {
-                    $scope.console = "launchCapturePhoto";
-                    if (navigator.camera) {
-                        $scope.console = "launchCapturePhoto--1";
-                        navigator.camera.getPicture(
-                            onPhotoDataSuccess,
-                            cameraError,
-                            {
-                                quality: 50,
-                                destinationType: destinationType.DATA_URL
-                            });
-                    } else {
-                        $scope.console = "launchCapturePhoto-selectIfDefaultImage";
-                        selectIfDefaultImage();
-                    }
-                };
-        
-                function onPhotoDataSuccess(imageData) {
-                    $scope.console = "onPhotoDataSuccess";
-                    var smallImage = document.getElementById('smallImage');
-                    smallImage.style.display = 'block';
-                    smallImage.src = "data:image/jpeg;base64," + imageData;
-                }
-        
-                $scope.launchPhotoAlbum = function ($state) {
-                    $scope.console = "launchPhotoAlbum";
-                    if (navigator.camera) {
-                        $scope.console = "launchPhotoAlbum--1";
-                        navigator.camera.getPicture(
-                            onPhotoURISuccess,
-                            cameraError,
-                            {
-                                sourceType: navigator.camera.PictureSourceType.SAVEDPHOTOALBUM,
-                                quality: 50,
-                                destinationType: destinationType.FILE_URI
-                            }
-                        );
-                    } else {
-                        $scope.console = "launchPhotoAlbum-selectIfDefaultImage";
-                        selectIfDefaultImage();
-                    }
-                };
-                function onPhotoURISuccess(imageURI) {
-                    $scope.console = "onPhotoURISuccess";
-                    if (imageURI.substring(0, 21) == "content://com.android") {
-                        var photo_split = imageURI.split("%3A");
-                        imageURI = "content://media/external/images/media/" + photo_split[1];
-                    }
-                    $scope.imagestring = imageURI;
-                    var largeImage = document.getElementById('largeImage');
-                    largeImage.style.display = 'block';
-                    largeImage.src = imageURI;
-                }
-        
-                function cameraError(message) {
-                    $scope.console = "cameraError";
-                    alert('Failed because: ' + message);
-                }
-        */
+
         $scope.viewTreatmentsPet = function () {
             console.log('detailPetCtrl - viewTreatmentsPet');
 
@@ -818,7 +759,7 @@ angular.module('app.controllers', [])
         BlankService.reloadHome = true;
         BlankService.initValuesFromMemory();
 
-        function processIfComeFromNotification() {
+$scope.processIfComeFromNotification = function () {
             console.log('homeCtrl -- processIfComeFromNotification');
             found = false;
             if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
@@ -1357,29 +1298,23 @@ angular.module('app.controllers', [])
         $ionicPlatform.ready(function () {
 
             $scope.scheduleInstantNotification = function (idAlarm, text, at, treatmentId) {
+                console.log('detailTreatmentCtrl - Notificacion  -  scheduleInstantNotification');
                 $cordovaLocalNotification.schedule({
-                    //id: idAlarm,
                     id: idAlarm,
                     title: 'AgenDog',
                     text: text,
                     at: at,
                     //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
-                    //data: { treatmentId: treatmentId }
                     data: { "treatmentId": treatmentId }
                 });
 
                 cordova.plugins.notification.local.on("click", function (notification) {
                     console.log('detailTreatmentCtrl - Notificacion  -  pulso en notificacion');
-
                     var unpackedData = JSON.parse(notification.data);
                     var notificationProfilID = unpackedData['treatmentId'];
-
                     localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
-
-                    console.log('detailTreatmentCtrl -- Notificacion -- todo ok.');
-                    //initSystem();
-
-                    $state.go('menu.detailTreatment');
+                    console.log('detailTreatmentCtrl -- Notificacion -- todo ok. redirect to detailTreatment.');
+                    $state.go('menu.home');
                 });
             };
 
@@ -1403,7 +1338,6 @@ angular.module('app.controllers', [])
             //Hay Notificacion
             if (BlankService.comesFromNotification()) {
                 console.log('detailTreatmentCtrl -- comesFromNotification = true');
-                //viene de notificacion. borro la memoria de la notificacion y muestro popup
                 BlankService.treatmentId_notif = undefined;
                 BlankService.removeDataFromInternalPhoneMemory("treatmentId_notif");
 
@@ -1415,7 +1349,6 @@ angular.module('app.controllers', [])
                 confirmPopup.then(function (res) {
                     if (res) {
                         BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-                        //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
                         var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
                         console.log('detailTreatmentCtrl -- Compraaaaa');
                     } else {
@@ -1432,8 +1365,7 @@ angular.module('app.controllers', [])
         $scope.solicitarConsulta = function () {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
-                        var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
+            var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
         };
         $scope.modifyTreatment = function () {
             console.log('detailTreatmentCtrl -- modifyTreatment');
