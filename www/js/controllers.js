@@ -1,7 +1,6 @@
 /*
     //ALARMAS!!!
     //VOLVER DE UNA WEB
-    //CAMARA
     //Badge para iOS	
     //Investigar calendario
     //Estadisticas
@@ -955,7 +954,6 @@ angular.module('app.controllers', [])
             var size = BlankService.actuacionesDeLasMascotas.length;
 
             for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
-                //1 chequeo si es visible o no.
                 var k = 0;
                 for (k; k < BlankService.mascotas.length; k++) {
                     if ((BlankService.actuacionesDeLasMascotas[i] != undefined) && (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.mascotas[k].name)) {
@@ -1418,7 +1416,7 @@ angular.module('app.controllers', [])
                     if (res) {
                         BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
                         //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
-                        cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas/', '_self');
+                        var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
                         console.log('detailTreatmentCtrl -- Compraaaaa');
                     } else {
                         console.log('detailTreatmentCtrl -- No compra');
@@ -1435,7 +1433,7 @@ angular.module('app.controllers', [])
             console.log('detailTreatmentCtrl -- solicitarConsulta');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
             //$window.open('http:///tecuroencasa.com/consultas/', '_blank');
-            cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas/', '_self');
+                        var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
         };
         $scope.modifyTreatment = function () {
             console.log('detailTreatmentCtrl -- modifyTreatment');
