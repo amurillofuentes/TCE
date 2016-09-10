@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "com-badrit-base64": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
@@ -14,6 +17,15 @@
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
         "cordova-plugin-splashscreen": {
@@ -28,28 +40,16 @@
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
-        "ionic-plugin-keyboard": {
+        "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
-        "cordova-plugin-image-picker": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "com-badrit-base64": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova.plugins.diagnostic": {
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         },
         "org.devgeeks.Canvas2ImagePlugin": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.myapp513489"
         }
     },
