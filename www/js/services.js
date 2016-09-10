@@ -115,6 +115,7 @@ angular.module('app.services', [])
         };
 
         this.saveActuacionesDeMascota = function () {
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- setViewGroupForDetailPet", JSON.stringify(this.actuacionesDeLasMascotas));
             this.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", this.actuacionesDeLasMascotas);
             this.initValuesFromMemory();
             return true;
@@ -195,6 +196,29 @@ angular.module('app.services', [])
             }
             return false;
         }
+         this.processImageFromType=function(tipo) {
+            console.log('addMyPetsCtrl -- processImageFromType');
+            //Tipos de actuaciones para las imagenes    
+            //desparasitacion
+            //filaria
+            //analisis
+            //medicacion
+            //collar
+            //otra
+            if(tipo=="desparasitacion"){
+                return "img/desparasitacionIcon.jpg"
+            }else if(tipo=="filaria"){
+                return "img/filariaIcon.jpg"
+            }else if(tipo=="analisis"){
+                return "img/analisisIcon.jpg"
+            }else if(tipo=="medicacion"){
+                return "img/medicacionIcon.jpg"
+            }else if(tipo=="collar"){
+                return "img/collarIcon.jpg"
+            }
+            return "img/otraIcon.jpg"            
+        }      
+        
         this.IDGenerator = function (length) {
             this.length = length;
             this.timestamp = +new Date;
