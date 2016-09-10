@@ -180,77 +180,87 @@ angular.module('app.controllers', [])
             return $scope.act;
         }
 
+        function processDateToInsert(currentTime, dateAInsertar){
+            if(currentTime>dateAInsertar){
+                dateAInsertar.setMonth(dateAInsertar.getMonth() + 12);
+            }
+            return dateAInsertar;
+        }
+
         function createActuacionesDeMascota() {
             console.log('addMyPetsCtrl -- createActuacionesDeMascota');
 
             //creo las actuaciones depende de si es perro o gatoIcon
             if ($scope.pet.type = 'perro') {
-                //10 de enero: desparasitación interna
-                $scope.newact = createActuacion('desparasitación interna', new Date('2016-01-10T09:00:00'));
+                
+                var currentTime=new Date();
+                
+                //10 de enero: desparasitación interna        
+                $scope.newact = createActuacion('desparasitación interna', processDateToInsert(currentTime,new Date('2016-01-10T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //01 de abril: ANALÍTICA DE FILARIA*
-                $scope.newact = createActuacion('ANALÍTICA DE FILARIA*', new Date('2016-04-01T09:00:00'));
+                $scope.newact = createActuacion('ANALÍTICA DE FILARIA*', processDateToInsert(currentTime,new Date('2016-04-01T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de abril: desparasitación interna
-                $scope.newact = createActuacion('desparasitación interna', new Date('2016-04-10T09:00:00'));
+                $scope.newact = createActuacion('desparasitación interna', processDateToInsert(currentTime,new Date('2016-04-10T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de abril: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-04-15T09:00:00'));
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime,new Date('2016-04-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de abril: PONER COLLAR PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('PONER COLLAR PREVENCIÓN LEISHMANIA', new Date('2016-04-15T09:00:00'));
+                $scope.newact = createActuacion('PONER COLLAR PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime,new Date('2016-04-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 de mayo: PREVENCIÓN ANUAL FILARIA GUARDIAN**
-                $scope.newact = createActuacion('PREVENCIÓN ANUAL FILARIA GUARDIAN**', new Date('2016-05-01T09:00:00'));
+                $scope.newact = createActuacion('PREVENCIÓN ANUAL FILARIA GUARDIAN**', processDateToInsert(currentTime,new Date('2016-05-01T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de mayo: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', new Date('2016-05-15T09:00:00'));
+                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime,new Date('2016-05-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de mayo: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-05-15T09:00:00'));
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime,new Date('2016-05-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de junio: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-06-15T09:00:00'));
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime,new Date('2016-06-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de julio: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', new Date('2016-07-10T09:00:00'));
+                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime,new Date('2016-07-10T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de julio: desparasitación interna
-                $scope.newact = createActuacion('desparasitación interna', new Date('2016-07-10T09:00:00'));
+                $scope.newact = createActuacion('desparasitación interna', processDateToInsert(currentTime,new Date('2016-07-10T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de julio: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-07-15T09:00:00'));
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime,new Date('2016-07-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de agosto: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-08-15T09:00:00'));
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime,new Date('2016-08-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de septiembre: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', new Date('2016-09-15T09:00:00'));
+                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime,new Date('2016-09-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de septiembre: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', new Date('2016-09-15T09:00:00'));
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime,new Date('2016-09-15T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de octubre: desparasitación interna
-                $scope.newact = createActuacion('desparasitación interna', new Date('2016-10-10T09:00:00'));
+                $scope.newact = createActuacion('desparasitación interna', processDateToInsert(currentTime,new Date('2016-10-10T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de diciembre: ANALÍTICA DE LEISHMANIA*
-                $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', new Date('2016-12-10T09:00:00'));
+                $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', processDateToInsert(currentTime,new Date('2016-12-10T09:00:00')));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
             } else if ($scope.pet.type = 'gato') {
