@@ -1,7 +1,7 @@
 /*
     //ALARMAS!!!
     //VOLVER DE UNA WEB
-    //Badge para iOS	
+    //Badge para iOS    
     //Investigar calendario
     //Estadisticas
     //Sistema de errores
@@ -594,7 +594,7 @@ angular.module('app.controllers', [])
 
             $scope.launchCapturePhoto = function (comeFromDetail) {
                 $scope.comeFromDetail = comeFromDetail;
-                console.log("ImagePickerController - launchCapturePhoto");
+                console.log("ImagePickerController - launchCapturePhotooo");
                 if (navigator.camera) {
                     console.log("ImagePickerController -launchCapturePhoto- hay camara");
 
@@ -618,45 +618,81 @@ angular.module('app.controllers', [])
                 }
             };
             $scope.getImageSaveContact = function (comeFromDetail) {
+                console.log("getImageSaveContact");
+
                 $scope.comeFromDetail = comeFromDetail;
-                cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
-                    for (var permission in statuses) {
-                        switch (statuses[permission]) {
-                            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-                                console.log("ImagePickerController -- Permission granted to use " + permission);
-                                var options = {
-                                    maximumImagesCount: 1,
-                                    width: 800,
-                                    height: 800,
-                                    quality: 80
-                                };
-                                $cordovaImagePicker.getPictures(options).then(function (results) {
-                                    console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
-                                    if ((results != undefined) && (results.length > 0)) {
-                                        sendImageToCrop(results[0]);
-                                    }
-                                }, function (error) {
-                                    console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
-                                });
-                                break;
-                            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
-                                console.log("ImagePickerController -- Permission to use " + permission + " has not been requested yet");
-                                break;
-                            case cordova.plugins.diagnostic.permissionStatus.DENIED:
-                                console.log("ImagePickerController -- Permission denied to use " + permission + " - ask again?");
-                                break;
-                            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
-                                console.log("ImagePickerController -- Permission permanently denied to use " + permission + " - guess we won't be using it then!");
-                                break;
-                        }
+                var options = {
+                                        maximumImagesCount: 1,
+                                        width: 800,
+                                        height: 800,
+                                        quality: 80
+                                    };
+                var isAndroid = ionic.Platform.isAndroid();
+                if (isAndroid){
+                    console.log("getImageSaveContact--android detectado");
+                    var version = ionic.Platform.version();
+                    //if(version<5){
+                        console.log("getImageSaveContact--android menor que 5");
+                        $cordovaImagePicker.getPictures(options).then(function (results) {
+                            console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                            if ((results != undefined) && (results.length > 0)) {
+                                sendImageToCrop(results[0]);
+                            }
+                        }, function (error) {
+                            console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                        });
+                    /*    
+                    }else{
+                        console.log("getImageSaveContact--android detectado 5 o superior");
+                        cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
+                            for (var permission in statuses) {
+                                switch (statuses[permission]) {
+                                    case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                                        console.log("xxxxxImagePickerController -- Permission granted to use " + permission);
+                                        $cordovaImagePicker.getPictures(options).then(function (results) {
+                                            console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                                            if ((results != undefined) && (results.length > 0)) {
+                                                sendImageToCrop(results[0]);
+                                            }
+                                        }, function (error) {
+                                            console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                                        });
+                                        break;
+                                    case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                                        console.log("ImagePickerController -- Permission to use " + permission + " has not been requested yet");
+                                        break;
+                                    case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                                        console.log("ImagePickerController -- Permission denied to use " + permission + " - ask again?");
+                                        break;
+                                    case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                                        console.log("ImagePickerController -- Permission permanently denied to use " + permission + " - guess we won't be using it then!");
+                                        break;
+                                }
+                            }
+                        }, function (error) {
+                            console.error("ImagePickerController -- The following error occurred: " + error);
+                        }, [
+                                cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
+                            ]);
                     }
-                }, function (error) {
-                    console.error("ImagePickerController -- The following error occurred: " + error);
-                }, [
-                        cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
-                    ]);
+                    */
+                }else{
+                    console.log("getImageSaveContact--ios tendra que ser");
+                    $cordovaImagePicker.getPictures(options).then(function (results) {
+                        console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                        if ((results != undefined) && (results.length > 0)) {
+                            sendImageToCrop(results[0]);
+                        }
+                    }, function (error) {
+                        console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                    });
+                }
             };
             function sendImageToCrop(image) {
+                             assignImageToView(image);
+/*
+                             console.log("ImagePickerController -- sendImageToCrop ", image);
+
                 $jrCrop.crop({
                     url: image,
                     width: 60,
@@ -667,7 +703,7 @@ angular.module('app.controllers', [])
                     window.canvas2ImagePlugin.saveImageDataToLibrary(
                         function (msg) {
                             console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
-                            assignImageToView(msg);
+                            assignImageToView(image);
                         },
                         function (err) {
                             console.log("ImagePickerController -- saveImageDataToLibrary error ", err);
@@ -676,23 +712,26 @@ angular.module('app.controllers', [])
                     );
                 }, function () {
                 });
+ */
             }
 
             function assignImageToView(msg) {
+                console.log("ImagePickerController -- assignImageToView ", msg);
                 if ($scope.comeFromDetail) {
                     if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
                         console.log("ImagePickerController -- asignando a BlankService detailpet image ");
                         BlankService.detailPet.image = msg;
+                        console.log("ImagePickerController -- asignando a BlankService detailpet image ", BlankService.detailPet.image);
                     }
                 } else {
                     if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
                         console.log("ImagePickerController -- asignando a interfaz imagePet ");
                         $scope.interfaz.imagePet = msg;
+                        console.log("ImagePickerController -- asignando a interfaz imagePet ", $scope.interfaz.imagePet);
                     }
                 }
             }
-
-
+                        
         });
     })
 

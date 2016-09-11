@@ -76,6 +76,7 @@
     <content src="index.html" />
     <access launch-external="yes" origin="*" />
     <allow-navigation href="*" />
+    <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -83,4 +84,6 @@
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="target-device" value="universal" />
 </widget>
