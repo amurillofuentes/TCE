@@ -5,6 +5,16 @@
     //Investigar calendario
     //Estadisticas
     //Sistema de errores
+    
+     .bar.bar-stable { background-color: #E9D423;
+ .bar-stable .button { background-color: #079307;
+ .bar-stable .button.button-clear { color: #FF0000;
+ .button.button-positive { background-color: #4DB6CE;
+ .button.button-positive { border-color: #4DB6CE;
+ .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
+ .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
+ 
+ 
 */
 
 angular.module('app.controllers', [])
