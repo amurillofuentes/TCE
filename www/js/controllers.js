@@ -24,11 +24,19 @@
             7.-Testear alertas otra vez
             
             4.-Añadir más eventos--> Me los pasa Stefan
-            5.-Informacion de la actuacion en boton-->Le paso plantilla con nombre y direccion y stefan me pasa la plantailla rellena
-            6.-Seccion de información en lugar de "version solo test". Stefan me pasa el texto.
+                [14:01, 11/10/2016] Stefan Don Perro: VACUNA RABIA 4 meses después de mes de nacimiento                         
+                [14:02, 11/10/2016] Stefan Don Perro: VACUNA POLIVALENTE 3 meses después de la fecha de nacimiento                         
+                [14:02, 11/10/2016] Stefan Don Perro: TOS DE LAS PERRERAS a los 6 meses del nacimiento. 
+                Esto en perros                         
+                [14:03, 11/10/2016] Stefan Don Perro: En gatos VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento
 
-            ALGO HA PASADO cuando he borrado actuaciones con las imaghenes
-            el filtro se guardaa pero si esta selected borra su value
+            5.-Informacion de la actuacion en boton-->Le paso plantilla con nombre y direccion y stefan me pasa la plantailla rellena
+            
+            6.-Seccion de información en lugar de "version solo test". Stefan me pasa el texto
+                [14:04, 11/10/2016] Stefan Don Perro: Necesita i de información con el texto:
+                AGENDOG es una herramienta sencilla que nos permite crear, modificar y recibir alertas de la agenda veterinaria de nuestras mascotas
+                Si en su utilización tienes alguna duda puedes contactar con info@servivet.com
+
             
  
 */
@@ -153,6 +161,7 @@ angular.module('app.controllers', [])
             if ($scope.interfaz.imagePet == "img/perroIcon.jpg" || $scope.interfaz.imagePet == "img/gatoIcon.jpg") {
                 $scope.interfaz.imagePet = "img/perroIcon.jpg";
                 if ($scope.interfaz.typePet == 'Gato') {
+                    console.log('addMyPetsCtrl -- camposIntroducidosOk--cambiando imagen a gato al ser typoe gato');
                     $scope.interfaz.imagePet = "img/gatoIcon.jpg";
                 }
             }
@@ -167,13 +176,15 @@ angular.module('app.controllers', [])
             $scope.pet.image = $scope.interfaz.imagePet;
             $scope.pet.selected = true;
             $scope.pet.id = BlankService.IDGenerator(8);
+console.log('addMyPetsCtrl -- camposIntroducidosOk--interfaz',JSON.stringify($scope.interfaz));
+console.log('addMyPetsCtrl -- camposIntroducidosOk--interfaz',JSON.stringify($scope.pet));
 
             var fechaHoy=new Date();
             var falloPorFecha=false;
             
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
                 if ($scope.pet.type != undefined && $scope.pet.type != '') {
-                    if ($scope.pet.date != undefined && $scope.pet.date != '' && (new Date($scope.pet.date)>fechaHoy)) {
+                    if ($scope.pet.date != undefined && $scope.pet.date != '' && (new Date($scope.pet.date)<fechaHoy)) {
                         falloPorFecha=true;
                         return true;
                     } else {
@@ -230,12 +241,15 @@ angular.module('app.controllers', [])
 
        
 
-        function createActuacionesDeMascota() {
+        function createActuacionesDeMascota(pet) {
             console.log('addMyPetsCtrl -- createActuacionesDeMascota');
 
+console.log('addMyPetsCtrl -- createActuacionesDeMascota--pet',JSON.stringify(pet));        
+
             //creo las actuaciones depende de si es perro o gatoIcon
-            if ($scope.pet.type = 'perro') {
-                
+            if (pet.type.localeCompare('Perro')==0) {
+                console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = perro');
+           
                 var currentTime=new Date();
                 
                 //10 de enero: desparasitacion interna        
@@ -306,8 +320,30 @@ angular.module('app.controllers', [])
                 $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', processDateToInsert(currentTime,new Date('2016-12-10T09:00:00')), "analisis");
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
-            } else if ($scope.pet.type = 'gato') {
-
+                
+                //VACUNA RABIA 4 meses después de mes de nacimiento
+                var fechaPet=pet.date;
+                var currentTime4Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth()+4));
+                var currentTime3Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth()+3));
+                var currentTime6Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth()+6));
+                
+                $scope.newact = createActuacion('VACUNA RABIA', processDateToInsert(currentTime, currentTime4Months), "medicacion");
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //VACUNA POLIVALENTE 3 meses después de la fecha de nacimiento 
+                $scope.newact = createActuacion('VACUNA POLIVALENTE', processDateToInsert(currentTime, currentTime3Months), "medicacion");
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //TOS DE LAS PERRERAS a los 6 meses del nacimiento. 
+                $scope.newact = createActuacion('TOS DE LAS PERRERAS', processDateToInsert(currentTime, currentTime6Months), "medicacion");
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+            } else if (pet.type = 'Gato') {
+                console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = Gato');
+                //VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento
+                $scope.newact = createActuacion('VACUNA TRIVALENTE + LEUCEMIA', processDateToInsert(currentTime, currentTime3Months), "filaria");
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
             }
             return true;
         }
@@ -325,9 +361,18 @@ angular.module('app.controllers', [])
         $scope.addPet = function () {
             console.log('addMyPetsCtrl -- addPet');
 
+console.log('addMyPetsCtrl -- addPet1--interfaz',JSON.stringify($scope.interfaz));
+console.log('addMyPetsCtrl -- addPet1--pet',JSON.stringify($scope.pet));
+
             if (camposIntroducidosOk()) {
+console.log('addMyPetsCtrl -- addPet2--interfaz',JSON.stringify($scope.interfaz));
+console.log('addMyPetsCtrl -- addPet2--pet',JSON.stringify($scope.pet));
                 if (BlankService.savePetInSystem($scope.pet)) {
-                    if (createActuacionesDeMascota()) {
+console.log('addMyPetsCtrl -- addPet3--interfaz',JSON.stringify($scope.interfaz));
+console.log('addMyPetsCtrl -- addPet3--pet',JSON.stringify($scope.pet));
+                    if (createActuacionesDeMascota($scope.pet)) {
+                        console.log('addMyPetsCtrl -- addPet4--interfaz',JSON.stringify($scope.interfaz));
+console.log('addMyPetsCtrl -- addPet4--pet',JSON.stringify($scope.pet));
                         if (BlankService.saveActuacionesDeMascota()) {
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Añadir mascotas',
@@ -465,7 +510,7 @@ angular.module('app.controllers', [])
             var falloPorFecha=false;
             if (BlankService.detailPet.name != undefined && BlankService.detailPet.name != '' && BlankService.detailPet.name != 'nombre') {
                 if (BlankService.detailPet.type != undefined && BlankService.detailPet.type != '') {
-                                        if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '' && (new Date(BlankService.detailPet.date)>fechaHoy)) {
+                                        if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '' && (new Date(BlankService.detailPet.date)<fechaHoy)) {
 falloPorFecha=true;
                         return true;
                     } else {
