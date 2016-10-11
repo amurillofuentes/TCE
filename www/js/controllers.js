@@ -16,11 +16,11 @@
  
   //26/09/2016
             1.-Revisar fecha cuando ya ha pasado
-                1.2-->popup si intentas añadir actuacion anterior a hoy
+                1.2-->popup si intentas añadir actuacion y/o mascota anterior a hoy
                 1.3-->si la actuacion ya ha pasado no mostrarla
             2.-Mantener el filtro
                 2.1-->Arreglado
-            3.-Pierde fotos en mascotas
+            3.-Pierde fotos en mascotas-->iphone o android?
             7.-Testear alertas otra vez
             
             4.-Añadir más eventos--> Me los pasa Stefan
@@ -973,6 +973,7 @@ $scope.processIfComeFromNotification = function () {
             BlankService.initValuesFromMemory();
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', $item.id);
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
+            processOrder();
         };
 
         function processOrder(){
