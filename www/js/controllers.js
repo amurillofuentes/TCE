@@ -16,7 +16,10 @@
  
   //26/09/2016
             1.-Revisar fecha cuando ya ha pasado
+                1.2-->popup si intentas añadir actuacion anterior a hoy
+                1.3-->si la actuacion ya ha pasado no mostrarla
             2.-Mantener el filtro
+                2.1-->Arreglado
             3.-Pierde fotos en mascotas
             7.-Testear alertas otra vez
             
@@ -165,9 +168,13 @@ angular.module('app.controllers', [])
             $scope.pet.selected = true;
             $scope.pet.id = BlankService.IDGenerator(8);
 
+            var fechaHoy=new Date();
+            var falloPorFecha=false;
+            
             if ($scope.pet.name != undefined && $scope.pet.name != '' && $scope.pet.name != 'nombre') {
                 if ($scope.pet.type != undefined && $scope.pet.type != '') {
-                    if ($scope.pet.date != undefined && $scope.pet.date != '') {
+                    if ($scope.pet.date != undefined && $scope.pet.date != '' && (new Date($scope.pet.date)>fechaHoy)) {
+                        falloPorFecha=true;
                         return true;
                     } else {
                         console.log('addMyPetsCtrl - addPetInSystem-pet.date');
@@ -178,10 +185,18 @@ angular.module('app.controllers', [])
             } else {
                 console.log('addMyPetsCtrl - addPetInSystem-pet.name');
             }
-            var alertPopup = $ionicPopup.alert({
-                title: 'Añadir mascotas',
-                template: 'Error 1. Rellena todos los campos correctamente'
-            });
+            var alertPopup;
+            if(falloPorFecha){
+                alertPopup = $ionicPopup.alert({
+                             title: 'Añadir mascotas',
+                            template: 'Error 2. Hay un error en la fecha introducida'
+                        });
+            }else{
+                    alertPopup = $ionicPopup.alert({
+                             title: 'Añadir mascotas',
+                            template: 'Error 1. Rellena todos los campos correctamente'
+                        });
+            }
         };
 
         function createActuacion(nombre, fecha, tipo) {
@@ -446,9 +461,12 @@ angular.module('app.controllers', [])
 
         function camposIntroducidosOk() {
             console.log('detailPetCtrl - camposIntroducidosOk');
+              var fechaHoy=new Date();
+            var falloPorFecha=false;
             if (BlankService.detailPet.name != undefined && BlankService.detailPet.name != '' && BlankService.detailPet.name != 'nombre') {
                 if (BlankService.detailPet.type != undefined && BlankService.detailPet.type != '') {
-                    if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '') {
+                                        if (BlankService.detailPet.date != undefined && BlankService.detailPet.date != '' && (new Date(BlankService.detailPet.date)>fechaHoy)) {
+falloPorFecha=true;
                         return true;
                     } else {
                         console.log('detailPetCtrl - camposIntroducidosOk-pet.date');
@@ -459,10 +477,19 @@ angular.module('app.controllers', [])
             } else {
                 console.log('detailPetCtrl - camposIntroducidosOk-pet.name');
             }
-            var alertPopup = $ionicPopup.alert({
-                title: 'Modificar mascota',
-                template: 'Error 1. Rellena todos los campos correctamente'
-            });
+           
+            var alertPopup;
+            if(falloPorFecha){
+                alertPopup = $ionicPopup.alert({
+                            title: 'Modificar mascota',
+                            template: 'Error 2. Hay un error en la fecha introducida'
+                        });
+            }else{
+                    alertPopup = $ionicPopup.alert({
+                            title: 'Modificar mascota',
+                            template: 'Error 1. Rellena todos los campos correctamente'
+                        });
+            }
         };
 
         $scope.modifyPet = function () {
@@ -972,13 +999,25 @@ $scope.processIfComeFromNotification = function () {
                     if ((BlankService.actuacionesDeLasMascotas[i] != undefined) && (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.mascotas[k].name)) {
                         BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.mascotas[k].selected;
                     }
+                    if(fechaDeActuacionEsAnteriorAHoy(BlankService.actuacionesDeLasMascotas[i])){
+                        BlankService.actuacionesDeLasMascotas[i].isVisible = false;
+                    }
                 }
             }
         }
 
+        function fechaDeActuacionEsAnteriorAHoy(actuacion){
+            var ret=false;
+            var fechaActuacion = new Date(actuacion.date);
+            var fechaHoy=new Date();
+                if(fechaActuacion<fechaHoy){
+                    ret=true;
+                }
+            return ret;
+        }
+
         function getItems() {
             console.log('homeCtrl -- getItems');
-
             $scope.items = BlankService.actuacionesDeLasMascotas;
         }
 
@@ -1326,8 +1365,12 @@ $scope.processIfComeFromNotification = function () {
             $scope.act.name = $scope.interfaz.nameAct;
             $scope.act.date = $scope.interfaz.dateAct;
             $scope.act.nameAlarm = $scope.interfaz.alarmName;
+            
+             var fechaHoy=new Date();
+            var falloPorFecha=false;
+            
             if ($scope.act.name != undefined && $scope.act.name != '' && $scope.act.name != 'nombre') {
-                if ($scope.act.date != undefined && $scope.act.date != '') {
+                if ($scope.act.date != undefined && $scope.act.date != '' && (new Date($scope.act.date)>fechaHoy)) {
                     if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
                         var k = 0;
                         someSelected = false;
@@ -1352,15 +1395,25 @@ $scope.processIfComeFromNotification = function () {
                         console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.nameAlarm');
                     }
                 } else {
+                                        falloPorFecha=true;
+
                     console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
                 }
             } else {
                 console.log('addTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
             }
-            var alertPopup = $ionicPopup.alert({
-                title: 'Añadir actuacion',
-                template: 'Error 1. Rellena todos los campos correctamente'
-            });
+            var alertPopup;
+            if(falloPorFecha){
+                alertPopup = $ionicPopup.alert({
+                            title: 'Añadir actuacion',
+                            template: 'Error 2. Hay un error en la fecha introducida'
+                        });
+            }else{
+                    alertPopup = $ionicPopup.alert({
+                            title: 'Añadir actuacion',
+                            template: 'Error 1. Rellena todos los campos correctamente'
+                        });
+            }
         };
     })
 
@@ -1568,12 +1621,13 @@ $scope.processIfComeFromNotification = function () {
 
         function camposIntroducidosOk() {
             console.log('detailTreatmentCtrl -- camposIntroducidosOk');
-
+            var fechaHoy=new Date();
+            var falloPorFecha=false;
             $scope.act.name = BlankService.detailTreatment.name;
             $scope.act.date = BlankService.detailTreatment.date;
             $scope.act.nameAlarm = BlankService.detailTreatment.nameAlarm;
             if ($scope.act.name != undefined && $scope.act.name != '' && $scope.act.name != 'nombre') {
-                if ($scope.act.date != undefined && $scope.act.date != '') {
+                if ($scope.act.date != undefined && $scope.act.date != '' && (new Date($scope.act.date)>fechaHoy)) {
                     if ($scope.act.nameAlarm != undefined && $scope.act.nameAlarm != '') {
                         var k = 0;
                         someSelected = false;
@@ -1601,15 +1655,26 @@ $scope.processIfComeFromNotification = function () {
 
                 } else {
                     console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.date');
+                    falloPorFecha=true;
                 }
             } else {
                 console.log('detailTreatmentCtrl - camposIntroducidosOk-Fallo por act.name');
             }
 
-            var alertPopup = $ionicPopup.alert({
-                title: 'Añadir actuacion',
-                template: 'Error 1. Rellena todos los campos correctamente'
-            });
+var alertPopup;
+            if(falloPorFecha){
+                alertPopup = $ionicPopup.alert({
+                            title: 'Añadir actuacion',
+                            template: 'Error 2. Hay un error en la fecha introducida'
+                        });
+            }else{
+                    alertPopup = $ionicPopup.alert({
+                            title: 'Añadir actuacion',
+                            template: 'Error 1. Rellena todos los campos correctamente'
+                        });
+            }
+
+                    
         }
 
 
