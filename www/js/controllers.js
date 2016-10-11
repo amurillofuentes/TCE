@@ -1,12 +1,6 @@
 /*
-    //ALARMAS!!!
-    //VOLVER DE UNA WEB
-    //Badge para iOS    
-    //Investigar calendario
-    //Estadisticas
-    //Sistema de errores
     
-     .bar.bar-stable { background-color: #E9D423;
+ .bar.bar-stable { background-color: #E9D423;
  .bar-stable .button { background-color: #079307;
  .bar-stable .button.button-clear { color: #FF0000;
  .button.button-positive { background-color: #4DB6CE;
@@ -21,14 +15,15 @@
             2.-Mantener el filtro
                 2.1-->Arreglado
             3.-Pierde fotos en mascotas
+                3.1-->En android ok
             7.-Testear alertas otra vez
-            
+                7.1-->En android ok
             4.-Añadir más eventos--> Me los pasa Stefan
                 [14:01, 11/10/2016] Stefan Don Perro: VACUNA RABIA 4 meses después de mes de nacimiento                         
                 [14:02, 11/10/2016] Stefan Don Perro: VACUNA POLIVALENTE 3 meses después de la fecha de nacimiento                         
                 [14:02, 11/10/2016] Stefan Don Perro: TOS DE LAS PERRERAS a los 6 meses del nacimiento. 
                 Esto en perros                         
-                [14:03, 11/10/2016] Stefan Don Perro: En gatos VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento
+                [14:03, 11/10/2016] Stefan Don Perro: En gatos VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento-->TODO: la lista no muestra la fecha del gato
 
             5.-Informacion de la actuacion en boton-->Le paso plantilla con nombre y direccion y stefan me pasa la plantailla rellena
             
