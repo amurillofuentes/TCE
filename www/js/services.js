@@ -76,7 +76,7 @@ angular.module('app.services', [])
         };
 
         this.setViewGroupForDetailPet = function () {
-            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- setViewGroupForDetailPet");
+            console.log("services -- setViewGroupForDetailPet");
             var i = 0;
             var nameDetailePet = JSON.stringify(this.detailPet.name).replace(/\"/g, "");
            
@@ -113,9 +113,17 @@ angular.module('app.services', [])
                 }
             }
         };
+       
+        this.orderSelected="Mascota";
 
+        this.saveOrderSelected = function () {
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-services -- saveOrderSelected", JSON.stringify(this.orderSelected));
+            this.saveDataInInternalPhoneMemory("orderSelected", this.orderSelected);
+            return true;
+        };
+        
         this.saveActuacionesDeMascota = function () {
-            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -- setViewGroupForDetailPet", JSON.stringify(this.actuacionesDeLasMascotas));
+            console.log("Services -- saveActuacionesDeMascota", JSON.stringify(this.actuacionesDeLasMascotas));
             this.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", this.actuacionesDeLasMascotas);
             this.initValuesFromMemory();
             return true;
@@ -197,7 +205,7 @@ angular.module('app.services', [])
             return false;
         }
          this.processImageFromType=function(tipo) {
-            console.log('addMyPetsCtrl -- processImageFromType');
+            console.log('services -- processImageFromType');
             //Tipos de actuaciones para las imagenes    
             //desparasitacion
             //filaria

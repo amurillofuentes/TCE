@@ -14,6 +14,19 @@
  .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
  .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
  
+  //26/09/2016
+            1.-Revisar fecha cuando ya ha pasado
+            2.-Mantener el filtro
+            3.-Pierde fotos en mascotas
+            7.-Testear alertas otra vez
+            
+            4.-Añadir más eventos--> Me los pasa Stefan
+            5.-Informacion de la actuacion en boton-->Le paso plantilla con nombre y direccion y stefan me pasa la plantailla rellena
+            6.-Seccion de información en lugar de "version solo test". Stefan me pasa el texto.
+
+            ALGO HA PASADO cuando he borrado actuaciones con las imaghenes
+            el filtro se guardaa pero si esta selected borra su value
+            
  
 */
 
@@ -702,7 +715,6 @@ angular.module('app.controllers', [])
                              assignImageToView(image);
 /*
                              console.log("ImagePickerController -- sendImageToCrop ", image);
-
                 $jrCrop.crop({
                     url: image,
                     width: 60,
@@ -867,7 +879,7 @@ $scope.processIfComeFromNotification = function () {
 
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
-                '  <ion-radio ng-repeat="order in service.orders" ng-model="interfaz.order" ng-value="order.name">{{order.name}} ' +
+                '  <ion-radio ng-repeat="order in service.orders" ng-model="service.orderSelected" ng-value="order.name">{{order.name}} ' +
                 '</ion-list>                               ',
                 title: 'Ordenar por...',
                 subTitle: '',
@@ -877,11 +889,6 @@ $scope.processIfComeFromNotification = function () {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
                         onTap: function (e) {
-                            if (!$scope.interfaz.order) {
-                                e.preventDefault();
-                            } else {
-                                return $scope.interfaz.order;
-                            }
                         }
                     }
                 ]
@@ -941,16 +948,17 @@ $scope.processIfComeFromNotification = function () {
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
         };
 
-        function processOrder() {
+        function processOrder(){
             console.log('homeCtrl -- processOrder');
 
-            if ($scope.interfaz.order == "Mascota") {
+            if (BlankService.orderSelected == "Mascota") {
                 BlankService.changeOrder('ordernombremascota');
-            } else if ($scope.interfaz.order == "Fecha") {
+            } else if (BlankService.orderSelected == "Fecha") {
                 BlankService.changeOrder('orderfechamascota');
-            } else if ($scope.interfaz.order == "Actuacion") {
+            } else if (BlankService.orderSelected == "Actuacion") {
                 BlankService.changeOrder('ordernombreactuacion');
             }
+            BlankService.saveOrderSelected();
         }
 
         function processGroup() {
