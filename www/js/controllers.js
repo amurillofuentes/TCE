@@ -36,33 +36,33 @@
 
 angular.module('app.controllers', [])
 
-    .controller('myPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
+    .controller('myPetsCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
         BlankService.initValuesFromMemory();
 
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.afterEnter', function() {
             console.log('myPetsCtrl -- $ionicView.afterEnter');
 
         });
 
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.$on('$ionicView.loaded', function() {
             console.log('myPetsCtrl -- $ionicView.loaded');
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
         });
 
-        $scope.addPet = function () {
+        $scope.addPet = function() {
             console.log('myPetsCtrl -- addPet');
             $state.go('menu.addMyPets');
         };
 
-        $scope.showDetailPet = function (pet) {
+        $scope.showDetailPet = function(pet) {
             console.log('myPetsCtrl -- showDetailPet');
             BlankService.detailPet = pet;
             $state.go('menu.detailPet');
         };
 
-        $scope.hayMascotaFunct = function (value) {
+        $scope.hayMascotaFunct = function(value) {
             console.log('myPetsCtrl -- hayMascotaFunct');
             try {
                 if (BlankService.mascotas.length > 0) {
@@ -74,14 +74,14 @@ angular.module('app.controllers', [])
         };
 
 
-        $scope.borrarMascota = function (pet) {
+        $scope.borrarMascota = function(pet) {
             console.log('myPetsCtrl -- borrarMascota');
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Borrar Mascota',
                 template: 'Al borrar la mascota también se borrarán todas sus actuaciones. ¿Quieres continuar?'
             });
 
-            confirmPopup.then(function (res) {
+            confirmPopup.then(function(res) {
                 if (res) {
                     BlankService.removeByAttr(BlankService.mascotas, 'id', pet.id);
                     BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'idPet', pet.id);
@@ -93,25 +93,25 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('addMyPetsCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
+    .controller('addMyPetsCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
 
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.afterEnter', function() {
             console.log('addMyPetsCtrl -- $ionicView.afterEnter');
         });
 
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.$on('$ionicView.loaded', function() {
             console.log('addMyPetsCtrl -- $ionicView.loaded');
             initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
         });
 
-        $scope.$on('$ionicView.beforeLeave', function () {
+        $scope.$on('$ionicView.beforeLeave', function() {
             console.log('addMyPetsCtrl -- $ionicView.beforeLeave');
 
             BlankService.initValuesFromMemory();
         });
-        $scope.$on('$ionicView.leave', function () {
+        $scope.$on('$ionicView.leave', function() {
             console.log('addMyPetsCtrl -- $ionicView.leave');
 
             BlankService.initValuesFromMemory();
@@ -343,7 +343,7 @@ angular.module('app.controllers', [])
             return true;
         }
 
-        $scope.finishPet = function () {
+        $scope.finishPet = function() {
             console.log('addMyPetsCtrl -- finishPet');
 
             BlankService.initValuesFromMemory();
@@ -353,7 +353,7 @@ angular.module('app.controllers', [])
             $state.go('menu.home');
         };
 
-        $scope.addPet = function () {
+        $scope.addPet = function() {
             console.log('addMyPetsCtrl -- addPet');
 
             console.log('addMyPetsCtrl -- addPet1--interfaz', JSON.stringify($scope.interfaz));
@@ -373,7 +373,7 @@ angular.module('app.controllers', [])
                                 title: 'Añadir mascotas',
                                 template: 'Mascota añadida correctamente'
                             });
-                            alertPopup.then(function (res) {
+                            alertPopup.then(function(res) {
                                 initValues();
                             });
                         }
@@ -384,7 +384,7 @@ angular.module('app.controllers', [])
 
 
 
-        $scope.showPopupAddName = function () {
+        $scope.showPopupAddName = function() {
             console.log('addMyPetsCtrl -- showPopupAddName');
 
             var myPopup = $ionicPopup.show({
@@ -396,7 +396,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.interfaz.namePet) {
                                 e.preventDefault();
                             } else {
@@ -406,15 +406,15 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddDate = function () {
+        $scope.showPopupAddDate = function() {
             console.log('addMyPetsCtrl -- showPopupAddDate');
 
             var myPopup = $ionicPopup.show({
@@ -426,7 +426,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.interfaz.datePet) {
                                 e.preventDefault();
                             } else {
@@ -436,15 +436,15 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddType = function () {
+        $scope.showPopupAddType = function() {
             console.log('addMyPetsCtrl -- showPopupAddType');
 
             var myPopup = $ionicPopup.show({
@@ -458,7 +458,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.interfaz.typePet) {
                                 e.preventDefault();
                             } else {
@@ -469,24 +469,24 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
     })
 
-    .controller('detailPetCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
+    .controller('detailPetCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
         $scope.service = BlankService;
 
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.afterEnter', function() {
             console.log('detailPetCtrl - $ionicView.afterEnter');
         });
 
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.$on('$ionicView.loaded', function() {
             console.log('detailPetCtrl - $ionicView.loaded');
             initValues();
             BlankService.reloadHome = true;
@@ -532,7 +532,7 @@ angular.module('app.controllers', [])
             }
         };
 
-        $scope.modifyPet = function () {
+        $scope.modifyPet = function() {
             console.log('detailPetCtrl - modifyPet');
 
             if (camposIntroducidosOk()) {
@@ -568,7 +568,7 @@ angular.module('app.controllers', [])
                     title: 'Añadir mascotas',
                     template: 'Mascota modificada correctamente'
                 });
-                alertPopup.then(function (res) {
+                alertPopup.then(function(res) {
                     BlankService.initValuesFromMemory();
 
                     $ionicHistory.nextViewOptions({
@@ -581,7 +581,7 @@ angular.module('app.controllers', [])
             }
         };
 
-        $scope.viewTreatmentsPet = function () {
+        $scope.viewTreatmentsPet = function() {
             console.log('detailPetCtrl - viewTreatmentsPet');
 
             BlankService.setViewGroupForDetailPet();
@@ -591,7 +591,7 @@ angular.module('app.controllers', [])
             $state.go('menu.home');
         }
 
-        $scope.showPopupAddName = function () {
+        $scope.showPopupAddName = function() {
             console.log('detailPetCtrl -- showPopupAddName');
 
             var myPopup = $ionicPopup.show({
@@ -603,21 +603,21 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
 
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddDate = function () {
+        $scope.showPopupAddDate = function() {
             console.log('detailPetCtrl -- showPopupAddDate');
 
             var myPopup = $ionicPopup.show({
@@ -629,21 +629,21 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
 
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddType = function () {
+        $scope.showPopupAddType = function() {
             console.log('detailPetCtrl -- showPopupAddType');
 
             var myPopup = $ionicPopup.show({
@@ -657,32 +657,32 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
 
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
     })
 
-    .controller('menuCtrl', function ($scope) {
+    .controller('menuCtrl', function($scope) {
     })
 
-    .controller('ImagePickerController', function ($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
-        $ionicPlatform.ready(function () {
+    .controller('ImagePickerController', function($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
+        $ionicPlatform.ready(function() {
 
 
             $scope.comeFromDetail = false;
 
-            $scope.launchCapturePhoto = function (comeFromDetail) {
+            $scope.launchCapturePhoto = function(comeFromDetail) {
                 $scope.comeFromDetail = comeFromDetail;
                 console.log("ImagePickerController - launchCapturePhotooo");
                 if (navigator.camera) {
@@ -707,7 +707,7 @@ angular.module('app.controllers', [])
                     alert('No hay cámara disponible');
                 }
             };
-            $scope.getImageSaveContact = function (comeFromDetail) {
+            $scope.getImageSaveContact = function(comeFromDetail) {
                 console.log("getImageSaveContact");
 
                 $scope.comeFromDetail = comeFromDetail;
@@ -723,12 +723,12 @@ angular.module('app.controllers', [])
                     var version = ionic.Platform.version();
                     //if(version<5){
                     console.log("getImageSaveContact--android menor que 5");
-                    $cordovaImagePicker.getPictures(options).then(function (results) {
+                    $cordovaImagePicker.getPictures(options).then(function(results) {
                         console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
                         if ((results != undefined) && (results.length > 0)) {
                             sendImageToCrop(results[0]);
                         }
-                    }, function (error) {
+                    }, function(error) {
                         console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
                     });
                     /*    
@@ -768,12 +768,12 @@ angular.module('app.controllers', [])
                     */
                 } else {
                     console.log("getImageSaveContact--ios tendra que ser");
-                    $cordovaImagePicker.getPictures(options).then(function (results) {
+                    $cordovaImagePicker.getPictures(options).then(function(results) {
                         console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
                         if ((results != undefined) && (results.length > 0)) {
                             sendImageToCrop(results[0]);
                         }
-                    }, function (error) {
+                    }, function(error) {
                         console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
                     });
                 }
@@ -824,21 +824,21 @@ angular.module('app.controllers', [])
         });
     })
 
-    .controller('versionsCtrl', function ($scope, BlankService) {
+    .controller('versionsCtrl', function($scope, BlankService) {
         $scope.service = BlankService;
-        $scope.borrarDatos = function () {
+        $scope.borrarDatos = function() {
             console.log('versionsCtrl -- borrarDatos');
             BlankService.clearData();
         }
     })
 
-    .controller('homeCtrl', function ($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
+    .controller('homeCtrl', function($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
         $scope.service = BlankService;
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.afterEnter', function() {
             console.log("homeCtrl -- $ionicView.afterEnter");
         });
 
-        $scope.hayMascotaFunct = function (value) {
+        $scope.hayMascotaFunct = function(value) {
             console.log('homeCtrl -- hayMascotaFunct');
             try {
                 if (BlankService.mascotas.length > 0) {
@@ -849,7 +849,7 @@ angular.module('app.controllers', [])
             } catch (e) { return false; }
         };
 
-        $scope.hayActuacionesFunct = function (value) {
+        $scope.hayActuacionesFunct = function(value) {
             console.log('homeCtrl -- hayActuacionesFunct');
             try {
                 if (BlankService.actuacionesDeLasMascotas.length > 0) {
@@ -860,7 +860,7 @@ angular.module('app.controllers', [])
             } catch (e) { return false; }
         };
 
-        $scope.ocultarBotoneraFunct = function (value) {
+        $scope.ocultarBotoneraFunct = function(value) {
             console.log('homeCtrl -- ocultarBotoneraFunct');
             var ocultarBotonera = true;
             if ((BlankService.mascotas != undefined) && (BlankService.mascotas.length > 0) && (BlankService.actuacionesDeLasMascotas != undefined) && (BlankService.actuacionesDeLasMascotas.length > 0)) {
@@ -869,18 +869,18 @@ angular.module('app.controllers', [])
             return ocultarBotonera;
         };
 
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.$on('$ionicView.loaded', function() {
             console.log("homeCtrl -- $ionicView.loaded");
             BlankService.initValuesFromMemory();
             $scope.choice = '';
         });
 
-        $scope.$on('$ionicView.beforeEnter', function () {
+        $scope.$on('$ionicView.beforeEnter', function() {
             console.log("homeCtrl -- $ionicView.beforeEnter");
             BlankService.initValuesFromMemory();
         });
 
-        $scope.$on('$ionicView.enter', function () {
+        $scope.$on('$ionicView.enter', function() {
             console.log("homeCtrl -- $ionicView.enter");
             initSystem();
         });
@@ -902,7 +902,7 @@ angular.module('app.controllers', [])
         BlankService.reloadHome = true;
         BlankService.initValuesFromMemory();
 
-        $scope.processIfComeFromNotification = function () {
+        $scope.processIfComeFromNotification = function() {
             console.log('homeCtrl -- processIfComeFromNotification');
             found = false;
             if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
@@ -930,7 +930,7 @@ angular.module('app.controllers', [])
                             title: 'Actuación no encontrada',
                             template: 'La actuación de la notificación no existe'
                         });
-                        alertPopup.then(function (res) {
+                        alertPopup.then(function(res) {
                             console.log('homeCtrl--popup -- el id recibido no existe');
                         });
                     }
@@ -941,7 +941,7 @@ angular.module('app.controllers', [])
 
 
 
-        $scope.showFilterOrder = function () {
+        $scope.showFilterOrder = function() {
             console.log('homeCtrl -- showFilterOrder');
 
             var myPopup = $ionicPopup.show({
@@ -955,21 +955,21 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
                 processOrder();
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showFilterGroup = function () {
+        $scope.showFilterGroup = function() {
             console.log('homeCtrl -- showFilterGroup');
 
             var myPopup = $ionicPopup.show({
@@ -983,32 +983,32 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
                 BlankService.saveMascotas();
                 processGroup();
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.redirectToaddTreatment = function () {
+        $scope.redirectToaddTreatment = function() {
             console.log('homeCtrl -- redirectToaddTreatment');
             $state.go('menu.addTreatment');
         };
 
-        $scope.redirectToaddPet = function () {
+        $scope.redirectToaddPet = function() {
             console.log('homeCtrl -- redirectToaddPet');
             $state.go('menu.addMyPets');
         };
 
-        $scope.borrarActuacion = function ($item) {
+        $scope.borrarActuacion = function($item) {
             console.log('homeCtrl -- borrarActuacion');
             BlankService.initValuesFromMemory();
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', $item.id);
@@ -1099,26 +1099,26 @@ angular.module('app.controllers', [])
             }
         }
 
-        $scope.showFilterBar = function ($filter) {
+        $scope.showFilterBar = function($filter) {
             console.log('homeCtrl -- showFilterBar');
 
             BlankService.initValuesFromMemory();
 
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.items,
-                update: function (filteredItems, filterText) {
+                update: function(filteredItems, filterText) {
                     $scope.items = filteredItems;
                     if (filterText) {
                         filtroTextoSearchFunction(filterText);
                     }
                 },
-                cancel: function (filteredItems) {
+                cancel: function(filteredItems) {
                     filtroTextoSearchFunction();
                 }
             });
         };
 
-        $scope.refreshItems = function () {
+        $scope.refreshItems = function() {
             console.log('homeCtrl -- refreshItems');
 
             if (filterBarInstance) {
@@ -1126,13 +1126,13 @@ angular.module('app.controllers', [])
                 filterBarInstance = null;
             }
 
-            $timeout(function () {
+            $timeout(function() {
                 getItems();
                 $scope.$broadcast('scroll.refreshComplete');
             }, 1000);
         };
 
-        $scope.showDetail = function ($item) {
+        $scope.showDetail = function($item) {
             console.log('homeCtrl -- showDetail');
 
             BlankService.initValuesFromMemory();
@@ -1141,26 +1141,26 @@ angular.module('app.controllers', [])
         }
     })
 
-    .controller('addTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
+    .controller('addTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
         $scope.service = BlankService;
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.afterEnter', function() {
         });
 
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.$on('$ionicView.loaded', function() {
             console.log('addTreatmentCtrl -- $ionicView.loaded');
             initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
         });
 
-        $scope.addActuacion = function () {
+        $scope.addActuacion = function() {
             console.log('addTreatmentCtrl -- addActuacion');
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Añadir actuacion',
                     template: 'Actuacion añadida correctamente'
                 });
-                alertPopup.then(function (res) {
+                alertPopup.then(function(res) {
                     BlankService.initValuesFromMemory();
                     $window.history.back();
 
@@ -1204,7 +1204,7 @@ angular.module('app.controllers', [])
             }
         }
 
-        $scope.showPopupAddNameAct = function () {
+        $scope.showPopupAddNameAct = function() {
             console.log('addTreatmentCtrl -- showPopupAddNameAct');
 
             var myPopup = $ionicPopup.show({
@@ -1216,7 +1216,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.interfaz.nameAct) {
                                 e.preventDefault();
                             } else {
@@ -1226,15 +1226,15 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddDateAct = function () {
+        $scope.showPopupAddDateAct = function() {
             console.log('addTreatmentCtrl -- showPopupAddDateAct');
 
             var myPopup = $ionicPopup.show({
@@ -1246,7 +1246,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.interfaz.dateAct) {
                                 e.preventDefault();
                             } else {
@@ -1256,16 +1256,16 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
 
-        $scope.showPopupAddMultiplePet = function () {
+        $scope.showPopupAddMultiplePet = function() {
             console.log('addTreatmentCtrl -- showPopupAddMultiplePet');
 
             var myPopup = $ionicPopup.show({
@@ -1279,20 +1279,20 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddAlarm = function () {
+        $scope.showPopupAddAlarm = function() {
             console.log('addTreatmentCtrl -- showPopupAddAlarm');
 
             var myPopup = $ionicPopup.show({
@@ -1306,7 +1306,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.interfaz.alarmName) {
                                 e.preventDefault();
                             } else {
@@ -1316,10 +1316,10 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
@@ -1392,7 +1392,7 @@ angular.module('app.controllers', [])
                     at: cuando,
                     //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
                     data: { treatmentId: treatmentId }
-                }).then(function (result) {
+                }).then(function(result) {
                     console.log('addTreatmentCtrl -- asignoAlarmaInSystem - Notification launched');
                 });
             } catch (e) {
@@ -1458,13 +1458,13 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function ($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification, $ionicPlatform) {
+    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification, $ionicPlatform) {
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
-        $ionicPlatform.ready(function () {
+        $ionicPlatform.ready(function() {
 
-            $scope.scheduleInstantNotification = function (idAlarm, text, at, treatmentId) {
+            $scope.scheduleInstantNotification = function(idAlarm, text, at, treatmentId) {
                 console.log('detailTreatmentCtrl - Notificacion  -  scheduleInstantNotification');
                 $cordovaLocalNotification.schedule({
                     id: idAlarm,
@@ -1475,7 +1475,7 @@ angular.module('app.controllers', [])
                     data: { "treatmentId": treatmentId }
                 });
 
-                cordova.plugins.notification.local.on("click", function (notification) {
+                cordova.plugins.notification.local.on("click", function(notification) {
                     console.log('detailTreatmentCtrl - Notificacion  -  pulso en notificacion');
                     var unpackedData = JSON.parse(notification.data);
                     var notificationProfilID = unpackedData['treatmentId'];
@@ -1485,13 +1485,13 @@ angular.module('app.controllers', [])
                 });
             };
 
-            $scope.cancelSingleNotification = function (idAlarm) {
-                $cordovaLocalNotification.cancel(idAlarm).then(function (result) {
+            $scope.cancelSingleNotification = function(idAlarm) {
+                $cordovaLocalNotification.cancel(idAlarm).then(function(result) {
                     console.log('detailPetCtrl -- Notification Canceled ', idAlarm);
                 });
             };
         });
-        $scope.$on('$ionicView.loaded', function () {
+        $scope.$on('$ionicView.loaded', function() {
             console.log('detailTreatmentCtrl -- $ionicView.loaded');
             BlankService.initDetailTreatment();
             initValues();
@@ -1499,7 +1499,7 @@ angular.module('app.controllers', [])
             BlankService.initValuesFromMemory();
         });
 
-        $scope.$on('$ionicView.enter', function () {
+        $scope.$on('$ionicView.enter', function() {
             console.log('detailTreatmentCtrl -- $ionicView.enter');
 
             //Hay Notificacion
@@ -1513,7 +1513,7 @@ angular.module('app.controllers', [])
                     template: '¿Quieres utilizar los servicios de TeCuroEnCasa para esta actuación de tu mascota?'
                 });
 
-                confirmPopup.then(function (res) {
+                confirmPopup.then(function(res) {
                     if (res) {
                         BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
                         var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
@@ -1524,30 +1524,26 @@ angular.module('app.controllers', [])
                 });
             }
 
-            
+
         });
 
-        $scope.$on('$ionicView.afterEnter', function () {
+        $scope.$on('$ionicView.afterEnter', function() {
             console.log('detailTreatmentCtrl -- $ionicView.afterEnter');
         });
 
-        $scope.solicitarConsulta = function () {
+        $scope.solicitarConsulta = function() {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            var ref = cordova.InAppBrowser.open('http:///tecuroencasa.com/consultas', '_blank', 'location=yes');
+            var ref = cordova.InAppBrowser.open('http://tecuroencasa.com/consultas', '_blank', 'location=yes');
         };
 
-         $scope.goToInfo = function () {
+        $scope.goToInfo = function() {
             console.log('detailTreatmentCtrl -- goToInfo');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            var ref = cordova.InAppBrowser.open($scape.actuacion.url, '_blank', 'location=yes');
+            var ref = cordova.InAppBrowser.open($scope.actuacion.url, '_blank', 'location=yes');
         };
 
-
-        
-
-
-        $scope.modifyTreatment = function () {
+        $scope.modifyTreatment = function() {
             console.log('detailTreatmentCtrl -- modifyTreatment');
 
             if ((camposIntroducidosOk()) && (saveActuacionInSystem())) {
@@ -1555,13 +1551,13 @@ angular.module('app.controllers', [])
                     title: 'Añadir actuacion',
                     template: 'Actuacion modificada correctamente'
                 });
-                alertPopup.then(function (res) {
+                alertPopup.then(function(res) {
                     BlankService.initValuesFromMemory();
                     $window.history.back();
                 });
             }
         };
-        $scope.forwardAlarm = function (secondsForward) {
+        $scope.forwardAlarm = function(secondsForward) {
             console.log('detailTreatmentCtrl -- forwardAlarm');
 
             if (BlankService.detailTreatment.alarmId != undefined) {
@@ -1783,7 +1779,7 @@ angular.module('app.controllers', [])
             }
         }
 
-        $scope.showPopupAddNameAct = function () {
+        $scope.showPopupAddNameAct = function() {
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="actuacion.name">',
                 title: 'Nombre de la actuacion',
@@ -1793,7 +1789,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.actuacion.name) {
                                 e.preventDefault();
                             } else {
@@ -1803,15 +1799,15 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddDateAct = function () {
+        $scope.showPopupAddDateAct = function() {
             console.log("detailTreatmentCtrl -- $scope.showPopupAddDateAct");
             console.log("detailTreatmentCtrl -- $scope.showPopupAddDateAct", $scope.actuacion);
             console.log("detailTreatmentCtrl -- $scope.showPopupAddDateAct", $scope.actuacion.date);
@@ -1830,7 +1826,7 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                             if (!$scope.actuacion.date) {
                                 e.preventDefault();
                             } else {
@@ -1840,15 +1836,15 @@ angular.module('app.controllers', [])
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddMultiplePet = function () {
+        $scope.showPopupAddMultiplePet = function() {
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '<ion-checkbox ng-repeat="pet in mascotasToShow" ng-model="pet.selected" ng-checked="pet.selected" ng-value="pet.id">{{pet.subId}} ' +
@@ -1860,20 +1856,20 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
 
-        $scope.showPopupAddAlarm = function () {
+        $scope.showPopupAddAlarm = function() {
             var myPopup = $ionicPopup.show({
                 template: '<ion-list>                                ' +
                 '  <ion-radio ng-repeat="alarm in service.alarmas" ng-model="actuacion.nameAlarm" ng-value="alarm.name">{{alarm.name}} ' +
@@ -1885,15 +1881,15 @@ angular.module('app.controllers', [])
                     {
                         text: '<b>Guardar</b>',
                         type: 'button-positive',
-                        onTap: function (e) {
+                        onTap: function(e) {
                         }
                     }
                 ]
             });
-            myPopup.then(function (res) {
+            myPopup.then(function(res) {
             });
 
-            $timeout(function () {
+            $timeout(function() {
                 myPopup.close();
             }, 30000);
         };
