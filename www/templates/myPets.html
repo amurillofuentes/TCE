@@ -4,7 +4,6 @@
         </button>
     </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-
         <div class="spacer" style="width: 285px; height: 9px;"></div>
         <h4>Listado de mascotas</h4>
         <div class="spacer" style="width: 285px; height: 3px;"></div>
@@ -12,13 +11,13 @@
             <ion-list>
                 <ion-list ng-controller="myPetsCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
                     <ion-card>
-                        <ion-item class="item-thumbnail-left" ng-repeat="mascota in service.mascotas track by $index" ng-click="showDetailPet(mascota)">
-                            <img src={{mascota.image}}>
+                        <ion-item class="item-thumbnail-left" ng-repeat="mascota in service.mascotas track by $index" ng-click="showDetailPet(mascota)">    
+                            <img ng-src="{{urlForImage(mascota.image)}}" style="width:100%; height: auto;"/>
                             <h2>{{mascota.name}}</h2>
                             <p>{{mascota.date | date:'dd/MM/yyyy HH:mm'}}</p>
                             <ion-option-button class="button-positive" ng-click="borrarMascota(mascota)">
                                 Borrar
-                            </ion-option-button>
+                             </ion-option-button>
                         </ion-item>
                     </ion-card>
                 </ion-list>

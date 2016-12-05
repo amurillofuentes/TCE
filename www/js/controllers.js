@@ -8,37 +8,19 @@
  .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
  .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
  
-  //26/09/2016
-            1.-Revisar fecha cuando ya ha pasado
-                1.2-->popup si intentas añadir actuacion anterior a hoy
-                1.3-->si la actuacion ya ha pasado no mostrarla
-            2.-Mantener el filtro
-                2.1-->Arreglado
-            3.-Pierde fotos en mascotas
-                3.1-->En android ok
-            7.-Testear alertas otra vez
-                7.1-->En android ok
-            4.-Añadir más eventos--> Me los pasa Stefan
-                [14:01, 11/10/2016] Stefan Don Perro: VACUNA RABIA 4 meses después de mes de nacimiento                         
-                [14:02, 11/10/2016] Stefan Don Perro: VACUNA POLIVALENTE 3 meses después de la fecha de nacimiento                         
-                [14:02, 11/10/2016] Stefan Don Perro: TOS DE LAS PERRERAS a los 6 meses del nacimiento. 
-                Esto en perros                         
-                [14:03, 11/10/2016] Stefan Don Perro: En gatos VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento-->TODO: la lista no muestra la fecha del gato
-            5.-Informacion de la actuacion en boton-->Le paso plantilla con nombre y direccion y stefan me pasa la plantailla rellena
-            
-            6.-Seccion de información en lugar de "version solo test". Stefan me pasa el texto
-                [14:04, 11/10/2016] Stefan Don Perro: Necesita i de información con el texto:
-                AGENDOG es una herramienta sencilla que nos permite crear, modificar y recibir alertas de la agenda veterinaria de nuestras mascotas
-                Si en su utilización tienes alguna duda puedes contactar con info@servivet.com
-            
- 
+
 */
 
-angular.module('app.controllers', [])
+angular.module('starter.controllers', [])
 
     .controller('myPetsCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
         BlankService.initValuesFromMemory();
+
+        $scope.urlForImage = function(imageName) {
+            var trueOrigin = cordova.file.dataDirectory + imageName;
+            return trueOrigin;
+        }
 
         $scope.$on('$ionicView.afterEnter', function() {
             console.log('myPetsCtrl -- $ionicView.afterEnter');
@@ -73,7 +55,6 @@ angular.module('app.controllers', [])
             } catch (e) { return false; }
         };
 
-
         $scope.borrarMascota = function(pet) {
             console.log('myPetsCtrl -- borrarMascota');
             var confirmPopup = $ionicPopup.confirm({
@@ -98,6 +79,14 @@ angular.module('app.controllers', [])
         $scope.$on('$ionicView.afterEnter', function() {
             console.log('addMyPetsCtrl -- $ionicView.afterEnter');
         });
+
+        
+        
+        $scope.urlForImage = function(imageName) {
+            var trueOrigin = cordova.file.dataDirectory + imageName;
+            return trueOrigin;
+        }
+
 
         $scope.$on('$ionicView.loaded', function() {
             console.log('addMyPetsCtrl -- $ionicView.loaded');
@@ -162,12 +151,12 @@ angular.module('app.controllers', [])
         function camposIntroducidosOk() {
             console.log('addMyPetsCtrl -- camposIntroducidosOk');
 
+            $scope.pet.id = BlankService.IDGenerator(8);
             $scope.pet.name = $scope.interfaz.namePet;
             $scope.pet.date = $scope.interfaz.datePet;
             $scope.pet.type = $scope.interfaz.typePet;
             $scope.pet.image = $scope.interfaz.imagePet;
             $scope.pet.selected = true;
-            $scope.pet.id = BlankService.IDGenerator(8);
             console.log('addMyPetsCtrl -- camposIntroducidosOk--interfaz', JSON.stringify($scope.interfaz));
             console.log('addMyPetsCtrl -- camposIntroducidosOk--interfaz', JSON.stringify($scope.pet));
 
@@ -203,7 +192,7 @@ angular.module('app.controllers', [])
         };
 
         function createActuacion(nombre, fecha, tipo, url) {
-            console.log('addMyPetsCtrl -- createActuacion');
+            console.log('addMyPetsCtrl -- createActuacion with values nombre:', nombre, ' fecha:', fecha, ' tipo:', tipo, ' url:', url);
 
             $scope.act = {};
             $scope.act.id = BlankService.IDGenerator(8);
@@ -225,28 +214,27 @@ angular.module('app.controllers', [])
         }
 
         function processDateToInsert(currentTime, dateAInsertar) {
-            console.log('addMyPetsCtrl -- processDateToInsert');
+            console.log('addMyPetsCtrl -- processDateToInsert currentitme',currentTime, ' dateAInsertar:', dateAInsertar);
             if (currentTime > dateAInsertar) {
                 dateAInsertar.setMonth(dateAInsertar.getMonth() + 12);
             }
             return dateAInsertar;
         }
 
-
-
-
-
         function createActuacionesDeMascota(pet) {
             console.log('addMyPetsCtrl -- createActuacionesDeMascota');
 
             console.log('addMyPetsCtrl -- createActuacionesDeMascota--pet', JSON.stringify(pet));
 
+                var currentTime = new Date();
+                var fechaPet = pet.date;
+                var currentTime4Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 4));
+                var currentTime3Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 3));
+                var currentTime6Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 6));
+
             //creo las actuaciones depende de si es perro o gatoIcon
             if (pet.type.localeCompare('Perro') == 0) {
                 console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = perro');
-
-                var currentTime = new Date();
-
                 //10 de enero: desparasitacion interna        
                 $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-01-10T09:00:00')), "desparasitacion", 'http://tecuroencasa.com/hidatidosis/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
@@ -315,13 +303,7 @@ angular.module('app.controllers', [])
                 $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', processDateToInsert(currentTime, new Date('2016-12-10T09:00:00')), "analisis", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
-
                 //VACUNA RABIA 4 meses después de mes de nacimiento
-                var fechaPet = pet.date;
-                var currentTime4Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 4));
-                var currentTime3Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 3));
-                var currentTime6Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 6));
-
                 $scope.newact = createActuacion('VACUNA RABIA', processDateToInsert(currentTime, currentTime4Months), "medicacion");
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
@@ -337,6 +319,7 @@ angular.module('app.controllers', [])
                 console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = Gato');
                 //VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento
                 $scope.newact = createActuacion('VACUNA TRIVALENTE + LEUCEMIA', processDateToInsert(currentTime, currentTime3Months), "filaria", 'http://tecuroencasa.com/la-leucemia-felina/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
             }
@@ -355,19 +338,9 @@ angular.module('app.controllers', [])
 
         $scope.addPet = function() {
             console.log('addMyPetsCtrl -- addPet');
-
-            console.log('addMyPetsCtrl -- addPet1--interfaz', JSON.stringify($scope.interfaz));
-            console.log('addMyPetsCtrl -- addPet1--pet', JSON.stringify($scope.pet));
-
             if (camposIntroducidosOk()) {
-                console.log('addMyPetsCtrl -- addPet2--interfaz', JSON.stringify($scope.interfaz));
-                console.log('addMyPetsCtrl -- addPet2--pet', JSON.stringify($scope.pet));
                 if (BlankService.savePetInSystem($scope.pet)) {
-                    console.log('addMyPetsCtrl -- addPet3--interfaz', JSON.stringify($scope.interfaz));
-                    console.log('addMyPetsCtrl -- addPet3--pet', JSON.stringify($scope.pet));
                     if (createActuacionesDeMascota($scope.pet)) {
-                        console.log('addMyPetsCtrl -- addPet4--interfaz', JSON.stringify($scope.interfaz));
-                        console.log('addMyPetsCtrl -- addPet4--pet', JSON.stringify($scope.pet));
                         if (BlankService.saveActuacionesDeMascota()) {
                             var alertPopup = $ionicPopup.alert({
                                 title: 'Añadir mascotas',
@@ -381,8 +354,6 @@ angular.module('app.controllers', [])
                 }
             }
         };
-
-
 
         $scope.showPopupAddName = function() {
             console.log('addMyPetsCtrl -- showPopupAddName');
@@ -479,12 +450,18 @@ angular.module('app.controllers', [])
 
     })
 
+
     .controller('detailPetCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
         $scope.service = BlankService;
 
         $scope.$on('$ionicView.afterEnter', function() {
             console.log('detailPetCtrl - $ionicView.afterEnter');
         });
+
+        $scope.urlForImage = function(imageName) {
+            var trueOrigin = cordova.file.dataDirectory + imageName;
+            return trueOrigin;
+        }
 
         $scope.$on('$ionicView.loaded', function() {
             console.log('detailPetCtrl - $ionicView.loaded');
@@ -676,151 +653,142 @@ angular.module('app.controllers', [])
     .controller('menuCtrl', function($scope) {
     })
 
-    .controller('ImagePickerController', function($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
+    //.controller('ImagePickerController', function($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
+    .controller('ImagePickerController', function($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $cordovaFile, ImageService, FileService) {
         $ionicPlatform.ready(function() {
+            
+            //$scope.images = FileService.images();
+            //$scope.$apply();
+        
+    
+        $scope.comeFromDetail = false;
 
+        $scope.launchCapturePhoto = function(comeFromDetail) {
+            $scope.comeFromDetail = comeFromDetail;
+            console.log("ImagePickerController - launchCapturePhotooo");
+            if (navigator.camera) {
+                console.log("ImagePickerController -launchCapturePhoto- hay camara");
 
-            $scope.comeFromDetail = false;
+                navigator.camera.getPicture(onSuccess, onFail, {
+                    quality: 80,
+                    destinationType: Camera.DestinationType.FILE_URI
+                });
 
-            $scope.launchCapturePhoto = function(comeFromDetail) {
-                $scope.comeFromDetail = comeFromDetail;
-                console.log("ImagePickerController - launchCapturePhotooo");
-                if (navigator.camera) {
-                    console.log("ImagePickerController -launchCapturePhoto- hay camara");
-
-                    navigator.camera.getPicture(onSuccess, onFail, {
-                        quality: 80,
-                        destinationType: Camera.DestinationType.FILE_URI
-                    });
-
-                    function onSuccess(imageURI) {
-                        console.log("ImagePickerController -launchCapturePhoto- onSuccess");
-                        sendImageToCrop(imageURI);
-                    }
-                    function onFail(message) {
-                        console.log("ImagePickerController -launchCapturePhoto- onFail");
-                        alert(' falló porque: ' + mensaje);
-                    }
-
-                } else {
-                    console.log("ImagePickerController - no hay camara");
-                    alert('No hay cámara disponible');
+                function onSuccess(imageURI) {
+                    console.log("ImagePickerController -launchCapturePhoto- onSuccess");
+                    assignImageToView(imageURI);
                 }
-            };
-            $scope.getImageSaveContact = function(comeFromDetail) {
-                console.log("getImageSaveContact");
+                function onFail(message) {
+                    console.log("ImagePickerController -launchCapturePhoto- onFail");
+                    alert(' falló porque: ' + mensaje);
+                }
 
-                $scope.comeFromDetail = comeFromDetail;
-                var options = {
-                    maximumImagesCount: 1,
-                    width: 800,
-                    height: 800,
-                    quality: 80
-                };
-                var isAndroid = ionic.Platform.isAndroid();
-                if (isAndroid) {
-                    console.log("getImageSaveContact--android detectado");
-                    var version = ionic.Platform.version();
-                    //if(version<5){
-                    console.log("getImageSaveContact--android menor que 5");
-                    $cordovaImagePicker.getPictures(options).then(function(results) {
-                        console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
-                        if ((results != undefined) && (results.length > 0)) {
-                            sendImageToCrop(results[0]);
-                        }
-                    }, function(error) {
-                        console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
-                    });
-                    /*    
-                    }else{
-                        console.log("getImageSaveContact--android detectado 5 o superior");
-                        cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
-                            for (var permission in statuses) {
-                                switch (statuses[permission]) {
-                                    case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-                                        console.log("xxxxxImagePickerController -- Permission granted to use " + permission);
-                                        $cordovaImagePicker.getPictures(options).then(function (results) {
-                                            console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
-                                            if ((results != undefined) && (results.length > 0)) {
-                                                sendImageToCrop(results[0]);
-                                            }
-                                        }, function (error) {
-                                            console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
-                                        });
-                                        break;
-                                    case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
-                                        console.log("ImagePickerController -- Permission to use " + permission + " has not been requested yet");
-                                        break;
-                                    case cordova.plugins.diagnostic.permissionStatus.DENIED:
-                                        console.log("ImagePickerController -- Permission denied to use " + permission + " - ask again?");
-                                        break;
-                                    case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
-                                        console.log("ImagePickerController -- Permission permanently denied to use " + permission + " - guess we won't be using it then!");
-                                        break;
-                                }
+            } else {
+                console.log("ImagePickerController - no hay camara");
+                alert('No hay cámara disponible');
+            }
+        };
+        $scope.getImageSaveContact = function(comeFromDetail) {
+            console.log("getImageSaveContact");
+
+            $scope.comeFromDetail = comeFromDetail;
+            var options = {
+                maximumImagesCount: 1,
+                width: 800,
+                height: 800,
+                quality: 80
+            };
+            var isAndroid = ionic.Platform.isAndroid();
+            if (isAndroid) {
+                console.log("getImageSaveContact--android detectado");
+                var version = ionic.Platform.version();
+                if(version<5){
+                console.log("getImageSaveContact--android menor que 5");
+                $cordovaImagePicker.getPictures(options).then(function(results) {
+                    console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                    if ((results != undefined) && (results.length > 0)) {
+                        assignImageToView(results[0]);
+                    }
+                }, function(error) {
+                    console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                });
+                
+                }else{
+                    console.log("getImageSaveContact--android detectado 5 o superior");
+                    cordova.plugins.diagnostic.requestRuntimePermissions(function (statuses) {
+                        for (var permission in statuses) {
+                            switch (statuses[permission]) {
+                                case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                                    console.log("xxxxxImagePickerController -- Permission granted to use " + permission);
+                                    $cordovaImagePicker.getPictures(options).then(function (results) {
+                                        console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                                        if ((results != undefined) && (results.length > 0)) {
+                                            assignImageToView(results[0]);
+                                        }
+                                    }, function (error) {
+                                        console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                                    });
+                                    break;
+                                case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                                    console.log("ImagePickerController -- Permission to use " + permission + " has not been requested yet");
+                                    break;
+                                case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                                    console.log("ImagePickerController -- Permission denied to use " + permission + " - ask again?");
+                                    break;
+                                case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                                    console.log("ImagePickerController -- Permission permanently denied to use " + permission + " - guess we won't be using it then!");
+                                    break;
                             }
-                        }, function (error) {
-                            console.error("ImagePickerController -- The following error occurred: " + error);
-                        }, [
-                                cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
-                            ]);
-                    }
-                    */
-                } else {
-                    console.log("getImageSaveContact--ios tendra que ser");
-                    $cordovaImagePicker.getPictures(options).then(function(results) {
-                        console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
-                        if ((results != undefined) && (results.length > 0)) {
-                            sendImageToCrop(results[0]);
                         }
-                    }, function(error) {
-                        console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
-                    });
+                    }, function (error) {
+                        console.error("ImagePickerController -- The following error occurred: " + error);
+                    }, [
+                            cordova.plugins.diagnostic.runtimePermission.READ_EXTERNAL_STORAGE
+                        ]);
                 }
-            };
-            function sendImageToCrop(image) {
-                assignImageToView(image);
-                /*
-                                             console.log("ImagePickerController -- sendImageToCrop ", image);
-                                $jrCrop.crop({
-                                    url: image,
-                                    width: 60,
-                                    height: 60,
-                                    title: 'Selecciona'
-                                }).then(function (canvas) {
-                                    console.log("ImagePickerController -- $cordovaImagePicker.getPictures function ok ");
-                                    window.canvas2ImagePlugin.saveImageDataToLibrary(
-                                        function (msg) {
-                                            console.log("ImagePickerController -- saveImageDataToLibrary result ", msg);
-                                            assignImageToView(image);
-                                        },
-                                        function (err) {
-                                            console.log("ImagePickerController -- saveImageDataToLibrary error ", err);
-                                        },
-                                        canvas
-                                    );
-                                }, function () {
-                                });
-                 */
+                
+            } else {
+                console.log("getImageSaveContact--ios tendra que ser");
+                $cordovaImagePicker.getPictures(options).then(function(results) {
+                    console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
+                    if ((results != undefined) && (results.length > 0)) {
+                        assignImageToView(results[0]);
+                    }
+                }, function(error) {
+                    console.log('ImagePickerController -- Error: ' + JSON.stringify(error));
+                });
             }
+        };
 
-            function assignImageToView(msg) {
-                console.log("ImagePickerController -- assignImageToView ", msg);
-                if ($scope.comeFromDetail) {
-                    if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
-                        console.log("ImagePickerController -- asignando a BlankService detailpet image ");
-                        BlankService.detailPet.image = msg;
-                        console.log("ImagePickerController -- asignando a BlankService detailpet image ", BlankService.detailPet.image);
-                    }
-                } else {
-                    if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
-                        console.log("ImagePickerController -- asignando a interfaz imagePet ");
-                        $scope.interfaz.imagePet = msg;
-                        console.log("ImagePickerController -- asignando a interfaz imagePet ", $scope.interfaz.imagePet);
-                    }
+        $scope.addImage = function(type) {
+            console.log("ImagePickerController - addImage type ", type);
+            ImageService.handleMediaDialog(type).then(function(result) {
+                console.log("ImagePickerController - addImage then function ", result);
+                assignImageToView(result)
+                $scope.$apply();
+            });
+        };
+
+        function assignImageToView(msg) {
+            console.log("ImagePickerController -- assignImageToView ", msg);
+            BlankService.detailPet.image = msg;
+            $scope.interfaz.imagePet = msg;
+            /*
+            if ($scope.comeFromDetail) {
+                if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
+                    console.log("ImagePickerController -- asignando a BlankService detailpet image ");
+                    BlankService.detailPet.image = msg;
+                    console.log("ImagePickerController -- asignando a BlankService detailpet image ", BlankService.detailPet.image);
+                }
+            } else {
+                if (($scope.interfaz != undefined) && ($scope.interfaz != null) && ($scope.interfaz.imagePet != null) && ($scope.interfaz.imagePet != null)) {
+                    console.log("ImagePickerController -- asignando a interfaz imagePet ");
+                    $scope.interfaz.imagePet = msg;
+                    console.log("ImagePickerController -- asignando a interfaz imagePet ", $scope.interfaz.imagePet);
                 }
             }
-
+            */
+        }
         });
     })
 
@@ -832,7 +800,7 @@ angular.module('app.controllers', [])
         }
     })
 
-    .controller('homeCtrl', function($scope, $ionicModal, $ionicFilterBar, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
+    .controller('homeCtrl', function($scope, $ionicModal, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
         $scope.service = BlankService;
         $scope.$on('$ionicView.afterEnter', function() {
             console.log("homeCtrl -- $ionicView.afterEnter");
@@ -1103,7 +1071,7 @@ angular.module('app.controllers', [])
             console.log('homeCtrl -- showFilterBar');
 
             BlankService.initValuesFromMemory();
-
+            /*
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.items,
                 update: function(filteredItems, filterText) {
@@ -1116,6 +1084,7 @@ angular.module('app.controllers', [])
                     filtroTextoSearchFunction();
                 }
             });
+            */
         };
 
         $scope.refreshItems = function() {
@@ -1458,7 +1427,7 @@ angular.module('app.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification, $ionicPlatform) {
+    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification, $ionicPlatform, $cordovaInAppBrowser) {
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
@@ -1534,13 +1503,13 @@ angular.module('app.controllers', [])
         $scope.solicitarConsulta = function() {
             console.log('detailTreatmentCtrl -- solicitarConsulta');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            var ref = cordova.InAppBrowser.open('http://tecuroencasa.com/consultas', '_blank', 'location=yes');
+            cordova.InAppBrowser.open('http://tecuroencasa.com/consultas', '_blank', 'location=yes');
         };
 
         $scope.goToInfo = function() {
             console.log('detailTreatmentCtrl -- goToInfo');
             BlankService.saveDataInInternalPhoneMemory("detailTreatmentId", BlankService.detailTreatment.id);
-            var ref = cordova.InAppBrowser.open($scope.actuacion.url, '_blank', 'location=yes');
+            cordova.InAppBrowser.open($scope.actuacion.url, '_blank', 'location=yes');
         };
 
         $scope.modifyTreatment = function() {

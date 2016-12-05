@@ -1,8 +1,98 @@
-angular.module('app.services', [])
+angular.module('starter.services', [])
 
     .factory('BlankFactory', [function () {
     }])
 
+    .service('FileService', function() {
+        var images = [];
+        var IMAGE_STORAGE_KEY = 'images';
+        
+        function getImages() {
+            console.log("FileService - getImages");
+            var img = window.localStorage.getItem(IMAGE_STORAGE_KEY);
+            console.log("FileService - getImages img",img);
+
+            if (img) {
+                images = JSON.parse(img);
+            } 
+            return images;
+        };
+
+        function addImage(img) {
+            console.log("FileService - addImage ",img);
+            images.push(img);
+            window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify(images));
+            console.log("FileService - addImage img push done");
+        };
+        
+        return {
+            storeImage: addImage,
+            restoreImage: getImages
+        }
+    })
+    .service('ImageService', function($cordovaCamera, FileService, $q, $cordovaFile) {
+        function makeid() {
+            console.log("ImageService - makeid type ");
+            var text = '';
+            var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (var i = 0; i < 5; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+        };
+
+        function optionsForType(type) {
+            console.log("ImageService - optionsForType type ");
+            var source;
+            switch (type) {
+                case 0:
+                source = Camera.PictureSourceType.CAMERA;
+                break;
+
+                case 1:
+                source = Camera.PictureSourceType.PHOTOLIBRARY;
+                break;
+            }
+            return {
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: source,
+                allowEdit: false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false,
+                targetWidth: 100,
+                targetHeight:100
+            };
+        }
+
+        function saveMedia(type) {
+            console.log("ImageService - saveMedia type ");
+            return $q(function(resolve, reject) {
+                var options = optionsForType(type);
+                console.log("saveMedia");
+                $cordovaCamera.getPicture(options).then(function(imageUrl) {
+                    var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
+                    var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
+                    var newName = makeid() + name;
+                    console.log("ImageService - saveMedia with ", newName);
+                    
+                    $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName).then(function(info) {
+                        console.log("ImageService - saveMedia copyFile ");
+                        var ret=FileService.storeImage(newName);
+                        console.log("ImageService - saveMedia ret ", newName);
+                        resolve(newName);
+                    }, function(e) {
+                        console.log("ImageService - saveMedia reject ", ret);
+                        reject(ret);
+                    });
+                    
+                });
+            })
+        }
+        return {
+            handleMediaDialog: saveMedia
+        }
+    })
     .service('BlankService', [function () {
 
         this.treatmentId_notif;
@@ -35,8 +125,6 @@ angular.module('app.services', [])
                 return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
             }
         }
-
-
 
         this.removeByAttr = function (arr, attr, value) {
             var i = arr.length;
@@ -100,7 +188,6 @@ angular.module('app.services', [])
                 this.actuacionesDeLasMascotas = this.getDataFromInternalPhoneMemory("actuacionesDeLasMascotas");
             }
         }
-
 
         this.initDetailTreatment = function () {
             this.initValuesFromMemory();
@@ -206,13 +293,6 @@ angular.module('app.services', [])
         }
          this.processImageFromType=function(tipo) {
             console.log('services -- processImageFromType');
-            //Tipos de actuaciones para las imagenes    
-            //desparasitacion
-            //filaria
-            //analisis
-            //medicacion
-            //collar
-            //otra
             if(tipo=="desparasitacion"){
                 return "img/desparasitacionIcon.jpg"
             }else if(tipo=="filaria"){
@@ -243,4 +323,5 @@ angular.module('app.services', [])
             }
             return id;
         }
-    }]);
+    }])
+    ;

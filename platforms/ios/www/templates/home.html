@@ -33,7 +33,8 @@
                                 ng-click="showDetail(actuacion)">
                                 <img src={{actuacion.imageact}}>
                                 <h2>{{actuacion.name}}</h2>
-                                <p>{{actuacion.date | date:'dd/MM/yyyy HH:mm'}}</p>
+                                <!-- <p>{{actuacion.date | date:'dd/MM/yyyy HH:mm'}}</p> -->
+                                <p>{{actuacion.date | date:'dd/MM/yyyy'}}</p>
                                 <p>{{actuacion.namePet}}</p>
                                 <ion-option-button class="button-positive" ng-click="borrarActuacion(actuacion)">
                                     Borrar

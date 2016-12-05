@@ -7,57 +7,39 @@
         "files": {}
     },
     "installed_plugins": {
-        "com-badrit-base64": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+            "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-image-picker": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+            "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+            "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+            "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "cordova.plugins.diagnostic": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
-        },
-        "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+            "PACKAGE_NAME": "com.ionicframework.starter"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+            "PACKAGE_NAME": "com.ionicframework.starter"
         },
-        "org.devgeeks.Canvas2ImagePlugin": {
-            "PACKAGE_NAME": "com.ionicframework.myapp513489"
+        "cordova-plugin-camera": {
+            "CAMERA_USAGE_DESCRIPTION": " ",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        }
+    }
 }
