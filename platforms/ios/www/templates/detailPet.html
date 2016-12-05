@@ -24,9 +24,13 @@
         </ion-list>
 
         <div class="item item-thumbnail-left" ng-controller="ImagePickerController">
-            <img ng-src="{{urlForImage(service.detailPet.image)}}" style="width:100%; height: auto;"/>
-             <button class="button button-stable button-block " ng-click="addImage(1)">Imagen desde tu telefono</button>
-            <button class="button button-stable button-block " ng-click="addImage(0)">Imagen desde la camara</button>
+
+<img ng-src="{{urlForImage(service.detailPet.image)}}" style="width:100%; height: auto;" ng-if="service.detailPet.image.indexOf('/')<0"/>
+<img ng-src="{{service.detailPet.image}}" style="width:100%; height: auto;" ng-if="service.detailPet.image.indexOf('/')>-1"/>
+
+
+             <button class="button button-stable button-block " ng-click="addImage(1)">Galeria</button>
+            <button class="button button-stable button-block " ng-click="addImage(0)">Camara</button>
         </div>
 
         <div class="button-bar">

@@ -23,14 +23,12 @@ angular.module('starter.controllers', [])
         }
 
         $scope.$on('$ionicView.afterEnter', function() {
-            console.log('myPetsCtrl -- $ionicView.afterEnter');
-
+            console.log('myPetsCtrl -- $ionicView.afterEnter 1');
         });
 
         $scope.$on('$ionicView.loaded', function() {
             console.log('myPetsCtrl -- $ionicView.loaded');
-            BlankService.reloadHome = true;
-            BlankService.initValuesFromMemory();
+            
         });
 
         $scope.addPet = function() {
@@ -74,10 +72,11 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('addMyPetsCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
+    .controller('addMyPetsCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory, ImageService) {
 
         $scope.$on('$ionicView.afterEnter', function() {
             console.log('addMyPetsCtrl -- $ionicView.afterEnter');
+            
         });
 
         
@@ -93,6 +92,20 @@ angular.module('starter.controllers', [])
             initValues();
             BlankService.reloadHome = true;
             BlankService.initValuesFromMemory();
+            console.log('myPetsCtrl -- $ionicView.loaded 2');
+            console.log('myPetsCtrl -- $ionicView.loaded 3');
+            console.log('myPetsCtrl -- $ionicView.loaded check si tiene imagen asiganda');
+            //Si tiene contrabarra, imagen es gato o perro por defetcto (img/gatoicon_perroicon)
+            if($scope.interfaz.imagePet.indexOf('/') !== -1){
+                console.log('myPetsCtrl -- $ionicView.loaded check sin imagane. asignando pordefectp');
+                ImageService.handleSaveInitImage($scope.interfaz.imagePet).then(function(result) {
+                    console.log("ImagePickerController - addImage then function ", result);
+                    $scope.interfaz.imagePet=img;
+                    $scope.$apply();
+                });
+            }else{
+                console.log('myPetsCtrl -- $ionicView.loaded ya tiene imagen');
+            }
         });
 
         $scope.$on('$ionicView.beforeLeave', function() {
@@ -139,11 +152,12 @@ angular.module('starter.controllers', [])
 
         function selectIfDefaultImage() {
             console.log('addMyPetsCtrl -- selectIfDefaultImage');
+            
             if ($scope.interfaz.imagePet == "img/perroIcon.jpg" || $scope.interfaz.imagePet == "img/gatoIcon.jpg") {
                 $scope.interfaz.imagePet = "img/perroIcon.jpg";
                 if ($scope.interfaz.typePet == 'Gato') {
                     console.log('addMyPetsCtrl -- camposIntroducidosOk--cambiando imagen a gato al ser typoe gato');
-                    $scope.interfaz.imagePet = "img/gatoIcon.jpg";
+                    $scope.interfaz.imagePet = "img/gatoIcon.jpg"
                 }
             }
         }
@@ -653,13 +667,8 @@ angular.module('starter.controllers', [])
     .controller('menuCtrl', function($scope) {
     })
 
-    //.controller('ImagePickerController', function($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $jrCrop, $cordovaFile) {
     .controller('ImagePickerController', function($scope, $cordovaImagePicker, BlankService, $ionicPlatform, $cordovaContacts, $cordovaFile, ImageService, FileService) {
         $ionicPlatform.ready(function() {
-            
-            //$scope.images = FileService.images();
-            //$scope.$apply();
-        
     
         $scope.comeFromDetail = false;
 
@@ -800,10 +809,10 @@ angular.module('starter.controllers', [])
         }
     })
 
-    .controller('homeCtrl', function($scope, $ionicModal, $filter, BlankService, $state, $window, $ionicPopup, $timeout) {
+    .controller('homeCtrl', function($scope, $ionicModal, $filter, BlankService, $state, $window, $ionicPopup, $timeout, $ionicFilterBar) {
         $scope.service = BlankService;
         $scope.$on('$ionicView.afterEnter', function() {
-            console.log("homeCtrl -- $ionicView.afterEnter");
+            console.log("homeCtrl -- $ionicView.afterEnter init images");
         });
 
         $scope.hayMascotaFunct = function(value) {
@@ -844,7 +853,7 @@ angular.module('starter.controllers', [])
         });
 
         $scope.$on('$ionicView.beforeEnter', function() {
-            console.log("homeCtrl -- $ionicView.beforeEnter");
+            console.log("homeCtrl -- $ionicView.beforeEnter");            
             BlankService.initValuesFromMemory();
         });
 
@@ -866,6 +875,7 @@ angular.module('starter.controllers', [])
             console.log("homeCtrl -- check if come from notification");
             if (processIfComeFromNotification() == false) {
             }
+
         }
         BlankService.reloadHome = true;
         BlankService.initValuesFromMemory();
@@ -1071,7 +1081,7 @@ angular.module('starter.controllers', [])
             console.log('homeCtrl -- showFilterBar');
 
             BlankService.initValuesFromMemory();
-            /*
+            
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.items,
                 update: function(filteredItems, filterText) {
@@ -1084,7 +1094,7 @@ angular.module('starter.controllers', [])
                     filtroTextoSearchFunction();
                 }
             });
-            */
+            
         };
 
         $scope.refreshItems = function() {

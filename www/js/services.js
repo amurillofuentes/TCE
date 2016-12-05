@@ -31,6 +31,8 @@ angular.module('starter.services', [])
         }
     })
     .service('ImageService', function($cordovaCamera, FileService, $q, $cordovaFile) {
+
+
         function makeid() {
             console.log("ImageService - makeid type ");
             var text = '';
@@ -89,9 +91,32 @@ angular.module('starter.services', [])
                 });
             })
         }
-        return {
-            handleMediaDialog: saveMedia
+
+        function saveImageFromPathMedia(imageUrl) {
+            console.log("ImageService - saveMedia type ");
+            return $q(function(resolve, reject) {
+
+                    var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
+                    var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
+                    var newName = makeid() + name;
+                    console.log("ImageService - saveMedia with ", newName);
+                    
+                    $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName).then(function(info) {
+                        console.log("ImageService - saveMedia copyFile ");
+                        var ret=FileService.storeImage(newName);
+                        console.log("ImageService - saveMedia ret ", newName);
+                        resolve(newName);
+                    }, function(e) {
+                        console.log("ImageService - saveMedia reject ", ret);
+                        reject(ret);
+                    });
+                    
+                
+            })
         }
+        return {
+            handleMediaDialog: saveMedia,
+            handleSaveInitImage: saveImageFromPathMedia        }
     })
     .service('BlankService', [function () {
 
