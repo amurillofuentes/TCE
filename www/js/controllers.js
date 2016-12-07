@@ -229,7 +229,7 @@ angular.module('starter.controllers', [])
 
         function processDateToInsert(currentTime, dateAInsertar) {
             console.log('addMyPetsCtrl -- processDateToInsert currentitme',currentTime, ' dateAInsertar:', dateAInsertar);
-            if (currentTime > dateAInsertar) {
+            while (currentTime > dateAInsertar) {
                 dateAInsertar.setMonth(dateAInsertar.getMonth() + 12);
             }
             return dateAInsertar;
@@ -728,7 +728,7 @@ angular.module('starter.controllers', [])
                         for (var permission in statuses) {
                             switch (statuses[permission]) {
                                 case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-                                    console.log("xxxxxImagePickerController -- Permission granted to use " + permission);
+                                    console.log("ImagePickerController -- Permission granted to use " + permission);
                                     $cordovaImagePicker.getPictures(options).then(function (results) {
                                         console.log("ImagePickerController -- $cordovaImagePicker.getPictures ");
                                         if ((results != undefined) && (results.length > 0)) {
@@ -813,6 +813,9 @@ angular.module('starter.controllers', [])
         $scope.service = BlankService;
         $scope.$on('$ionicView.afterEnter', function() {
             console.log("homeCtrl -- $ionicView.afterEnter init images");
+            processOrder();
+            processGroup();
+            processVisibles();
         });
 
         $scope.hayMascotaFunct = function(value) {
@@ -871,11 +874,9 @@ angular.module('starter.controllers', [])
             mascotas = JSON.parse(retrievedObject);
             var filterBarInstance;
             getItems();
-            processGroup();
             console.log("homeCtrl -- check if come from notification");
             if (processIfComeFromNotification() == false) {
             }
-
         }
         BlankService.reloadHome = true;
         BlankService.initValuesFromMemory();
@@ -940,6 +941,7 @@ angular.module('starter.controllers', [])
             });
             myPopup.then(function(res) {
                 processOrder();
+                processVisibles();
             });
 
             $timeout(function() {
@@ -969,6 +971,7 @@ angular.module('starter.controllers', [])
             myPopup.then(function(res) {
                 BlankService.saveMascotas();
                 processGroup();
+                processVisibles();
             });
 
             $timeout(function() {
@@ -1004,10 +1007,11 @@ angular.module('starter.controllers', [])
                 BlankService.changeOrder('ordernombreactuacion');
             }
             BlankService.saveOrderSelected();
+            
         }
 
         function processGroup() {
-            console.log('homeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrl -- processGroup');
+            console.log('homeCtrl -- processGroup');
             var i = 0;
             var size = BlankService.actuacionesDeLasMascotas.length;
 
@@ -1017,6 +1021,22 @@ angular.module('starter.controllers', [])
                     if ((BlankService.actuacionesDeLasMascotas[i] != undefined) && (BlankService.actuacionesDeLasMascotas[i].namePet == BlankService.mascotas[k].name)) {
                         BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.mascotas[k].selected;
                     }
+                }
+            }
+            
+        }
+
+
+        function processVisibles(){
+            console.log('homeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrlhomeCtrl -- processVisibles');
+            processOrder();
+            var i = 0;
+            var size = BlankService.actuacionesDeLasMascotas.length;
+
+            for (i; i < BlankService.actuacionesDeLasMascotas.length; i++) {
+                var k = 0;
+                for (k; k < BlankService.mascotas.length; k++) {
+                    
                     if (fechaDeActuacionEsAnteriorAHoy(BlankService.actuacionesDeLasMascotas[i])) {
                         BlankService.actuacionesDeLasMascotas[i].isVisible = false;
                     }
@@ -1054,7 +1074,6 @@ angular.module('starter.controllers', [])
                             //establezco si es visible o no
                             BlankService.actuacionesDeLasMascotas[i].isVisible = BlankService.mascotas[k].selected;
                             //ahora, si no es visible, me da igual. Pero si lo es, hay que ver si entra dentro del filtro.
-
                             //si es visible
                             if (BlankService.mascotas[k].selected) {
                                 if (filterText == undefined | '') {

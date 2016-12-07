@@ -226,10 +226,10 @@ angular.module('starter.services', [])
             }
         };
        
-        this.orderSelected="Mascota";
+        this.orderSelected="Fecha";
 
         this.saveOrderSelected = function () {
-            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-services -- saveOrderSelected", JSON.stringify(this.orderSelected));
+            console.log("Services -- saveOrderSelected", JSON.stringify(this.orderSelected));
             this.saveDataInInternalPhoneMemory("orderSelected", this.orderSelected);
             return true;
         };
