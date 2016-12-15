@@ -38,6 +38,10 @@
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "781703763498",
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
         }
     },
     "dependent_plugins": {

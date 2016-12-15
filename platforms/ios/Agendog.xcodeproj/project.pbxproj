@@ -37,6 +37,37 @@
 		9E37A77635DF4CD181CA240E /* APPLocalNotificationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7731423F94E84ED5A8201407 /* APPLocalNotificationOptions.m */; };
 		77236B6E3F5C4B599D6E56DF /* UIApplication+APPLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = D6820DDBAF9645CD805EEA67 /* UIApplication+APPLocalNotification.m */; };
 		C0E77F42DFA24751A849E798 /* UILocalNotification+APPLocalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CBFA222E75841898BC5AE96 /* UILocalNotification+APPLocalNotification.m */; };
+		A4773768D3B948B0911B91CC /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 802216C02F5B4AA2902EC321 /* AppDelegate+notification.m */; };
+		9C45557958064C19A67A7C6D /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AF6228B5A13D4FEEB03A60A3 /* PushPlugin.m */; };
+		D797C0A21C7B42A1B436B6E0 /* libGGLCloudMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D969EC8D944B4A71A9FA719C /* libGGLCloudMessaging.a */; };
+		B57100CB60B64353A1B89D34 /* libGGLCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 738119C9D40246F1A3752D81 /* libGGLCore.a */; };
+		F37E719550324B69B0F74B29 /* libGGLInstanceIDLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A15E261CB28428498D28C29 /* libGGLInstanceIDLib.a */; };
+		2A446389B02D4AF5815EB99F /* libGIP_Reachability.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C12B9128A16450D9FC15E9F /* libGIP_Reachability.a */; };
+		EC5AF1E1498342ADBB546B4A /* libGSDK_Overload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 061FFA9586114C5F9F083B16 /* libGSDK_Overload.a */; };
+		95716E31BC134FCAA0D288BE /* libGTMSessionFetcher_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35650A7DEF3A4E49A831CA82 /* libGTMSessionFetcher_core.a */; };
+		9CCF989629B0477CB64FB634 /* libGTMSessionFetcher_full.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC60822C5C3448AD960CBF74 /* libGTMSessionFetcher_full.a */; };
+		701CED9B38354F258B9690ED /* libGTMStackTrace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E97DC34C07784108833145F5 /* libGTMStackTrace.a */; };
+		3C6B97EEC41F4022A2CBCC36 /* libGTM_AddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB9DBA3C1CA43CBBBCB848D /* libGTM_AddressBook.a */; };
+		3A3696FF3BE94D33B794CAEB /* libGTM_DebugUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 610454C9A0BF4146BF9FDE8E /* libGTM_DebugUtils.a */; };
+		270D62277A1446F899445F56 /* libGTM_GTMURLBuilder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CD9BDAAEE8B452B903FBE8A /* libGTM_GTMURLBuilder.a */; };
+		6676D4E7CB8E4AF285CC2FE8 /* libGTM_KVO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD61BB812CA4AF58B2A30C2 /* libGTM_KVO.a */; };
+		1AFBA4109AA2425F83B34C6A /* libGTM_NSData+zlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0E112EA29146E6B2EB7625 /* libGTM_NSData+zlib.a */; };
+		BF05C519BAEC45E3B63A91AD /* libGTM_NSDictionary+URLArguments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF923A8372C6486A9E9EE7EA /* libGTM_NSDictionary+URLArguments.a */; };
+		FAD7C3029F784CEF8FF5D9A3 /* libGTM_NSScannerJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F770067A88E433DB47AF22C /* libGTM_NSScannerJSON.a */; };
+		755B0526BEE34AB194F7B778 /* libGTM_NSStringHTML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32136D5406C1448DA69F3049 /* libGTM_NSStringHTML.a */; };
+		18BA58BDEF874F0B8E882AEA /* libGTM_NSStringXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 161A78D21C684DEF95EAAB4E /* libGTM_NSStringXML.a */; };
+		1D14CE9F674F4F3B885713B9 /* libGTM_Regex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A413760D664F59B19F89BF /* libGTM_Regex.a */; };
+		460207B9F5084406B0B2F4F8 /* libGTM_RoundedRectPath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8016B3D18A40D481646E0D /* libGTM_RoundedRectPath.a */; };
+		2FE7679F6176447B94232EF8 /* libGTM_StringEncoding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3892A5EC9EBC4621A8C294B9 /* libGTM_StringEncoding.a */; };
+		9F8254D118174E528E47396F /* libGTM_SystemVersion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E950B8522794CBEAA3A0F26 /* libGTM_SystemVersion.a */; };
+		879EC534B17D418BBA8C779B /* libGTM_UIFont+LineHeight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 817FA9C6E0A44F7ABFFDB844 /* libGTM_UIFont+LineHeight.a */; };
+		39085D0479184507BA55817B /* libGTM_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCEDB9E51BA4A058EE516DD /* libGTM_core.a */; };
+		3FC2B9CDAC1E41C3BB24AC7E /* libGTM_iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BF9C839CB84978B5C127D5 /* libGTM_iPhone.a */; };
+		29A6965050434ADDBCE8917F /* libGcmLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F015880AA145EEB806B208 /* libGcmLib.a */; };
+		195E9922DBDD4A0AA58CE6CF /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA279EF5E894500A18258CE /* libProtocolBuffers.a */; };
+		AD4662BA651F420DA5C4580A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003C4C2A1CE4459ABA66F758 /* AddressBook.framework */; };
+		32990E5177B0495689E5C80D /* libsqlite3.tbd in Resources */ = {isa = PBXBuildFile; fileRef = CF27B8D1672C4300ACE964E5 /* libsqlite3.tbd */; };
+		7F6E379189BC4AF38940D562 /* libz.tbd in Resources */ = {isa = PBXBuildFile; fileRef = 1AAFFAC0935C4493AFEE06E9 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +150,54 @@
 		ACF8A3CE325E4F538F5315AC /* APPLocalNotificationOptions.h */ = {isa = PBXFileReference; name = "APPLocalNotificationOptions.h"; path = "de.appplant.cordova.plugin.local-notification/APPLocalNotificationOptions.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		A5245B6182CF4B74A3F20FD0 /* UIApplication+APPLocalNotification.h */ = {isa = PBXFileReference; name = "UIApplication+APPLocalNotification.h"; path = "de.appplant.cordova.plugin.local-notification/UIApplication+APPLocalNotification.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 		820EB0C7D15F44ADB484A8C8 /* UILocalNotification+APPLocalNotification.h */ = {isa = PBXFileReference; name = "UILocalNotification+APPLocalNotification.h"; path = "de.appplant.cordova.plugin.local-notification/UILocalNotification+APPLocalNotification.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		802216C02F5B4AA2902EC321 /* AppDelegate+notification.m */ = {isa = PBXFileReference; name = "AppDelegate+notification.m"; path = "phonegap-plugin-push/AppDelegate+notification.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		AF6228B5A13D4FEEB03A60A3 /* PushPlugin.m */ = {isa = PBXFileReference; name = "PushPlugin.m"; path = "phonegap-plugin-push/PushPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		D969EC8D944B4A71A9FA719C /* libGGLCloudMessaging.a */ = {isa = PBXFileReference; name = "libGGLCloudMessaging.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLCloudMessaging.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		738119C9D40246F1A3752D81 /* libGGLCore.a */ = {isa = PBXFileReference; name = "libGGLCore.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLCore.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7A15E261CB28428498D28C29 /* libGGLInstanceIDLib.a */ = {isa = PBXFileReference; name = "libGGLInstanceIDLib.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLInstanceIDLib.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9C12B9128A16450D9FC15E9F /* libGIP_Reachability.a */ = {isa = PBXFileReference; name = "libGIP_Reachability.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGIP_Reachability.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		061FFA9586114C5F9F083B16 /* libGSDK_Overload.a */ = {isa = PBXFileReference; name = "libGSDK_Overload.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGSDK_Overload.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		35650A7DEF3A4E49A831CA82 /* libGTMSessionFetcher_core.a */ = {isa = PBXFileReference; name = "libGTMSessionFetcher_core.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMSessionFetcher_core.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		FC60822C5C3448AD960CBF74 /* libGTMSessionFetcher_full.a */ = {isa = PBXFileReference; name = "libGTMSessionFetcher_full.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMSessionFetcher_full.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E97DC34C07784108833145F5 /* libGTMStackTrace.a */ = {isa = PBXFileReference; name = "libGTMStackTrace.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMStackTrace.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		AAB9DBA3C1CA43CBBBCB848D /* libGTM_AddressBook.a */ = {isa = PBXFileReference; name = "libGTM_AddressBook.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_AddressBook.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		610454C9A0BF4146BF9FDE8E /* libGTM_DebugUtils.a */ = {isa = PBXFileReference; name = "libGTM_DebugUtils.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_DebugUtils.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6CD9BDAAEE8B452B903FBE8A /* libGTM_GTMURLBuilder.a */ = {isa = PBXFileReference; name = "libGTM_GTMURLBuilder.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_GTMURLBuilder.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7DD61BB812CA4AF58B2A30C2 /* libGTM_KVO.a */ = {isa = PBXFileReference; name = "libGTM_KVO.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_KVO.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		FF0E112EA29146E6B2EB7625 /* libGTM_NSData+zlib.a */ = {isa = PBXFileReference; name = "libGTM_NSData+zlib.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSData+zlib.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CF923A8372C6486A9E9EE7EA /* libGTM_NSDictionary+URLArguments.a */ = {isa = PBXFileReference; name = "libGTM_NSDictionary+URLArguments.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSDictionary+URLArguments.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		4F770067A88E433DB47AF22C /* libGTM_NSScannerJSON.a */ = {isa = PBXFileReference; name = "libGTM_NSScannerJSON.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSScannerJSON.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		32136D5406C1448DA69F3049 /* libGTM_NSStringHTML.a */ = {isa = PBXFileReference; name = "libGTM_NSStringHTML.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSStringHTML.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		161A78D21C684DEF95EAAB4E /* libGTM_NSStringXML.a */ = {isa = PBXFileReference; name = "libGTM_NSStringXML.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSStringXML.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		17A413760D664F59B19F89BF /* libGTM_Regex.a */ = {isa = PBXFileReference; name = "libGTM_Regex.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_Regex.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CA8016B3D18A40D481646E0D /* libGTM_RoundedRectPath.a */ = {isa = PBXFileReference; name = "libGTM_RoundedRectPath.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_RoundedRectPath.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3892A5EC9EBC4621A8C294B9 /* libGTM_StringEncoding.a */ = {isa = PBXFileReference; name = "libGTM_StringEncoding.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_StringEncoding.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1E950B8522794CBEAA3A0F26 /* libGTM_SystemVersion.a */ = {isa = PBXFileReference; name = "libGTM_SystemVersion.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_SystemVersion.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		817FA9C6E0A44F7ABFFDB844 /* libGTM_UIFont+LineHeight.a */ = {isa = PBXFileReference; name = "libGTM_UIFont+LineHeight.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_UIFont+LineHeight.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		ABCEDB9E51BA4A058EE516DD /* libGTM_core.a */ = {isa = PBXFileReference; name = "libGTM_core.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_core.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		76BF9C839CB84978B5C127D5 /* libGTM_iPhone.a */ = {isa = PBXFileReference; name = "libGTM_iPhone.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_iPhone.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		52F015880AA145EEB806B208 /* libGcmLib.a */ = {isa = PBXFileReference; name = "libGcmLib.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libGcmLib.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		BFA279EF5E894500A18258CE /* libProtocolBuffers.a */ = {isa = PBXFileReference; name = "libProtocolBuffers.a"; path = "Agendog/Plugins/phonegap-plugin-push/GCM/Libraries/libProtocolBuffers.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9AC26D4FA7CB43F0BCE70BC2 /* AppDelegate+notification.h */ = {isa = PBXFileReference; name = "AppDelegate+notification.h"; path = "phonegap-plugin-push/AppDelegate+notification.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		DE32F27D293B4C1CB6C610D9 /* PushPlugin.h */ = {isa = PBXFileReference; name = "PushPlugin.h"; path = "phonegap-plugin-push/PushPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		0F096F6B3D7C4975B2B7A0F0 /* GGLInstanceID.h */ = {isa = PBXFileReference; name = "GGLInstanceID.h"; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceID.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		1A18A7DDD5CF48F89C1162BF /* GGLInstanceIDConfig.h */ = {isa = PBXFileReference; name = "GGLInstanceIDConfig.h"; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceIDConfig.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		B6D01E84C69A4531B98E61AB /* GGLInstanceIDDelegate.h */ = {isa = PBXFileReference; name = "GGLInstanceIDDelegate.h"; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceIDDelegate.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		03F9BDA7432948298A9FEEB6 /* GGLInstanceIDHeaders.h */ = {isa = PBXFileReference; name = "GGLInstanceIDHeaders.h"; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceIDHeaders.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		61E0A7A268C2403C9163F27F /* CloudMessaging.h */ = {isa = PBXFileReference; name = "CloudMessaging.h"; path = "phonegap-plugin-push/GCM/Headers/CloudMessaging.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5078655769324D1B81A7D0A0 /* GGLContext+CloudMessaging.h */ = {isa = PBXFileReference; name = "GGLContext+CloudMessaging.h"; path = "phonegap-plugin-push/GCM/Headers/GGLContext+CloudMessaging.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		553A0522D0C64874926217FD /* Core.h */ = {isa = PBXFileReference; name = "Core.h"; path = "phonegap-plugin-push/GCM/Headers/Core.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5C2DA29C206540FE8696DC5A /* GGLConfiguration.h */ = {isa = PBXFileReference; name = "GGLConfiguration.h"; path = "phonegap-plugin-push/GCM/Headers/GGLConfiguration.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5A02DABB9FA04D17A3460AC1 /* GGLContext.h */ = {isa = PBXFileReference; name = "GGLContext.h"; path = "phonegap-plugin-push/GCM/Headers/GGLContext.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		9058B934D2904638877AE8C1 /* GGLErrorCode.h */ = {isa = PBXFileReference; name = "GGLErrorCode.h"; path = "phonegap-plugin-push/GCM/Headers/GGLErrorCode.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		DBB72A15C0C54866B34FFF03 /* GCMConfig.h */ = {isa = PBXFileReference; name = "GCMConfig.h"; path = "phonegap-plugin-push/GCM/Headers/GCMConfig.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		20FC8D7461994E5480895879 /* GCMPubSub.h */ = {isa = PBXFileReference; name = "GCMPubSub.h"; path = "phonegap-plugin-push/GCM/Headers/GCMPubSub.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		5B234334166A400A8B438D6F /* GCMReceiverDelegate.h */ = {isa = PBXFileReference; name = "GCMReceiverDelegate.h"; path = "phonegap-plugin-push/GCM/Headers/GCMReceiverDelegate.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		B7F9E9630DA94561AA34C34C /* GCMService.h */ = {isa = PBXFileReference; name = "GCMService.h"; path = "phonegap-plugin-push/GCM/Headers/GCMService.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		8B24EB0B40EC4481814D90A7 /* GoogleCloudMessaging.h */ = {isa = PBXFileReference; name = "GoogleCloudMessaging.h"; path = "phonegap-plugin-push/GCM/Headers/GoogleCloudMessaging.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		003C4C2A1CE4459ABA66F758 /* AddressBook.framework */ = {isa = PBXFileReference; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		CF27B8D1672C4300ACE964E5 /* libsqlite3.tbd */ = {isa = PBXFileReference; name = "libsqlite3.tbd"; path = "libsqlite3.tbd"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1AAFFAC0935C4493AFEE06E9 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "libz.tbd"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +209,35 @@
 				3323B98E76E047018D721208 /* ImageIO.framework in Frameworks */,
 				A2C6B5D5BA4D4EB1B4F393A3 /* CoreLocation.framework in Frameworks */,
 				A728650571BA44E8938E7375 /* AVFoundation.framework in Frameworks */,
+				D797C0A21C7B42A1B436B6E0 /* libGGLCloudMessaging.a in Frameworks */,
+				B57100CB60B64353A1B89D34 /* libGGLCore.a in Frameworks */,
+				F37E719550324B69B0F74B29 /* libGGLInstanceIDLib.a in Frameworks */,
+				2A446389B02D4AF5815EB99F /* libGIP_Reachability.a in Frameworks */,
+				EC5AF1E1498342ADBB546B4A /* libGSDK_Overload.a in Frameworks */,
+				95716E31BC134FCAA0D288BE /* libGTMSessionFetcher_core.a in Frameworks */,
+				9CCF989629B0477CB64FB634 /* libGTMSessionFetcher_full.a in Frameworks */,
+				701CED9B38354F258B9690ED /* libGTMStackTrace.a in Frameworks */,
+				3C6B97EEC41F4022A2CBCC36 /* libGTM_AddressBook.a in Frameworks */,
+				3A3696FF3BE94D33B794CAEB /* libGTM_DebugUtils.a in Frameworks */,
+				270D62277A1446F899445F56 /* libGTM_GTMURLBuilder.a in Frameworks */,
+				6676D4E7CB8E4AF285CC2FE8 /* libGTM_KVO.a in Frameworks */,
+				1AFBA4109AA2425F83B34C6A /* libGTM_NSData+zlib.a in Frameworks */,
+				BF05C519BAEC45E3B63A91AD /* libGTM_NSDictionary+URLArguments.a in Frameworks */,
+				FAD7C3029F784CEF8FF5D9A3 /* libGTM_NSScannerJSON.a in Frameworks */,
+				755B0526BEE34AB194F7B778 /* libGTM_NSStringHTML.a in Frameworks */,
+				18BA58BDEF874F0B8E882AEA /* libGTM_NSStringXML.a in Frameworks */,
+				1D14CE9F674F4F3B885713B9 /* libGTM_Regex.a in Frameworks */,
+				460207B9F5084406B0B2F4F8 /* libGTM_RoundedRectPath.a in Frameworks */,
+				2FE7679F6176447B94232EF8 /* libGTM_StringEncoding.a in Frameworks */,
+				9F8254D118174E528E47396F /* libGTM_SystemVersion.a in Frameworks */,
+				879EC534B17D418BBA8C779B /* libGTM_UIFont+LineHeight.a in Frameworks */,
+				39085D0479184507BA55817B /* libGTM_core.a in Frameworks */,
+				3FC2B9CDAC1E41C3BB24AC7E /* libGTM_iPhone.a in Frameworks */,
+				29A6965050434ADDBCE8917F /* libGcmLib.a in Frameworks */,
+				195E9922DBDD4A0AA58CE6CF /* libProtocolBuffers.a in Frameworks */,
+				AD4662BA651F420DA5C4580A /* AddressBook.framework in Frameworks */,
+				32990E5177B0495689E5C80D /* libsqlite3.tbd in Resources */,
+				7F6E379189BC4AF38940D562 /* libz.tbd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +310,35 @@
 				79C7283EDA6C4D659701B41B /* ImageIO.framework */,
 				643A804182394C1D959511DC /* CoreLocation.framework */,
 				21443B4B849C4EF19905B06C /* AVFoundation.framework */,
+				D969EC8D944B4A71A9FA719C /* libGGLCloudMessaging.a */,
+				738119C9D40246F1A3752D81 /* libGGLCore.a */,
+				7A15E261CB28428498D28C29 /* libGGLInstanceIDLib.a */,
+				9C12B9128A16450D9FC15E9F /* libGIP_Reachability.a */,
+				061FFA9586114C5F9F083B16 /* libGSDK_Overload.a */,
+				35650A7DEF3A4E49A831CA82 /* libGTMSessionFetcher_core.a */,
+				FC60822C5C3448AD960CBF74 /* libGTMSessionFetcher_full.a */,
+				E97DC34C07784108833145F5 /* libGTMStackTrace.a */,
+				AAB9DBA3C1CA43CBBBCB848D /* libGTM_AddressBook.a */,
+				610454C9A0BF4146BF9FDE8E /* libGTM_DebugUtils.a */,
+				6CD9BDAAEE8B452B903FBE8A /* libGTM_GTMURLBuilder.a */,
+				7DD61BB812CA4AF58B2A30C2 /* libGTM_KVO.a */,
+				FF0E112EA29146E6B2EB7625 /* libGTM_NSData+zlib.a */,
+				CF923A8372C6486A9E9EE7EA /* libGTM_NSDictionary+URLArguments.a */,
+				4F770067A88E433DB47AF22C /* libGTM_NSScannerJSON.a */,
+				32136D5406C1448DA69F3049 /* libGTM_NSStringHTML.a */,
+				161A78D21C684DEF95EAAB4E /* libGTM_NSStringXML.a */,
+				17A413760D664F59B19F89BF /* libGTM_Regex.a */,
+				CA8016B3D18A40D481646E0D /* libGTM_RoundedRectPath.a */,
+				3892A5EC9EBC4621A8C294B9 /* libGTM_StringEncoding.a */,
+				1E950B8522794CBEAA3A0F26 /* libGTM_SystemVersion.a */,
+				817FA9C6E0A44F7ABFFDB844 /* libGTM_UIFont+LineHeight.a */,
+				ABCEDB9E51BA4A058EE516DD /* libGTM_core.a */,
+				76BF9C839CB84978B5C127D5 /* libGTM_iPhone.a */,
+				52F015880AA145EEB806B208 /* libGcmLib.a */,
+				BFA279EF5E894500A18258CE /* libProtocolBuffers.a */,
+				003C4C2A1CE4459ABA66F758 /* AddressBook.framework */,
+				CF27B8D1672C4300ACE964E5 /* libsqlite3.tbd */,
+				1AAFFAC0935C4493AFEE06E9 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,6 +404,25 @@
 				ACF8A3CE325E4F538F5315AC /* APPLocalNotificationOptions.h */,
 				A5245B6182CF4B74A3F20FD0 /* UIApplication+APPLocalNotification.h */,
 				820EB0C7D15F44ADB484A8C8 /* UILocalNotification+APPLocalNotification.h */,
+				802216C02F5B4AA2902EC321 /* AppDelegate+notification.m */,
+				AF6228B5A13D4FEEB03A60A3 /* PushPlugin.m */,
+				9AC26D4FA7CB43F0BCE70BC2 /* AppDelegate+notification.h */,
+				DE32F27D293B4C1CB6C610D9 /* PushPlugin.h */,
+				0F096F6B3D7C4975B2B7A0F0 /* GGLInstanceID.h */,
+				1A18A7DDD5CF48F89C1162BF /* GGLInstanceIDConfig.h */,
+				B6D01E84C69A4531B98E61AB /* GGLInstanceIDDelegate.h */,
+				03F9BDA7432948298A9FEEB6 /* GGLInstanceIDHeaders.h */,
+				61E0A7A268C2403C9163F27F /* CloudMessaging.h */,
+				5078655769324D1B81A7D0A0 /* GGLContext+CloudMessaging.h */,
+				553A0522D0C64874926217FD /* Core.h */,
+				5C2DA29C206540FE8696DC5A /* GGLConfiguration.h */,
+				5A02DABB9FA04D17A3460AC1 /* GGLContext.h */,
+				9058B934D2904638877AE8C1 /* GGLErrorCode.h */,
+				DBB72A15C0C54866B34FFF03 /* GCMConfig.h */,
+				20FC8D7461994E5480895879 /* GCMPubSub.h */,
+				5B234334166A400A8B438D6F /* GCMReceiverDelegate.h */,
+				B7F9E9630DA94561AA34C34C /* GCMService.h */,
+				8B24EB0B40EC4481814D90A7 /* GoogleCloudMessaging.h */,
 			);
 			name = Plugins;
 			path = Agendog/Plugins;
@@ -408,6 +564,8 @@
 				9E37A77635DF4CD181CA240E /* APPLocalNotificationOptions.m in Sources */,
 				77236B6E3F5C4B599D6E56DF /* UIApplication+APPLocalNotification.m in Sources */,
 				C0E77F42DFA24751A849E798 /* UILocalNotification+APPLocalNotification.m in Sources */,
+				A4773768D3B948B0911B91CC /* AppDelegate+notification.m in Sources */,
+				9C45557958064C19A67A7C6D /* PushPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +600,35 @@
 				INFOPLIST_FILE = "Agendog/Agendog-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_NAME = Agendog;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+				);
 			};
 			name = Debug;
 		};
@@ -462,6 +649,35 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Agendog/Agendog-Info.plist";
 				PRODUCT_NAME = Agendog;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+				);
 			};
 			name = Release;
 		};
@@ -489,6 +705,35 @@
 				PRODUCT_NAME = Agendog;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+				);
 			};
 			name = Debug;
 		};
@@ -515,6 +760,35 @@
 				PRODUCT_NAME = Agendog;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/Agendog/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+				);
 			};
 			name = Release;
 		};

@@ -289,6 +289,14 @@ module.exports = [
             "cordova.plugins.notification.local.core",
             "plugin.notification.local.core"
         ]
+    },
+    {
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "id": "phonegap-plugin-push.PushNotification",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -305,7 +313,8 @@ module.exports.metadata =
     "cordova-plugin-file": "4.3.0",
     "cordova-plugin-inappbrowser": "1.5.0",
     "cordova-plugin-app-event": "1.2.0",
-    "de.appplant.cordova.plugin.local-notification": "0.8.4"
+    "de.appplant.cordova.plugin.local-notification": "0.8.4",
+    "phonegap-plugin-push": "1.8.4"
 }
 // BOTTOM OF METADATA
 });

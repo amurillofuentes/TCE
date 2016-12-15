@@ -45,5 +45,13 @@
     <string/>
     <key>UIRequiresFullScreen</key>
     <true/>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>GCM_SENDER_ID</key>
+    <string>781703763498</string>
+    <key>IS_GCM_ENABLED</key>
+    <true/>
   </dict>
 </plist>

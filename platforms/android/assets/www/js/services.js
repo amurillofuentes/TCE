@@ -134,7 +134,8 @@ angular.module('starter.services', [])
             { "name": "Nunca", "id": "0" },
             { "name": "12 horas antes", "id": "1" },
             { "name": "1 día antes", "id": "2" },
-            { "name": "2 días antes", "id": "3" }];
+            { "name": "2 días antes", "id": "3" },
+            { "name": "En breves", "id": "4" }];
 
         this.orders = [
             { "name": "Fecha", "id": "0", "seleccionado": "true" },

@@ -5,32 +5,102 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'jett.ionic.filter.bar'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+/*
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+APPID: 146ea6b0
+messagingSenderId: "781703763498"
+   
+testPush token
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0
+
+Public Key
+9e798e8a7cafe4a7431b13202a8d30cac56f7cbfeba3e92a
+
+Secret Key
+a6d325a0aa5895aff19fdbf9b73a3b834323caa6cd0a057a
+
+
+*/
+angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'starter.services', 'ngCordova', 'jett.ionic.filter.bar'])
+.config(function($ionicCloudProvider) {
+  $ionicCloudProvider.init({
+    "core": {
+      "app_id": "146ea6b0"
+    },
+    "push": {
+      "sender_id": "781703763498",
+      "pluginConfig": {
+        "ios": {
+          "badge": true,
+          "sound": true
+        },
+        "android": {
+          "iconColor": "#343434"
+        }
+      }
     }
   });
 })
+.run(function($ionicPlatform, $ionicPush) {
+    $ionicPlatform.ready(function () {
+      $ionicPush.register().then(function(t) {
+      return $ionicPush.saveToken(t);
+      }).then(function(t) {
+      console.log('initialising push cloud ionic system Token saved:', t.token);
+      window.localStorage.setItem("token", t.token);
+      //alert("inicio"+t.token+"fin");
+    });
+
+
+    /*
+        console.log('initialising GCM/APNS app registration for notifications token');      
+        var push = PushNotification.init({
+            android: {
+                senderID: "781703763498"
+            },
+            ios: {
+                alert: true,
+                badge: true,
+                sound: true
+            },
+            windows: {}
+        });
+
+        push.on('registration', function (data) {
+            console.log('GCM/APNS app registration EVENT');
+            console.log('GCM/APNS app registration for notifications token data received: ' + JSON.stringify(data));
+            var token = data.registrationId;
+
+        });
+
+        push.on('error', function (data) {
+            console.log("GCM/APNS error event: "+JSON.stringify(data));
+        });
+
+        push.on('notification', function(data) {
+            console.log('notification event');
+            navigator.notification.alert(
+                    data.message,         // message
+                    null,                 // callback
+                    data.title,           // title
+                    'Ok'                  // buttonName
+            );
+    });
+
+    $scope.$on('cloud:push:notification', function(event, data) {
+  var msg = data.message;
+  alert(msg.title + ': ' + msg.text);
+});
+*/
+    });
+})
+
+
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-
+$stateProvider
 .state('menu.addMyPets', {
     url: '/addPet',
     views: {

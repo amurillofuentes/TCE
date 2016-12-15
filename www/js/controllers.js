@@ -8,10 +8,10 @@
  .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
  .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
  
-
+ TODO: HAcer que se borren las alarmas
 */
 
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic.cloud'])
 
     .controller('myPetsCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state) {
         $scope.service = BlankService;
@@ -76,16 +76,12 @@ angular.module('starter.controllers', [])
 
         $scope.$on('$ionicView.afterEnter', function() {
             console.log('addMyPetsCtrl -- $ionicView.afterEnter');
-            
         });
 
-        
-        
         $scope.urlForImage = function(imageName) {
             var trueOrigin = cordova.file.dataDirectory + imageName;
             return trueOrigin;
         }
-
 
         $scope.$on('$ionicView.loaded', function() {
             console.log('addMyPetsCtrl -- $ionicView.loaded');
@@ -782,7 +778,7 @@ angular.module('starter.controllers', [])
             console.log("ImagePickerController -- assignImageToView ", msg);
             BlankService.detailPet.image = msg;
             $scope.interfaz.imagePet = msg;
-            /*
+            
             if ($scope.comeFromDetail) {
                 if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
                     console.log("ImagePickerController -- asignando a BlankService detailpet image ");
@@ -796,12 +792,12 @@ angular.module('starter.controllers', [])
                     console.log("ImagePickerController -- asignando a interfaz imagePet ", $scope.interfaz.imagePet);
                 }
             }
-            */
+            
         }
         });
     })
 
-    .controller('versionsCtrl', function($scope, BlankService) {
+    .controller('versionsCtrl', function($scope, BlankService, $ionicPush, $http) {
         $scope.service = BlankService;
         $scope.borrarDatos = function() {
             console.log('versionsCtrl -- borrarDatos');
@@ -865,25 +861,19 @@ angular.module('starter.controllers', [])
             initSystem();
         });
 
-        function initSystem() {
-            console.log('homeCtrl -- initSystem');
-            $scope.interfaz = {};
-            $scope.interfaz.order = 'Mascota';
-            mascotas = [];
-            var retrievedObject = localStorage.getItem("mascotas");
-            mascotas = JSON.parse(retrievedObject);
-            var filterBarInstance;
-            getItems();
-            console.log("homeCtrl -- check if come from notification");
-            if (processIfComeFromNotification() == false) {
-            }
-        }
-        BlankService.reloadHome = true;
-        BlankService.initValuesFromMemory();
+        $scope.$on('cloud:push:notification', function(event, data) {
+            var msg = data.message;
+            //todo: notificaciones dobles???
+            console.log('homeCtrl -- notificacion recibida');
 
-        $scope.processIfComeFromNotification = function() {
-            console.log('homeCtrl -- processIfComeFromNotification');
-            found = false;
+            var title=msg.title;
+            var text=msg.text;
+            var idAlarm=msg.payload.idAlarm;
+            var notificationProfilID=msg.payload.treatmentId;
+            window.localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
+            console.log('detailTreatmentCtrl -- Notificacion -- todo ok. redirect to detailTreatment.');
+
+           var found = false;
             if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
                 BlankService.treatmentId_notif = BlankService.getDataFromInternalPhoneMemory("treatmentId_notif");
                 if ((BlankService.treatmentId_notif != undefined) && (BlankService.treatmentId_notif != null) && (BlankService.treatmentId_notif != '')) {
@@ -915,10 +905,22 @@ angular.module('starter.controllers', [])
                     }
                 }
             }
-            return found;
+        });
+
+        function initSystem() {
+            console.log('homeCtrl -- initSystem');
+            $scope.interfaz = {};
+            $scope.interfaz.order = 'Mascota';
+            mascotas = [];
+            var retrievedObject = localStorage.getItem("mascotas");
+            mascotas = JSON.parse(retrievedObject);
+            var filterBarInstance;
+            getItems();
+            console.log("homeCtrl -- check if come from notification");
         }
 
-
+        BlankService.reloadHome = true;
+        BlankService.initValuesFromMemory();
 
         $scope.showFilterOrder = function() {
             console.log('homeCtrl -- showFilterOrder');
@@ -1139,7 +1141,7 @@ angular.module('starter.controllers', [])
         }
     })
 
-    .controller('addTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification) {
+    .controller('addTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $http) {
         $scope.service = BlankService;
         $scope.$on('$ionicView.afterEnter', function() {
         });
@@ -1365,42 +1367,71 @@ angular.module('starter.controllers', [])
                         } else if (actuacion.alarmId == "3") {
                             //2 dias antes
                             timeAlarm = new Date(now - 48 * 60 * 60 * 1000);
+                        } else if (actuacion.alarmId == "4") {
+                            //15 segundos
+                            var currentimeNew=new Date();
+                            currentimeNew.setSeconds(currentimeNew.getSeconds() + 15);
+                            timeAlarm=currentimeNew;
                         }
+
+                         
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
-                        asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
+                        $scope.asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
                         return idAlarmaInSystem;
                     }
                 }
             }
         }
 
-        function asignoAlarmaInSystem(cuando, idAlarm, treatmentId, text) {
-
-            var currentimeNew=new Date();
-            currentimeNew.setSeconds(currentimeNew.getSeconds() + 15);
-            cuando=currentimeNew;
-
+        $scope.asignoAlarmaInSystem = function(cuando, idAlarm, treatmentId, text) {
             console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
             console.log('addTreatmentCtrl -- text: ', text);
             console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
             console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
             console.log('addTreatmentCtrl -- cuando: ', cuando);
 
-            try {
-                $cordovaLocalNotification.schedule({
-                    id: idAlarm,
-                    title: 'AgenDog',
-                    text: text,
-                    at: cuando,
-                    //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
-                    data: { treatmentId: treatmentId }
-                }).then(function(result) {
-                    console.log('addTreatmentCtrl -- asignoAlarmaInSystem - Notification launched');
-                });
-            } catch (e) {
-                console.log('addTreatmentCtrl -- asignoAlarmaInSystem - ha petao', e);
-            }
+           
+
+            var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
+            var tokens = [window.localStorage.getItem("token")];
+            var profile = 'tce';
+
+            // Build the request object
+            var req = {
+                method: 'POST',
+                url: 'https://api.ionic.io/push/notifications',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwt
+                },
+                data: {
+                    "tokens": tokens,
+                    "profile": profile,
+                    "scheduled": cuando,
+                    "notification": {
+                        "title": "Actuacion pendiente",
+                        "message": text,
+                        "sound": "default",
+                        "android": {
+                                "sound": "default",
+                                "payload": {
+                                    "idAlarm": idAlarm,
+                                    "treatmentId": treatmentId
+                                }
+                        }
+                    }
+                }
+            };
+
+            // Make the API call
+            $http(req).success(function(resp){
+            // Handle success
+           // alert("Ionic Push: Push success"+ resp);
+            }).error(function(error){
+            // Handle error 
+            //alert("Ionic Push: Push error"+error);
+            });
         };
 
         function camposIntroducidosOk() {
@@ -1461,12 +1492,12 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $cordovaLocalNotification, $ionicPlatform, $cordovaInAppBrowser) {
+    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicPlatform, $cordovaInAppBrowser) {
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
         $ionicPlatform.ready(function() {
-
+/*
             $scope.scheduleInstantNotification = function(idAlarm, text, at, treatmentId) {
                 console.log('detailTreatmentCtrl - Notificacion  -  scheduleInstantNotification');
                 $cordovaLocalNotification.schedule({
@@ -1493,6 +1524,7 @@ angular.module('starter.controllers', [])
                     console.log('detailPetCtrl -- Notification Canceled ', idAlarm);
                 });
             };
+            */
         });
         $scope.$on('$ionicView.loaded', function() {
             console.log('detailTreatmentCtrl -- $ionicView.loaded');
@@ -1560,19 +1592,7 @@ angular.module('starter.controllers', [])
                 });
             }
         };
-        $scope.forwardAlarm = function(secondsForward) {
-            console.log('detailTreatmentCtrl -- forwardAlarm');
 
-            if (BlankService.detailTreatment.alarmId != undefined) {
-                if (BlankService.detailTreatment.alarmId != "0") {
-                    var idAlarmaInSystem = BlankService.detailTreatment.alarmSystemId;
-                    var now = new Date().getTime();
-                    var timeAlarm = new Date(now + secondsForward * 1000);
-                    var text = BlankService.detailTreatment.namePet + " - " + BlankService.detailTreatment.name;
-                    asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, BlankService.detailTreatment.id, text)
-                }
-            }
-        };
 
         function getActuacion(pet) {
             console.log('detailTreatmentCtrl -- getActuacion');
@@ -1614,32 +1634,14 @@ angular.module('starter.controllers', [])
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
             return true;
         }
-        function processDeleteAlarm(actuacion) {
-            console.log('detailTreatmentCtrl -- processDeleteAlarm');
-
-            if (actuacion != undefined) {
-                if (actuacion.alarmSystemId != undefined) {
-                    borroAlarmaInSystem(actuacion.alarmSystemId)
-                }
-            }
-        }
-        function borroAlarmaInSystem(idAlarm) {
-            console.log('detailTreatmentCtrl -- borroAlarmaInSystem');
-
-            console.log('detailPetCtrl -- borroAlarmaInSystem with');
-            console.log('detailPetCtrl -- idAlarm: ', idAlarm);
-            try {
-                $scope.cancelSingleNotification(idAlarm);
-            } catch (e) { }
-        };
-
+       
         function processAssignAlarm(actuacion) {
             console.log('detailTreatmentCtrl -- processAssignAlarm');
 
             if ((actuacion != undefined) && (actuacion.date != undefined)) {
                 if (actuacion.nameAlarm != undefined) {
                     if (actuacion.alarmId != "0") {
-                        var now = new Date(actuacion.date).getTime();
+                        var now = actuacion.date.getTime();
                         var timeAlarm;
                         if (actuacion.alarmId == "1") {
                             //12 horas antes
@@ -1651,7 +1653,13 @@ angular.module('starter.controllers', [])
                         } else if (actuacion.alarmId == "3") {
                             //2 dias antes
                             timeAlarm = new Date(now - 48 * 60 * 60 * 1000);
+                        } else if (actuacion.alarmId == "4") {
+                            //15 segundos
+                            var currentimeNew=new Date();
+                            currentimeNew.setSeconds(currentimeNew.getSeconds() + 15);
+                            timeAlarm=currentimeNew;
                         }
+
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
                         asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
@@ -1661,16 +1669,54 @@ angular.module('starter.controllers', [])
             }
         }
 
-        function asignoAlarmaInSystem(cuando, idAlarm, treatmentId, text) {
-            console.log('detailTreatmentCtrl -- asignoAlarmaInSystem with...');
-            console.log('detailTreatmentCtrl -- text: ', text);
-            console.log('detailTreatmentCtrl -- idAlarm: ', idAlarm);
-            console.log('detailTreatmentCtrl -- treatmentId: ', treatmentId);
-            console.log('detailTreatmentCtrl -- cuando: ', cuando);
-            try {
-                $scope.scheduleInstantNotification(10, text, cuando, treatmentId);
-            } catch (e) {
-            }
+         $scope.asignoAlarmaInSystem = function(cuando, idAlarm, treatmentId, text) {
+            console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
+            console.log('addTreatmentCtrl -- text: ', text);
+            console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
+            console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+            console.log('addTreatmentCtrl -- cuando: ', cuando);
+
+           
+
+            var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
+            var tokens = [window.localStorage.getItem("token")];
+            var profile = 'tce';
+
+            // Build the request object
+            var req = {
+                method: 'POST',
+                url: 'https://api.ionic.io/push/notifications',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwt
+                },
+                data: {
+                    "tokens": tokens,
+                    "profile": profile,
+                    "scheduled": cuando,
+                    "notification": {
+                        "title": "Actuacion pendiente",
+                        "message": text,
+                        "sound": "default",
+                        "android": {
+                                "sound": "default",
+                                "payload": {
+                                    "idAlarm": idAlarm,
+                                    "treatmentId": treatmentId
+                                }
+                        }
+                    }
+                }
+            };
+
+            // Make the API call
+            $http(req).success(function(resp){
+            // Handle success
+           // alert("Ionic Push: Push success"+ resp);
+            }).error(function(error){
+            // Handle error 
+            //alert("Ionic Push: Push error"+error);
+            });
         };
 
         function camposIntroducidosOk() {
