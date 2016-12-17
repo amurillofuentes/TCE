@@ -1,5 +1,4 @@
 /*
-    
  .bar.bar-stable { background-color: #E9D423;
  .bar-stable .button { background-color: #079307;
  .bar-stable .button.button-clear { color: #FF0000;
@@ -7,8 +6,9 @@
  .button.button-positive { border-color: #4DB6CE;
  .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
  .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
- 
- TODO: HAcer que se borren las alarmas
+  TODO: HAcer que se borren las alarmas
+  TODO: ANDROID: imagenes + splash + icono
+  TODO;: android agrupar notificaciones
 */
 
 angular.module('starter.controllers', ['ionic.cloud'])
@@ -797,7 +797,7 @@ angular.module('starter.controllers', ['ionic.cloud'])
         });
     })
 
-    .controller('versionsCtrl', function($scope, BlankService, $ionicPush, $http) {
+    .controller('versionsCtrl', function($scope, BlankService, $ionicPush) {
         $scope.service = BlankService;
         $scope.borrarDatos = function() {
             console.log('versionsCtrl -- borrarDatos');
@@ -870,8 +870,15 @@ angular.module('starter.controllers', ['ionic.cloud'])
             var text=msg.text;
             var idAlarm=msg.payload.idAlarm;
             var notificationProfilID=msg.payload.treatmentId;
+            
+            
+            console.log('homeCtrl -- Notificacion --  title -->',title);
+            console.log('homeCtrl -- Notificacion --  text -->',text);
+            console.log('homeCtrl -- Notificacion --  idAlarm -->',idAlarm);
+            console.log('homeCtrl -- Notificacion --  idActuacion -->',notificationProfilID);
+
             window.localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
-            console.log('detailTreatmentCtrl -- Notificacion -- todo ok. redirect to detailTreatment.');
+            console.log('homeCtrl -- Notificacion -- todo ok. redirect to detailTreatment.');
 
            var found = false;
             if (BlankService.existsDataFromInternalPhoneMemory("treatmentId_notif")) {
@@ -996,6 +1003,8 @@ angular.module('starter.controllers', ['ionic.cloud'])
             BlankService.initValuesFromMemory();
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', $item.id);
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
+             processOrder();
+             processVisibles();
         };
 
         function processOrder() {
@@ -1339,23 +1348,64 @@ angular.module('starter.controllers', ['ionic.cloud'])
                     $scope.act.typePet = pet.type;
                     $scope.act.namePet = pet.name;
                     $scope.act.imagePet = pet.image;
-                    $scope.act.alarmSystemId = processAssignAlarm($scope.act);
-                    BlankService.actuacionesDeLasMascotas.push($scope.act);
+                    
+                    $scope.act.alarmSystemId = processAssignAlarm($scope.act, k);
+
+                    var actToTinsert=createActuacion($scope.act);
+
+                    console.log('addTreatmentCtrl -- saveActuacionInSystem push pet -- ', JSON.stringify(actToTinsert));
+                    BlankService.actuacionesDeLasMascotas.push(actToTinsert);
+                    console.log('addTreatmentCtrl -- saveActuacionInSystem push pet -- ', JSON.stringify(BlankService.actuacionesDeLasMascotas));
                 }
             }
 
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
 
             return true;
-        };
+        }
 
-        function processAssignAlarm(actuacion) {
+        function createActuacion(actuacion){
+            var nuevaActuacion={};
+            nuevaActuacion.id=actuacion.id;
+            nuevaActuacion.name=actuacion.name;
+            nuevaActuacion.date=actuacion.date;
+            nuevaActuacion.url=actuacion.url;
+            nuevaActuacion.nameAlarm=actuacion.nameAlarm;
+            nuevaActuacion.alarmId=actuacion.ialarmIdd;
+            nuevaActuacion.idPet=actuacion.idPet;
+            nuevaActuacion.namePet=actuacion.namePet;
+            nuevaActuacion.datePet=actuacion.datePet;
+            nuevaActuacion.typePet=actuacion.typePet;
+            nuevaActuacion.imagePet=actuacion.imagePet;
+            nuevaActuacion.isVisible=actuacion.isVisible;
+            nuevaActuacion.imageact=actuacion.imageact;
+            return nuevaActuacion;
+        }
+
+
+        function parseDate(input) {
+            var parts = input.match(/(\d+)/g);
+            // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+            // return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+            var dateFormatted=parts[0]+"-"+(parts[1])+"-"+parts[2];
+            var date=new Date(dateFormatted);
+            date.setHours(11);
+            date.setMinutes(00);
+            date.setSeconds(00);
+            return date;
+        }
+
+        function processAssignAlarm(actuacion, addMinutes) {
             console.log('addTreatmentCtrl -- processAssignAlarm');
 
-            if (actuacion != undefined) {
+              if ((actuacion != undefined) && (actuacion.date != undefined)) {
                 if (actuacion.nameAlarm != undefined) {
                     if (actuacion.alarmId != "0") {
-                        var now = actuacion.date.getTime();
+                        var nowDate = actuacion.date;
+                        console.log('addTreatmentCtrl -- processAssignAlarm -- nowDate ', nowDate);
+                        //var now = parseDate(nowDate);
+                        var now = actuacion.date;
+                        console.log('addTreatmentCtrl -- processAssignAlarm -- now', now);
                         var timeAlarm;
                         if (actuacion.alarmId == "1") {
                             //12 horas antes
@@ -1374,65 +1424,83 @@ angular.module('starter.controllers', ['ionic.cloud'])
                             timeAlarm=currentimeNew;
                         }
 
+                        if(addMinutes!=null){
+                            if(addMinutes!=undefined){
+                                if(addMinutes>0){
+                                    console.log('detailTreatmentCtrl -- processAssignAlarm -- adding minutes ', addMinutes);
+                                    timeAlarm.setTime(timeAlarm.getTime() + addMinutes*120000+60000);
+                                    console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
+                                }
+                            }
+                        }
                          
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
-                        $scope.asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
+
+                        var cuando=timeAlarm;
+                        var idAlarm=idAlarmaInSystem;
+                        var treatmentId=actuacion.id;
+                        var text = actuacion.namePet + " - " + actuacion.name;
+
+                        console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
+                        console.log('addTreatmentCtrl -- text: ', text);
+                        console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
+                        console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- cuando: ', cuando);
+
+                        
+
+                        var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
+                        var tokens = [window.localStorage.getItem("token")];
+                        var profile = 'tce';
+
+                        // Build the request object
+                        var req = {
+                            method: 'POST',
+                            url: 'https://api.ionic.io/push/notifications',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + jwt
+                            },
+                            data: {
+                                "tokens": tokens,
+                                "profile": profile,
+                                "scheduled": cuando,
+                                "notification": {
+                                    "title": "Actuacion pendiente",
+                                    "message": text,
+                                    "sound": "default",
+                                    "android": {
+                                            "sound": "default",
+                                            "payload": {
+                                                "idAlarm": idAlarm,
+                                                "treatmentId": treatmentId
+                                            }
+                                    }
+                                }
+                            }
+                        };
+
+                        // Make the API call
+                        $http(req).success(function(resp){
+                            // Handle success
+                            // alert("Ionic Push: Push success"+ resp);
+                            console.log('addTreatmentCtrl -- Notificacion -asignoAlarmaInSystem OK');
+                            console.log('addTreatmentCtrl -- Notificacion -text: ', text);
+                            console.log('addTreatmentCtrl -- Notificacion -idAlarm: ', idAlarm);
+                            console.log('addTreatmentCtrl -- Notificacion -treatmentId: ', treatmentId);
+                            console.log('addTreatmentCtrl -- Notificacion -cuando: ', cuando);
+                        }).error(function(error){
+                        // Handle error 
+                        //alert("Ionic Push: Push error"+error);
+                        });
+
+
                         return idAlarmaInSystem;
                     }
                 }
             }
         }
-
-        $scope.asignoAlarmaInSystem = function(cuando, idAlarm, treatmentId, text) {
-            console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
-            console.log('addTreatmentCtrl -- text: ', text);
-            console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
-            console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
-            console.log('addTreatmentCtrl -- cuando: ', cuando);
-
-           
-
-            var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
-            var tokens = [window.localStorage.getItem("token")];
-            var profile = 'tce';
-
-            // Build the request object
-            var req = {
-                method: 'POST',
-                url: 'https://api.ionic.io/push/notifications',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + jwt
-                },
-                data: {
-                    "tokens": tokens,
-                    "profile": profile,
-                    "scheduled": cuando,
-                    "notification": {
-                        "title": "Actuacion pendiente",
-                        "message": text,
-                        "sound": "default",
-                        "android": {
-                                "sound": "default",
-                                "payload": {
-                                    "idAlarm": idAlarm,
-                                    "treatmentId": treatmentId
-                                }
-                        }
-                    }
-                }
-            };
-
-            // Make the API call
-            $http(req).success(function(resp){
-            // Handle success
-           // alert("Ionic Push: Push success"+ resp);
-            }).error(function(error){
-            // Handle error 
-            //alert("Ionic Push: Push error"+error);
-            });
-        };
 
         function camposIntroducidosOk() {
             console.log('addTreatmentCtrl -- camposIntroducidosOk');
@@ -1492,40 +1560,10 @@ angular.module('starter.controllers', ['ionic.cloud'])
         };
     })
 
-    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicPlatform, $cordovaInAppBrowser) {
+    .controller('detailTreatmentCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicPlatform, $cordovaInAppBrowser, $http) {
         $scope.actuacion = BlankService.detailTreatment;
         $scope.service = BlankService;
 
-        $ionicPlatform.ready(function() {
-/*
-            $scope.scheduleInstantNotification = function(idAlarm, text, at, treatmentId) {
-                console.log('detailTreatmentCtrl - Notificacion  -  scheduleInstantNotification');
-                $cordovaLocalNotification.schedule({
-                    id: idAlarm,
-                    title: 'AgenDog',
-                    text: text,
-                    at: at,
-                    //badge: number, The number currently set as the badge of the app icon in Springboard (iOS) or at the right-hand side of the local notification (Android)
-                    data: { "treatmentId": treatmentId }
-                });
-
-                cordova.plugins.notification.local.on("click", function(notification) {
-                    console.log('detailTreatmentCtrl - Notificacion  -  pulso en notificacion');
-                    var unpackedData = JSON.parse(notification.data);
-                    var notificationProfilID = unpackedData['treatmentId'];
-                    localStorage.setItem("treatmentId_notif", JSON.stringify(notificationProfilID));
-                    console.log('detailTreatmentCtrl -- Notificacion -- todo ok. redirect to detailTreatment.');
-                    $state.go('menu.home');
-                });
-            };
-
-            $scope.cancelSingleNotification = function(idAlarm) {
-                $cordovaLocalNotification.cancel(idAlarm).then(function(result) {
-                    console.log('detailPetCtrl -- Notification Canceled ', idAlarm);
-                });
-            };
-            */
-        });
         $scope.$on('$ionicView.loaded', function() {
             console.log('detailTreatmentCtrl -- $ionicView.loaded');
             BlankService.initDetailTreatment();
@@ -1597,7 +1635,7 @@ angular.module('starter.controllers', ['ionic.cloud'])
         function getActuacion(pet) {
             console.log('detailTreatmentCtrl -- getActuacion');
             $scope.newact = {};
-            $scope.newact.id = BlankService.IDGenerator(8);
+            $scope.newact.id = $scope.act.id;
             $scope.newact.name = $scope.act.name;
             $scope.newact.date = $scope.act.date;
             $scope.newact.idPet = pet.id;
@@ -1623,52 +1661,143 @@ angular.module('starter.controllers', ['ionic.cloud'])
                     someSelected = true;
                     var act = getActuacion(BlankService.findPetbyName($scope.mascotasToShow[k].subId));
                     //añado alarma
-                    act.alarmSystemId = processAssignAlarm(act);
+                    console.log("detailTreatmentCtrl -- saveActuacionInSystem -- actuacion a procesar par alarma", JSON.stringify(act));
+                    act.alarmSystemId = processAssignAlarm(act, k);
+                    //borro la antigua
+                    BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', BlankService.detailTreatment.id);
                     BlankService.actuacionesDeLasMascotas.push(act);
                 }
             }
 
-            //borro la antigua
-            BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', BlankService.detailTreatment.id);
+           
 
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
             return true;
         }
        
-        function processAssignAlarm(actuacion) {
-            console.log('detailTreatmentCtrl -- processAssignAlarm');
+        function parseDate(input) {
+            var parts = input.match(/(\d+)/g);
+            var parts = input.match(/(\d+)/g);
+            // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+            // return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+            var dateFormatted=parts[0]+"-"+(parts[1])+"-"+parts[2];
+            var date=new Date(dateFormatted);
+            date.setHours(11);
+            date.setMinutes(00);
+            date.setSeconds(00);
+            return date;
+        }
 
+        function processAssignAlarm(actuacion, addMinutes) {
+            console.log('detailTreatmentCtrl -- processAssignAlarm -- actuacion', JSON.stringify(actuacion));
+            console.log('detailTreatmentCtrl -- processAssignAlarm -- addMinutes', addMinutes);
             if ((actuacion != undefined) && (actuacion.date != undefined)) {
                 if (actuacion.nameAlarm != undefined) {
                     if (actuacion.alarmId != "0") {
-                        var now = actuacion.date.getTime();
+                        var nowDate = actuacion.date;
+                        //var now = parseDate(nowDate);
+                        var now = actuacion.date;
+                        console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista actuacion', now);
                         var timeAlarm;
                         if (actuacion.alarmId == "1") {
                             //12 horas antes
                             timeAlarm = new Date(now - 12 * 60 * 60 * 1000);
+                            console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
                         } else if (actuacion.alarmId == "2") {
                             //1 dia antes
-                            var now = actuacion.date.getTime();
                             timeAlarm = new Date(now - 24 * 60 * 60 * 1000);
+                            console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
                         } else if (actuacion.alarmId == "3") {
                             //2 dias antes
                             timeAlarm = new Date(now - 48 * 60 * 60 * 1000);
+                            console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
                         } else if (actuacion.alarmId == "4") {
                             //15 segundos
                             var currentimeNew=new Date();
                             currentimeNew.setSeconds(currentimeNew.getSeconds() + 15);
                             timeAlarm=currentimeNew;
+                            console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
+                        }
+
+
+                        if(addMinutes!=null){
+                            if(addMinutes!=undefined){
+                                if(addMinutes>0){
+                                    console.log('detailTreatmentCtrl -- processAssignAlarm -- adding minutes ', addMinutes);
+                                    timeAlarm.setTime(timeAlarm.getTime() + addMinutes*120000+60000);
+                                    console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
+                                }
+                            }
                         }
 
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
-                        asignoAlarmaInSystem(timeAlarm, idAlarmaInSystem, actuacion.id, text)
+
+                        var cuando=timeAlarm;
+                        var idAlarm=idAlarmaInSystem;
+                        var treatmentId=actuacion.id;
+                        var text = actuacion.namePet + " - " + actuacion.name;
+                        
+                        console.log('detailTreatmentCtrl -- processAssignAlarm-- asignoAlarmaInSystem with');
+                        console.log('detailTreatmentCtrl -- processAssignAlarm-- text: ', text);
+                        console.log('detailTreatmentCtrl -- processAssignAlarm-- idAlarm: ', idAlarm);
+                        console.log('detailTreatmentCtrl -- processAssignAlarm-- treatmentId: ', treatmentId);
+                        console.log('detailTreatmentCtrl -- processAssignAlarm-- cuando: ', cuando);
+
+
+                        var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
+                        var tokens = [window.localStorage.getItem("token")];
+                        var profile = 'tce';
+
+                        // Build the request object
+                        var req = {
+                            method: 'POST',
+                            url: 'https://api.ionic.io/push/notifications',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + jwt
+                            },
+                            data: {
+                                "tokens": tokens,
+                                "profile": profile,
+                                "scheduled": cuando,
+                                "notification": {
+                                    "title": "Actuacion pendiente",
+                                    "message": text,
+                                    "sound": "default",
+                                    "android": {
+                                            "sound": "default",
+                                            "payload": {
+                                                "idAlarm": idAlarm,
+                                                "treatmentId": treatmentId
+                                            }
+                                    }
+                                }
+                            }
+                        };
+
+                        // Make the API call
+                        $http(req).success(function(resp){
+                            console.log('addTreatmentCtrl -- Notificacion -asignoAlarmaInSystem OK');
+                            console.log('addTreatmentCtrl -- Notificacion -text: ', text);
+                            console.log('addTreatmentCtrl -- Notificacion -idAlarm: ', idAlarm);
+                            console.log('addTreatmentCtrl -- Notificacion -treatmentId: ', treatmentId);
+                            console.log('addTreatmentCtrl -- Notificacion -processAssignAlarm-- cuando: ', cuando);
+                        // Handle success
+                    // alert("Ionic Push: Push success"+ resp);
+                        }).error(function(error){
+                        // Handle error 
+                        //alert("Ionic Push: Push error"+error);
+                        });
+
+
                         return idAlarmaInSystem;
-                    }
-                }
-            }
+                                }
+                            }
+                        }
         }
 
+/*
          $scope.asignoAlarmaInSystem = function(cuando, idAlarm, treatmentId, text) {
             console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
             console.log('addTreatmentCtrl -- text: ', text);
@@ -1718,11 +1847,11 @@ angular.module('starter.controllers', ['ionic.cloud'])
             //alert("Ionic Push: Push error"+error);
             });
         };
-
+*/
         function camposIntroducidosOk() {
-            console.log('detailTreatmentCtrl -- camposIntroducidosOk');
             var fechaHoy = new Date();
             var falloPorFecha = false;
+            $scope.act.id = BlankService.detailTreatment.id;
             $scope.act.name = BlankService.detailTreatment.name;
             $scope.act.date = BlankService.detailTreatment.date;
             $scope.act.nameAlarm = BlankService.detailTreatment.nameAlarm;

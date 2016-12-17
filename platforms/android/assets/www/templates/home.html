@@ -1,6 +1,5 @@
 <ion-view title="AgenDog">
     <ion-nav-buttons side="right">
-        <!--<button class="button button-icon ion-android-calendar" ng-click="TODO()"></button>-->
         <button class="button button-icon ion-plus-round" ng-click="redirectToaddTreatment()" ng-hide="ocultarBotoneraFunct()">
         </button>
         <button class="button button-icon icon ion-stats-bars" ng-click="showFilterGroup()" ng-hide="ocultarBotoneraFunct()">
@@ -31,6 +30,7 @@
                                 ng-click="showDetail(actuacion)">
                                 <img src={{actuacion.imageact}}>
                                 <h2>{{actuacion.name}}</h2>
+                                <!-- <h2>{{actuacion.id}}</h2> -->
                                 <!-- <p>{{actuacion.date | date:'dd/MM/yyyy HH:mm'}}</p> -->
                                 <p>{{actuacion.date | date:'dd/MM/yyyy'}}</p>
                                 <p>{{actuacion.namePet}}</p>

@@ -34,7 +34,7 @@
     "cordova-plugin-splashscreen": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-splashscreen@4.0.0"
+            "id": "cordova-plugin-splashscreen@4.0.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -53,10 +53,7 @@
             "id": "cordova-plugin-camera"
         },
         "is_top_level": true,
-        "variables": {
-            "CAMERA_USAGE_DESCRIPTION": " ",
-            "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
-        }
+        "variables": {}
     },
     "cordova-plugin-compat": {
         "source": {
