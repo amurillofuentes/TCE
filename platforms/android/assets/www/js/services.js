@@ -66,44 +66,8 @@ angular.module('starter.services', [])
                 targetHeight:100
             };
         }
-/*
-//si desde camara sale esto
-ImagePickerController - addImage type  0
-services.js:91 ImageService - saveMedia type 
-services.js:47 ImageService - optionsForType type 
-services.js:94 saveMedia
-services.js:96 ImageService - saveMedia-- recieved  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/1481891011589.jpg
-services.js:37 ImageService - makeid type 
-services.js:102 ImageService - saveMedia with name  1481891011589.jpg
-services.js:103 ImageService - saveMedia with namePath  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/
-services.js:104 ImageService - saveMedia with newName  NNxAW1481891011589.jpg
-services.js:108 ImageService - saveMedia copyFile 
-services.js:22 FileService - addImage  156416541.jpg
-services.js:25 FileService - addImage img push done
-services.js:110 ImageService - saveMedia ret  156416541.jpg
-ionic.bundle.js:29132 ImagePickerController - addImage then function  156416541.jpg
-ionic.bundle.js:29132 ImagePickerController -- assignImageToView  156416541.jpg
-ionic.bundle.js:26799 TypeError: Cannot set property 'imagePet' of undefined
-    at assignImageToView (controllers.js:778)
-    at controllers.js:770
-    at processQueue (ionic.bundle.js:29132)
-    at ionic.bundle.js:29148
-    at Scope.$eval (ionic.bundle.js:30400)
-    at Scope.$digest (ionic.bundle.js:30216)
-    at ionic.bundle.js:30439
-    at completeOutstandingRequest (ionic.bundle.js:19199)
-    at ionic.bundle.js:19475
-(anonymous) @ ionic.bundle.js:26799
-(anonymous) @ ionic.bundle.js:23512
-processQueue @ ionic.bundle.js:29140
-(anonymous) @ ionic.bundle.js:29148
-$eval @ ionic.bundle.js:30400
-$digest @ ionic.bundle.js:30216
-(anonymous) @ ionic.bundle.js:30439
-completeOutstandingRequest @ ionic.bundle.js:19199
-(anonymous) @ ionic.bundle.js:19475
 
-
+        /*
 
 //si desde galeria, sale esto
 ImagePickerController - addImage type  1
@@ -124,18 +88,25 @@ FileError {code: 1, message: "NOT_FOUND_ERR"}
                 var options = optionsForType(type);
                 console.log("saveMedia");
                 $cordovaCamera.getPicture(options).then(function(imageUrl) {
-                    console.log("ImageService - saveMedia-- recieved ", imageUrl);
+                    console.log("ImageService - saveMedia-- recieved and process ", imageUrl);
 
-                    var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
+                    var namePRev = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
+                    console.log("ImageService - saveMedia-- namePRev ", namePRev);
+
+                    var name = namePRev.substr(0, namePRev.lastIndexOf('.jp')+4);
+                    console.log("ImageService - saveMedia-- name ", name);
+
                     var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
+                    console.log("ImageService - saveMedia-- namePath ", namePath);
+
                     var newName = makeid() + name;
+                    console.log("ImageService - saveMedia-- newName ", newName);
                     
-                    console.log("ImageService - saveMedia with name ", name);
-                    console.log("ImageService - saveMedia with namePath ", namePath);
-                    console.log("ImageService - saveMedia with newName ", newName);
-                    
+                    console.log("ImageService - saveMedia en directory ", namePath);
+                    console.log("ImageService - saveMedia with the image ", name);
+                    console.log("ImageService - saveMedia with the newname ", newName);
+
                     $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName).then(function(info) {
-                        newName="156416541.jpg";
                         console.log("ImageService - saveMedia copyFile ");
                         var ret=FileService.storeImage(newName);
                         console.log("ImageService - saveMedia ret ", newName);
