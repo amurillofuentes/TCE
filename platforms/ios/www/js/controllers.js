@@ -88,7 +88,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
             console.log('myPetsCtrl -- $ionicView.loaded 2');
             console.log('myPetsCtrl -- $ionicView.loaded 3');
             console.log('myPetsCtrl -- $ionicView.loaded check si tiene imagen asiganda');
-            //Si tiene contrabarra, imagen es gato o perro por defetcto (img/gatoicon_perroicon)
             if($scope.interfaz.imagePet.indexOf('/') !== -1){
                 console.log('myPetsCtrl -- $ionicView.loaded check sin imagane. asignando pordefectp');
                 ImageService.handleSaveInitImage($scope.interfaz.imagePet).then(function(result) {
@@ -1457,8 +1456,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
 
         function saveActuacionInSystem() {
             console.log('addTreatmentCtrl -- saveActuacionInSystem');
-
-            //guardar una actuacion por cada mascota seleccionada
             var k = 0;
             for (k; k < $scope.mascotasToShow.length; k++) {
                 if ($scope.mascotasToShow[k].selected) {
