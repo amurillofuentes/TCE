@@ -899,9 +899,7 @@ angular.module('starter.controllers', ['ionic.cloud'])
 
         function assignImageToView(msg) {
             console.log("ImagePickerController -- assignImageToView ", msg);
-            BlankService.detailPet.image = msg;
-            $scope.interfaz.imagePet = msg;
-            
+
             if ($scope.comeFromDetail) {
                 if ((BlankService.detailPet != undefined) && (BlankService.detailPet != null) && (BlankService.detailPet.image != null) && (BlankService.detailPet.image != null)) {
                     console.log("ImagePickerController -- asignando a BlankService detailpet image ");
