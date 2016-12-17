@@ -44,7 +44,7 @@ angular.module('starter.services', [])
         };
 
         function optionsForType(type) {
-            console.log("ImageService - optionsForType type ");
+            console.log("ImageService - optionsForType ", type);
             var source;
             switch (type) {
                 case 0:
@@ -66,26 +66,83 @@ angular.module('starter.services', [])
                 targetHeight:100
             };
         }
+/*
+//si desde camara sale esto
+ImagePickerController - addImage type  0
+services.js:91 ImageService - saveMedia type 
+services.js:47 ImageService - optionsForType type 
+services.js:94 saveMedia
+services.js:96 ImageService - saveMedia-- recieved  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/1481891011589.jpg
+services.js:37 ImageService - makeid type 
+services.js:102 ImageService - saveMedia with name  1481891011589.jpg
+services.js:103 ImageService - saveMedia with namePath  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/
+services.js:104 ImageService - saveMedia with newName  NNxAW1481891011589.jpg
+services.js:108 ImageService - saveMedia copyFile 
+services.js:22 FileService - addImage  156416541.jpg
+services.js:25 FileService - addImage img push done
+services.js:110 ImageService - saveMedia ret  156416541.jpg
+ionic.bundle.js:29132 ImagePickerController - addImage then function  156416541.jpg
+ionic.bundle.js:29132 ImagePickerController -- assignImageToView  156416541.jpg
+ionic.bundle.js:26799 TypeError: Cannot set property 'imagePet' of undefined
+    at assignImageToView (controllers.js:778)
+    at controllers.js:770
+    at processQueue (ionic.bundle.js:29132)
+    at ionic.bundle.js:29148
+    at Scope.$eval (ionic.bundle.js:30400)
+    at Scope.$digest (ionic.bundle.js:30216)
+    at ionic.bundle.js:30439
+    at completeOutstandingRequest (ionic.bundle.js:19199)
+    at ionic.bundle.js:19475
+(anonymous) @ ionic.bundle.js:26799
+(anonymous) @ ionic.bundle.js:23512
+processQueue @ ionic.bundle.js:29140
+(anonymous) @ ionic.bundle.js:29148
+$eval @ ionic.bundle.js:30400
+$digest @ ionic.bundle.js:30216
+(anonymous) @ ionic.bundle.js:30439
+completeOutstandingRequest @ ionic.bundle.js:19199
+(anonymous) @ ionic.bundle.js:19475
 
+
+
+//si desde galeria, sale esto
+ImagePickerController - addImage type  1
+services.js:91 ImageService - saveMedia type 
+services.js:47 ImageService - optionsForType type 
+services.js:94 saveMedia
+services.js:96 ImageService - saveMedia-- recieved  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/IMG_20161216_132351.jpg?1481891031691
+services.js:37 ImageService - makeid type 
+services.js:102 ImageService - saveMedia with name  IMG_20161216_132351.jpg?1481891031691
+services.js:103 ImageService - saveMedia with namePath  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/
+services.js:104 ImageService - saveMedia with newName  f16iCIMG_20161216_132351.jpg?1481891031691
+services.js:113 ImageService - saveMedia reject  
+FileError {code: 1, message: "NOT_FOUND_ERR"}
+*/
         function saveMedia(type) {
             console.log("ImageService - saveMedia type ");
             return $q(function(resolve, reject) {
                 var options = optionsForType(type);
                 console.log("saveMedia");
                 $cordovaCamera.getPicture(options).then(function(imageUrl) {
+                    console.log("ImageService - saveMedia-- recieved ", imageUrl);
+
                     var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
                     var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
                     var newName = makeid() + name;
-                    console.log("ImageService - saveMedia with ", newName);
+                    
+                    console.log("ImageService - saveMedia with name ", name);
+                    console.log("ImageService - saveMedia with namePath ", namePath);
+                    console.log("ImageService - saveMedia with newName ", newName);
                     
                     $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName).then(function(info) {
+                        //newName="156416541.jpg";
                         console.log("ImageService - saveMedia copyFile ");
                         var ret=FileService.storeImage(newName);
                         console.log("ImageService - saveMedia ret ", newName);
                         resolve(newName);
                     }, function(e) {
-                        console.log("ImageService - saveMedia reject ", ret);
-                        reject(ret);
+                        console.log("ImageService - saveMedia reject ", e);
+                        reject(e);
                     });
                     
                 });
@@ -134,7 +191,8 @@ angular.module('starter.services', [])
             { "name": "Nunca", "id": "0" },
             { "name": "12 horas antes", "id": "1" },
             { "name": "1 día antes", "id": "2" },
-            { "name": "2 días antes", "id": "3" }];
+            { "name": "2 días antes", "id": "3" },
+            { "name": "En breves", "id": "4" }];
 
         this.orders = [
             { "name": "Fecha", "id": "0", "seleccionado": "true" },

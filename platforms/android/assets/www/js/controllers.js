@@ -6,9 +6,8 @@
  .button.button-positive { border-color: #4DB6CE;
  .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
  .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
-  TODO: HAcer que se borren las alarmas
-  TODO: ANDROID: imagenes + splash + icono
-  TODO;: android agrupar notificaciones
+MULTIMEDIA
+  TODO: android agrupar notificaciones. borrar notificaciones. se solapan las hijas de...
 */
 
 angular.module('starter.controllers', ['ionic.cloud'])
@@ -459,7 +458,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
         };
 
     })
-
 
     .controller('detailPetCtrl', function($scope, $ionicPopup, $timeout, BlankService, $window, $state, $ionicHistory) {
         $scope.service = BlankService;
@@ -1003,6 +1001,7 @@ angular.module('starter.controllers', ['ionic.cloud'])
             BlankService.initValuesFromMemory();
             BlankService.removeByAttr(BlankService.actuacionesDeLasMascotas, 'id', $item.id);
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
+            //XXXXX borrar la alarma aqui
              processOrder();
              processVisibles();
         };
@@ -1385,8 +1384,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
 
         function parseDate(input) {
             var parts = input.match(/(\d+)/g);
-            // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-            // return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
             var dateFormatted=parts[0]+"-"+(parts[1])+"-"+parts[2];
             var date=new Date(dateFormatted);
             date.setHours(11);
@@ -1475,26 +1472,32 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                             "payload": {
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
+                                            },
+                                            "collapse_key": "Actuaciones pendientes",
+                                            "tag": treatmentId,
+                                            "priority" : "high"
+                                    },
+                                    "ios": {
+                                        "sound": "default",
+                                            "payload": {
+                                                "idAlarm": idAlarm,
+                                                "treatmentId": treatmentId
                                             }
                                     }
                                 }
                             }
                         };
 
-                        // Make the API call
                         $http(req).success(function(resp){
-                            // Handle success
-                            // alert("Ionic Push: Push success"+ resp);
                             console.log('addTreatmentCtrl -- Notificacion -asignoAlarmaInSystem OK');
                             console.log('addTreatmentCtrl -- Notificacion -text: ', text);
                             console.log('addTreatmentCtrl -- Notificacion -idAlarm: ', idAlarm);
                             console.log('addTreatmentCtrl -- Notificacion -treatmentId: ', treatmentId);
-                            console.log('addTreatmentCtrl -- Notificacion -cuando: ', cuando);
+                            console.log('addTreatmentCtrl -- Notificacion -processAssignAlarm-- cuando: ', cuando);
+                            console.log("addTreatmentCtrl -- Notificacion -Ionic Push: Push success", resp);
                         }).error(function(error){
-                        // Handle error 
-                        //alert("Ionic Push: Push error"+error);
+                            console.log("addTreatmentCtrl -- Notificacion -Ionic Push: Push error ", error);
                         });
-
 
                         return idAlarmaInSystem;
                     }
@@ -1596,8 +1599,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
                     }
                 });
             }
-
-
         });
 
         $scope.$on('$ionicView.afterEnter', function() {
@@ -1631,7 +1632,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
             }
         };
 
-
         function getActuacion(pet) {
             console.log('detailTreatmentCtrl -- getActuacion');
             $scope.newact = {};
@@ -1651,6 +1651,7 @@ angular.module('starter.controllers', ['ionic.cloud'])
 
             return $scope.newact;
         }
+
         function saveActuacionInSystem() {
             console.log('detailTreatmentCtrl -- saveActuacionInSystem');
 
@@ -1668,9 +1669,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
                     BlankService.actuacionesDeLasMascotas.push(act);
                 }
             }
-
-           
-
             BlankService.saveDataInInternalPhoneMemory("actuacionesDeLasMascotas", BlankService.actuacionesDeLasMascotas);
             return true;
         }
@@ -1678,8 +1676,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
         function parseDate(input) {
             var parts = input.match(/(\d+)/g);
             var parts = input.match(/(\d+)/g);
-            // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-            // return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
             var dateFormatted=parts[0]+"-"+(parts[1])+"-"+parts[2];
             var date=new Date(dateFormatted);
             date.setHours(11);
@@ -1718,7 +1714,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
                             timeAlarm=currentimeNew;
                             console.log('detailTreatmentCtrl -- processAssignAlarm -- hora prevista notificacion ', timeAlarm);
                         }
-
 
                         if(addMinutes!=null){
                             if(addMinutes!=undefined){
@@ -1770,26 +1765,32 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                             "payload": {
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
+                                            },
+                                            "collapse_key": "Actuaciones pendientes",
+                                            "tag": treatmentId,
+                                            "priority" : "high"
+                                    },
+                                    "ios": {
+                                        "sound": "default",
+                                            "payload": {
+                                                "idAlarm": idAlarm,
+                                                "treatmentId": treatmentId
                                             }
                                     }
                                 }
                             }
                         };
 
-                        // Make the API call
                         $http(req).success(function(resp){
-                            console.log('addTreatmentCtrl -- Notificacion -asignoAlarmaInSystem OK');
-                            console.log('addTreatmentCtrl -- Notificacion -text: ', text);
-                            console.log('addTreatmentCtrl -- Notificacion -idAlarm: ', idAlarm);
-                            console.log('addTreatmentCtrl -- Notificacion -treatmentId: ', treatmentId);
-                            console.log('addTreatmentCtrl -- Notificacion -processAssignAlarm-- cuando: ', cuando);
-                        // Handle success
-                    // alert("Ionic Push: Push success"+ resp);
+                            console.log('detailTreatmentCtrl -- Notificacion -asignoAlarmaInSystem OK');
+                            console.log('detailTreatmentCtrl -- Notificacion -text: ', text);
+                            console.log('detailTreatmentCtrl -- Notificacion -idAlarm: ', idAlarm);
+                            console.log('detailTreatmentCtrl -- Notificacion -treatmentId: ', treatmentId);
+                            console.log('detailTreatmentCtrl -- Notificacion -processAssignAlarm-- cuando: ', cuando);
+                            console.log("detailTreatmentCtrl -- Notificacion -Ionic Push: Push success", JSON.stringify(resp));
                         }).error(function(error){
-                        // Handle error 
-                        //alert("Ionic Push: Push error"+error);
+                            console.log("detailTreatmentCtrl -- Notificacion -Ionic Push: Push error ", error);
                         });
-
 
                         return idAlarmaInSystem;
                                 }
@@ -1797,57 +1798,6 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         }
         }
 
-/*
-         $scope.asignoAlarmaInSystem = function(cuando, idAlarm, treatmentId, text) {
-            console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
-            console.log('addTreatmentCtrl -- text: ', text);
-            console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
-            console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
-            console.log('addTreatmentCtrl -- cuando: ', cuando);
-
-           
-
-            var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
-            var tokens = [window.localStorage.getItem("token")];
-            var profile = 'tce';
-
-            // Build the request object
-            var req = {
-                method: 'POST',
-                url: 'https://api.ionic.io/push/notifications',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + jwt
-                },
-                data: {
-                    "tokens": tokens,
-                    "profile": profile,
-                    "scheduled": cuando,
-                    "notification": {
-                        "title": "Actuacion pendiente",
-                        "message": text,
-                        "sound": "default",
-                        "android": {
-                                "sound": "default",
-                                "payload": {
-                                    "idAlarm": idAlarm,
-                                    "treatmentId": treatmentId
-                                }
-                        }
-                    }
-                }
-            };
-
-            // Make the API call
-            $http(req).success(function(resp){
-            // Handle success
-           // alert("Ionic Push: Push success"+ resp);
-            }).error(function(error){
-            // Handle error 
-            //alert("Ionic Push: Push error"+error);
-            });
-        };
-*/
         function camposIntroducidosOk() {
             var fechaHoy = new Date();
             var falloPorFecha = false;

@@ -7,27 +7,15 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.starter"
-        },
         "cordova-plugin-camera": {
             "CAMERA_USAGE_DESCRIPTION": " ",
             "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         },
         "cordova-plugin-file": {
@@ -36,7 +24,19 @@
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
         "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ionicframework.todo610847"
+        },
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         },
         "phonegap-plugin-push": {
@@ -45,10 +45,10 @@
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
+        "cordova-plugin-app-event": {
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         },
-        "cordova-plugin-app-event": {
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         }
     }
