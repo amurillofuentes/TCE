@@ -67,21 +67,6 @@ angular.module('starter.services', [])
             };
         }
 
-        /*
-
-//si desde galeria, sale esto
-ImagePickerController - addImage type  1
-services.js:91 ImageService - saveMedia type 
-services.js:47 ImageService - optionsForType type 
-services.js:94 saveMedia
-services.js:96 ImageService - saveMedia-- recieved  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/IMG_20161216_132351.jpg?1481891031691
-services.js:37 ImageService - makeid type 
-services.js:102 ImageService - saveMedia with name  IMG_20161216_132351.jpg?1481891031691
-services.js:103 ImageService - saveMedia with namePath  file:///storage/emulated/0/Android/data/com.ionicframework.todo610847/cache/
-services.js:104 ImageService - saveMedia with newName  f16iCIMG_20161216_132351.jpg?1481891031691
-services.js:113 ImageService - saveMedia reject  
-FileError {code: 1, message: "NOT_FOUND_ERR"}
-*/
         function saveMedia(type) {
             console.log("ImageService - saveMedia type ");
             return $q(function(resolve, reject) {
