@@ -32,8 +32,10 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'starte
       "sender_id": "781703763498",
       "pluginConfig": {
         "ios": {
-          "badge": true,
-          "sound": true
+          "badge": "true",
+          "sound": "true",
+          "clearBadge": "true"
+
         },
         "android": {
           "iconColor": "#343434"

@@ -243,96 +243,196 @@ angular.module('starter.controllers', ['ionic.cloud'])
                 var currentTime6Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 6));
 
             //creo las actuaciones depende de si es perro o gatoIcon
-            if (pet.type.localeCompare('Perro') == 0) {
+if (pet.type.localeCompare('Perro') == 0) {
                 console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = perro');
                 //10 de enero: desparasitacion interna        
-                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-01-10T09:00:00')), "desparasitacion", 'http://tecuroencasa.com/hidatidosis/');
+                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-01-10T09:00:00')), "DesparasitacionInternaDog", 'http://tecuroencasa.com/hidatidosis/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //01 de abril: ANALÍTICA DE FILARIA*
-                $scope.newact = createActuacion('ANALÍTICA DE FILARIA*', processDateToInsert(currentTime, new Date('2016-04-01T09:00:00')), "analisis", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('ANALÍTICA DE FILARIA*', processDateToInsert(currentTime, new Date('2016-04-01T09:00:00')), "AnaliticaFilariaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de abril: desparasitacion interna
-                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-04-10T09:00:00')), "desparasitacion", 'http://tecuroencasa.com/hidatidosis/');
+                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-04-10T09:00:00')), "DesparasitacionInternaDog", 'http://tecuroencasa.com/hidatidosis/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de abril: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-04-15T09:00:00')), "filaria", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-04-15T09:00:00')), "PrevencionFilariaPastillaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de abril: PONER COLLAR PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('PONER COLLAR PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-04-15T09:00:00')), "collar", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
+                $scope.newact = createActuacion('PONER COLLAR PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-04-15T09:00:00')), "CollarPrevencionLeishmaniaDog", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 de mayo: PREVENCIÓN ANUAL FILARIA GUARDIAN**
-                $scope.newact = createActuacion('PREVENCIÓN ANUAL FILARIA GUARDIAN**', processDateToInsert(currentTime, new Date('2016-05-01T09:00:00')), "medicacion", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('PREVENCIÓN ANUAL FILARIA GUARDIAN**', processDateToInsert(currentTime, new Date('2016-05-01T09:00:00')), "PrevencionFilariaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de mayo: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-05-15T09:00:00')), "medicacion", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
+                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-05-15T09:00:00')), "PrevencionLeishmaniaDog", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de mayo: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-05-15T09:00:00')), "filaria", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-05-15T09:00:00')), "PrevencionFilariaPastillaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de junio: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-06-15T09:00:00')), "filaria", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-06-15T09:00:00')), "PrevencionFilariaPastillaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de julio: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-07-10T09:00:00')), "medicacion", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
+                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-07-10T09:00:00')), "PrevencionLeishmaniaDog", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de julio: desparasitacion interna
-                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-07-10T09:00:00')), "desparasitacion", 'http://tecuroencasa.com/hidatidosis/');
+                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-07-10T09:00:00')), "DesparasitacionInternaDog", 'http://tecuroencasa.com/hidatidosis/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de julio: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-07-15T09:00:00')), "filaria", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-07-15T09:00:00')), "PrevencionFilariaPastillaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de agosto: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-08-15T09:00:00')), "filaria", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-08-15T09:00:00')), "PrevencionFilariaPastillaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //1 a 29 de septiembre: LEISGUARD PREVENCIÓN LEISHMANIA
-                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-09-15T09:00:00')), "medicacion", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
+                $scope.newact = createActuacion('LEISGUARD PREVENCIÓN LEISHMANIA', processDateToInsert(currentTime, new Date('2016-09-15T09:00:00')), "PrevencionLeishmaniaDog", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //15 de septiembre: prevención Filaria en pastilla
-                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-09-15T09:00:00')), "filaria", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
+                $scope.newact = createActuacion('prevención Filaria en pastilla', processDateToInsert(currentTime, new Date('2016-09-15T09:00:00')), "PrevencionFilariaPastillaDog", 'http://tecuroencasa.com/promocion-para-la-prevencion-de-la-filiariosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de octubre: desparasitacion interna
-                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-10-10T09:00:00')), "desparasitacion", 'http://tecuroencasa.com/hidatidosis/');
+                $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-10-10T09:00:00')), "DesparasitacionInternaDog", 'http://tecuroencasa.com/hidatidosis/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //10 de diciembre: ANALÍTICA DE LEISHMANIA*
-                $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', processDateToInsert(currentTime, new Date('2016-12-10T09:00:00')), "analisis", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
+                $scope.newact = createActuacion('ANALÍTICA DE LEISHMANIA', processDateToInsert(currentTime, new Date('2016-12-10T09:00:00')), "AnaliticaLeishmaniaDog", 'http://tecuroencasa.com/la-leishmaniosis-canina/');
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //VACUNA RABIA 4 meses después de mes de nacimiento
-                $scope.newact = createActuacion('VACUNA RABIA', processDateToInsert(currentTime, currentTime4Months), "medicacion");
+                $scope.newact = createActuacion('VACUNA RABIA', processDateToInsert(currentTime, currentTime4Months), "VacunaRabiaDog");
                 $scope.newact.nameAlarm = "1 día antes";$scope.newact.alarmId = "2";$scope.newact.alarmSystemId = BlankService.IDGenerator(4);
                 actuacionAINsertarPorDefecto1=$scope.newact;
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //VACUNA POLIVALENTE 3 meses después de la fecha de nacimiento 
-                $scope.newact = createActuacion('VACUNA POLIVALENTE', processDateToInsert(currentTime, currentTime3Months), "medicacion");
+                $scope.newact = createActuacion('VACUNA POLIVALENTE', processDateToInsert(currentTime, currentTime3Months), "VacunaPolivalenteDog");
                 $scope.newact.nameAlarm = "1 día antes";$scope.newact.alarmId = "2";$scope.newact.alarmSystemId = BlankService.IDGenerator(4);
                 actuacionAINsertarPorDefecto2=$scope.newact;
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //TOS DE LAS PERRERAS a los 6 meses del nacimiento. 
-                $scope.newact = createActuacion('TOS DE LAS PERRERAS', processDateToInsert(currentTime, currentTime6Months), "medicacion");
+                $scope.newact = createActuacion('TOS DE LAS PERRERAS', processDateToInsert(currentTime, currentTime6Months), "TosPerrerasDog");
                 $scope.newact.nameAlarm = "1 día antes";$scope.newact.alarmId = "2";$scope.newact.alarmSystemId = BlankService.IDGenerator(4);
                 actuacionAINsertarPorDefecto3=$scope.newact;
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
             } else if (pet.type = 'Gato') {
+
+                var currentTime = new Date();
+                var fechaPet = pet.date;
+                var currentTime1Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 1));
+                var currentTime2Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 2));
+                var currentTime3Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 3));
+                var currentTime4Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 4));
+                var currentTime5Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 5));
+                var currentTime6Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 6));
+                var currentTime7Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 7));
+                var currentTime8Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 8));
+                var currentTime9Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 9));
+                var currentTime10Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 10));
+                var currentTime11Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 11));
+                var currentTime12Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 12));
+
                 console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = Gato');
                 //VACUNA TRIVALENTE + LEUCEMIA a tres meses del nacimiento
-                $scope.newact = createActuacion('VACUNA TRIVALENTE + LEUCEMIA', processDateToInsert(currentTime, currentTime3Months), "filaria", 'http://tecuroencasa.com/la-leucemia-felina/');
+                $scope.newact = createActuacion('VACUNA TRIVALENTE + LEUCEMIA', processDateToInsert(currentTime, currentTime3Months), "TrivalenteLeucemiaCat", 'http://tecuroencasa.com/la-leucemia-felina/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+
+                //Desparastiación interna cada year
+                $scope.newact = createActuacion('DESPARASITACION INTERNA', processDateToInsert(currentTime, fechaPet), "DesparasitacionCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+
+                //Desparastiación interna cada 3 meses
+                $scope.newact = createActuacion('DESPARASITACION INTERNA', processDateToInsert(currentTime, currentTime3Months), "DesparasitacionCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+
+                //Desparastiación interna cada 6 meses
+                $scope.newact = createActuacion('DESPARASITACION INTERNA', processDateToInsert(currentTime, currentTime6Months), "DesparasitacionCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                
+                //Desparastiación interna cada 9 meses
+                $scope.newact = createActuacion('DESPARASITACION INTERNA', processDateToInsert(currentTime, currentTime9Months), "DesparasitacionCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+
+                //PIPETA cada year
+                $scope.newact = createActuacion('PIPETA', processDateToInsert(currentTime, fechaPet), "PipetaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime1Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime2Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime3Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime4Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime5Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime6Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime7Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime8Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime9Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime10Months), "MaltaCat", 'http://tecuroencasa.com/');
+                console.log("gato creado-->",JSON.stringify($scope.newact));
+                BlankService.actuacionesDeLasMascotas.push($scope.newact);
+                $scope.act = {};
+                //MALTA cada mes
+                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime11Months), "MaltaCat", 'http://tecuroencasa.com/');
                 console.log("gato creado-->",JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
@@ -421,11 +521,13 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         var idAlarm=idAlarmaInSystem;
                         var treatmentId=actuacion.id;
                         var text = actuacion.namePet + " - " + actuacion.name;
+                        var tag="treatmentId"+treatmentId;
 
                         console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
                         console.log('addTreatmentCtrl -- text: ', text);
                         console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
                         console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- tag: ', tag);
                         console.log('addTreatmentCtrl -- cuando: ', cuando);
 
                         
@@ -456,12 +558,14 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
                                             },
-                                            "collapse_key": "Actuaciones pendientes",
-                                            "tag": treatmentId,
+                                            //"collapse_key": "Actuaciones pendientes",
+                                            "tag": tag,
                                             "priority" : "high"
                                     },
                                     "ios": {
                                         "sound": "default",
+                                        "badge":true,
+                                        "content-available": 1,
                                             "payload": {
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
@@ -982,10 +1086,11 @@ angular.module('starter.controllers', ['ionic.cloud'])
         });
 
         $scope.$on('cloud:push:notification', function(event, data) {
+            console.log('homeCtrl -- notificacion recibida');
+            
             var msg = data.message;
             //todo: notificaciones dobles???
-            console.log('homeCtrl -- notificacion recibida');
-
+            
             var title=msg.title;
             var text=msg.text;
             var idAlarm=msg.payload.idAlarm;
@@ -1558,13 +1663,14 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         var idAlarm=idAlarmaInSystem;
                         var treatmentId=actuacion.id;
                         var text = actuacion.namePet + " - " + actuacion.name;
+                        var tag="treatmentId"+treatmentId;
 
                         console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
                         console.log('addTreatmentCtrl -- text: ', text);
                         console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
                         console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- tag: ', tag);
                         console.log('addTreatmentCtrl -- cuando: ', cuando);
-
                         
 
                         var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
@@ -1593,12 +1699,14 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
                                             },
-                                            "collapse_key": "Actuaciones pendientes",
-                                            "tag": treatmentId,
+                                            //"collapse_key": "Actuaciones pendientes",
+                                            "tag": tag,
                                             "priority" : "high"
                                     },
                                     "ios": {
                                         "sound": "default",
+                                        "badge":true,
+                                        "content-available":1,
                                             "payload": {
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
@@ -1848,16 +1956,18 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
 
-                        var cuando=timeAlarm;
+                       var cuando=timeAlarm;
                         var idAlarm=idAlarmaInSystem;
                         var treatmentId=actuacion.id;
                         var text = actuacion.namePet + " - " + actuacion.name;
-                        
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- asignoAlarmaInSystem with');
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- text: ', text);
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- idAlarm: ', idAlarm);
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- treatmentId: ', treatmentId);
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- cuando: ', cuando);
+                        var tag="treatmentId"+treatmentId;
+
+                        console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
+                        console.log('addTreatmentCtrl -- text: ', text);
+                        console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
+                        console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- tag: ', tag);
+                        console.log('addTreatmentCtrl -- cuando: ', cuando);
 
 
                         var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
@@ -1886,12 +1996,14 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
                                             },
-                                            "collapse_key": "Actuaciones pendientes",
-                                            "tag": treatmentId,
+                                            //"collapse_key": "Actuaciones pendientes",
+                                            "tag": tag,
                                             "priority" : "high"
                                     },
                                     "ios": {
                                         "sound": "default",
+                                        "badge":true,
+                                        "content-available": 1,
                                             "payload": {
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId

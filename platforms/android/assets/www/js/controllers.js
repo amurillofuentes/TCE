@@ -421,11 +421,13 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         var idAlarm=idAlarmaInSystem;
                         var treatmentId=actuacion.id;
                         var text = actuacion.namePet + " - " + actuacion.name;
+                        var tag="treatmentId"+treatmentId;
 
                         console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
                         console.log('addTreatmentCtrl -- text: ', text);
                         console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
                         console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- tag: ', tag);
                         console.log('addTreatmentCtrl -- cuando: ', cuando);
 
                         
@@ -456,8 +458,8 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
                                             },
-                                            "collapse_key": "Actuaciones pendientes",
-                                            "tag": treatmentId,
+                                            //"collapse_key": "Actuaciones pendientes",
+                                            "tag": tag,
                                             "priority" : "high"
                                     },
                                     "ios": {
@@ -1554,17 +1556,18 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
 
-                        var cuando=timeAlarm;
+                       var cuando=timeAlarm;
                         var idAlarm=idAlarmaInSystem;
                         var treatmentId=actuacion.id;
                         var text = actuacion.namePet + " - " + actuacion.name;
+                        var tag="treatmentId"+treatmentId;
 
                         console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
                         console.log('addTreatmentCtrl -- text: ', text);
                         console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
                         console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- tag: ', tag);
                         console.log('addTreatmentCtrl -- cuando: ', cuando);
-
                         
 
                         var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
@@ -1593,8 +1596,8 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
                                             },
-                                            "collapse_key": "Actuaciones pendientes",
-                                            "tag": treatmentId,
+                                            //"collapse_key": "Actuaciones pendientes",
+                                            "tag": tag,
                                             "priority" : "high"
                                     },
                                     "ios": {
@@ -1848,16 +1851,18 @@ angular.module('starter.controllers', ['ionic.cloud'])
                         var idAlarmaInSystem = BlankService.IDGenerator(4);
                         var text = actuacion.namePet + " - " + actuacion.name;
 
-                        var cuando=timeAlarm;
+                       var cuando=timeAlarm;
                         var idAlarm=idAlarmaInSystem;
                         var treatmentId=actuacion.id;
                         var text = actuacion.namePet + " - " + actuacion.name;
-                        
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- asignoAlarmaInSystem with');
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- text: ', text);
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- idAlarm: ', idAlarm);
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- treatmentId: ', treatmentId);
-                        console.log('detailTreatmentCtrl -- processAssignAlarm-- cuando: ', cuando);
+                        var tag="treatmentId"+treatmentId;
+
+                        console.log('addTreatmentCtrl -- asignoAlarmaInSystem with');
+                        console.log('addTreatmentCtrl -- text: ', text);
+                        console.log('addTreatmentCtrl -- idAlarm: ', idAlarm);
+                        console.log('addTreatmentCtrl -- treatmentId: ', treatmentId);
+                        console.log('addTreatmentCtrl -- tag: ', tag);
+                        console.log('addTreatmentCtrl -- cuando: ', cuando);
 
 
                         var jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDVmNDBjYS05YWRmLTQ3MTktOTMwYy1hZjE3MDkyMDU2MjMifQ.8J-mIWGru1bJSh96KxluceMC899rs3q0Wh5Fe5cuds0 '; //token de dashboard ionic
@@ -1886,8 +1891,8 @@ angular.module('starter.controllers', ['ionic.cloud'])
                                                 "idAlarm": idAlarm,
                                                 "treatmentId": treatmentId
                                             },
-                                            "collapse_key": "Actuaciones pendientes",
-                                            "tag": treatmentId,
+                                            //"collapse_key": "Actuaciones pendientes",
+                                            "tag": tag,
                                             "priority" : "high"
                                     },
                                     "ios": {
