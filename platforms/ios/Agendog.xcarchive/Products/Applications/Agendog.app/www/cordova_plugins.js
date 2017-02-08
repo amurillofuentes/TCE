@@ -314,7 +314,7 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.0",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "ionic-plugin-keyboard": "2.2.1",
-    "phonegap-plugin-push": "1.8.4"
+    "phonegap-plugin-push": "1.9.2"
 };
 // BOTTOM OF METADATA
 });

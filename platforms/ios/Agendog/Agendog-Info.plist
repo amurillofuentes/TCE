@@ -26,33 +26,12 @@
     <string>????</string>
     <key>CFBundleVersion</key>
     <string>0.0.1</string>
-    <key>GCM_SENDER_ID</key>
-    <string>781703763498</string>
-    <key>IS_GCM_ENABLED</key>
-    <true/>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
-    <key>NSCameraUsageDescription</key>
-    <string/>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
     <key>NSMainNibFile</key>
     <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string/>
-    <key>UIBackgroundModes</key>
-    <array>
-      <string>remote-notification</string>
-    </array>
-    <key>UIRequiresFullScreen</key>
-    <true/>
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationPortrait</string>
@@ -66,5 +45,26 @@
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>UIRequiresFullScreen</key>
+    <true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+    <key>NSCameraUsageDescription</key>
+    <string/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string/>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>GCM_SENDER_ID</key>
+    <string>85075801930</string>
+    <key>IS_GCM_ENABLED</key>
+    <true/>
   </dict>
 </plist>

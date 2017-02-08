@@ -86,7 +86,7 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
-		t0yYqfmKAo6uldsiw5LDU1aX7tk=
+		qL9kPpT6cyKBMMHmG2W0sug6GD4=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
 		<data>
@@ -94,11 +94,11 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib</key>
 		<data>
-		KarnJghnYFmLzmNBKUSkkFOG0cU=
+		dcvPYA7uthfMD1LFLi+uo8sVVBY=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mLIV1oMBjUAyDWVZsX2Xcz2kfyk=
+		pcopS28tcdOfVUZcRS3S28xjkU8=
 		</data>
 		<key>LaunchImage-568h@2x.png</key>
 		<data>
@@ -158,7 +158,7 @@
 		</data>
 		<key>MainViewController.nib</key>
 		<data>
-		AOUubWeeyvqWcaj2Y/J2L9SEBd4=
+		Wne4TFWJrF1zNUM/GQJQiymlBOU=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -166,7 +166,7 @@
 		</data>
 		<key>archived-expanded-entitlements.xcent</key>
 		<data>
-		vO/gVYVVkU1zHBaxd4xJ53/ga5k=
+		uVC4UsEAjsaAorNMAW+mHUKgk9o=
 		</data>
 		<key>config.xml</key>
 		<data>
@@ -190,7 +190,7 @@
 		</data>
 		<key>www/cordova_plugins.js</key>
 		<data>
-		mc1Zm72B79QeYGfEm6qt6kAhj+M=
+		8zkQ2Ei8GzrZsffkmWN2rwTuhYA=
 		</data>
 		<key>www/css/style.css</key>
 		<data>
@@ -918,7 +918,7 @@
 		</data>
 		<key>www/plugins/phonegap-plugin-push/www/push.js</key>
 		<data>
-		apcUuyMiXojMo5XdGSWEahYMM6Y=
+		5lqeq3eXKNBSZFridjwkmGk0IH8=
 		</data>
 		<key>www/service-worker.js</key>
 		<data>
@@ -1183,11 +1183,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			t0yYqfmKAo6uldsiw5LDU1aX7tk=
+			qL9kPpT6cyKBMMHmG2W0sug6GD4=
 			</data>
 			<key>hash2</key>
 			<data>
-			ndr5OR7UkNuZs7hxpfuINGKB9JVjoqkso80ASsRg27o=
+			dJrbzAcqPasX8M668Jeocrri1rUNs/KP7F65TR7pVq8=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
@@ -1205,11 +1205,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KarnJghnYFmLzmNBKUSkkFOG0cU=
+			dcvPYA7uthfMD1LFLi+uo8sVVBY=
 			</data>
 			<key>hash2</key>
 			<data>
-			apxroj8mLHeN4eTyGfNMMwRCVY0fQAOuxZVvbyaDnt0=
+			1Fc7prMNiD084x/eefZn4tcWOiIhtQOg8jsWlezeNok=
 			</data>
 		</dict>
 		<key>LaunchImage-568h@2x.png</key>
@@ -1370,22 +1370,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AOUubWeeyvqWcaj2Y/J2L9SEBd4=
+			Wne4TFWJrF1zNUM/GQJQiymlBOU=
 			</data>
 			<key>hash2</key>
 			<data>
-			MbV1em6VXnmraSgFCJ/rcmERecgB/jBzzHlMUZXVLoY=
+			Pahm0otrGLfdOzmKRgiMOhXVWgiKHPUTySg3fIOvmLI=
 			</data>
 		</dict>
 		<key>archived-expanded-entitlements.xcent</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			vO/gVYVVkU1zHBaxd4xJ53/ga5k=
+			uVC4UsEAjsaAorNMAW+mHUKgk9o=
 			</data>
 			<key>hash2</key>
 			<data>
-			l3BKiWC0+szu9UOXoI+10KRWJHw2JzWSFaoqJ98iZWw=
+			e/joE7ObU4L5jO1+1JUxZxM/FUkgLPoVg6yex5UVEFk=
 			</data>
 		</dict>
 		<key>config.xml</key>
@@ -1447,11 +1447,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mc1Zm72B79QeYGfEm6qt6kAhj+M=
+			8zkQ2Ei8GzrZsffkmWN2rwTuhYA=
 			</data>
 			<key>hash2</key>
 			<data>
-			m43kaex0uxlmPaXDNixiII092RQ3A+cn5Wl3pZv9Soc=
+			6YfWpjCqjsdqqh86HqwvA/idvzqP4xaf4Zn4AthJUxU=
 			</data>
 		</dict>
 		<key>www/css/style.css</key>
@@ -3449,11 +3449,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			apcUuyMiXojMo5XdGSWEahYMM6Y=
+			5lqeq3eXKNBSZFridjwkmGk0IH8=
 			</data>
 			<key>hash2</key>
 			<data>
-			+Iw4Cw6aVzdAUD7Mzhh5ScljopZy5262GBaBUXSnbc0=
+			fnu6B3igubTsRbXXflx/zb6AbO9quQlivKUyNjtq/qo=
 			</data>
 		</dict>
 		<key>www/service-worker.js</key>

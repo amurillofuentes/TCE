@@ -91,13 +91,33 @@
                     ],
                     "GCM_SENDER_ID": [
                         {
-                            "xml": "<string>781703763498</string>",
+                            "xml": "<string>85075801930</string>",
                             "count": 1
                         }
                     ],
                     "IS_GCM_ENABLED": [
                         {
                             "xml": "<true />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Debug.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>development</string>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Release.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>production</string>",
                             "count": 1
                         }
                     ]
@@ -145,7 +165,7 @@
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         },
         "phonegap-plugin-push": {
-            "SENDER_ID": "781703763498",
+            "SENDER_ID": "85075801930",
             "PACKAGE_NAME": "com.ionicframework.todo610847"
         }
     },
@@ -463,6 +483,6 @@
         "cordova-plugin-whitelist": "1.3.0",
         "de.appplant.cordova.plugin.local-notification": "0.8.4",
         "ionic-plugin-keyboard": "2.2.1",
-        "phonegap-plugin-push": "1.8.4"
+        "phonegap-plugin-push": "1.9.2"
     }
 }
