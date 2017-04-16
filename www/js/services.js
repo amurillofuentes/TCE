@@ -145,10 +145,11 @@ angular.module('starter.services', [])
 
         this.alarmas = [
             { "name": "Nunca", "id": "0" },
-            { "name": "12 horas antes", "id": "1" },
-            { "name": "1 día antes", "id": "2" },
-            { "name": "2 días antes", "id": "3" },
-            { "name": "En breves", "id": "4" }];
+            //{ "name": "12 horas antes", "id": "1" }
+            { "name": "1 día antes", "id": "2" }
+            //{ "name": "2 días antes", "id": "3" }
+            //{ "name": "en breves", "id": "4" }
+        ];
 
         this.orders = [
             { "name": "Fecha", "id": "0", "seleccionado": "true" },
@@ -330,40 +331,40 @@ angular.module('starter.services', [])
             }
             return false;
         }
+        
          this.processImageFromType=function(tipo) {
-    console.log('services -- processImageFromType');
-    if(tipo=="DesparasitacionInternaDog"){
-        return "img/DesparasitacionInternaDog.jpg"
-    }else if(tipo=="AnaliticaFilariaDog"){
-        return "img/AnaliticaFilariaDog.jpg"
-    }else if(tipo=="PrevencionFilariaPastillaDog"){
-        return "img/PrevencionFilariaPastillaDog.jpg"
-    }else if(tipo=="CollarPrevencionLeishmaniaDog"){
-        return "img/CollarPrevencionLeishmaniaDog.jpg"
-    }else if(tipo=="PrevencionFilariaDog"){
-        return "img/PrevencionFilariaDog.jpg"
-    }else if(tipo=="PrevencionLeishmaniaDog"){
-        return "img/PrevencionLeishmaniaDog.jpg"
-    }else if(tipo=="AnaliticaLeishmaniaDog"){
-        return "img/AnaliticaLeishmaniaDog.jpg"
-    }else if(tipo=="VacunaRabiaDog"){
-        return "img/VacunaRabiaDog.jpg"
-    }else if(tipo=="VacunaPolivalenteDog"){
-        return "img/VacunaPolivalenteDog.jpg"
-    }else if(tipo=="TosPerrerasDog"){
-        return "img/TosPerrerasDog.jpg"
-    }else if(tipo=="DesparasitacionCat"){
-        return "img/DesparasitacionCat.jpg"
-    }else if(tipo=="TrivalenteLeucemiaCat"){
-        return "img/TrivalenteLeucemiaCat.jpg"
-    }else if(tipo=="MaltaCat"){
-        return "img/MaltaCat.jpg"
-    }else if(tipo=="PipetaCat"){
-        return "img/PipetaCat.jpg"
-    }
-
-    return "img/otraIcon.jpg"            
-}   
+            console.log('services -- processImageFromType');
+            if(tipo=="DesparasitacionInternaDog"){
+                return "img/DesparasitacionInternaDog.jpg"
+            }else if(tipo=="AnaliticaFilariaDog"){
+                return "img/AnaliticaFilariaDog.jpg"
+            }else if(tipo=="PrevencionFilariaPastillaDog"){
+                return "img/PrevencionFilariaPastillaDog.jpg"
+            }else if(tipo=="CollarPrevencionLeishmaniaDog"){
+                return "img/CollarPrevencionLeishmaniaDog.jpg"
+            }else if(tipo=="PrevencionFilariaDog"){
+                return "img/PrevencionFilariaDog.jpg"
+            }else if(tipo=="PrevencionLeishmaniaDog"){
+                return "img/PrevencionLeishmaniaDog.jpg"
+            }else if(tipo=="AnaliticaLeishmaniaDog"){
+                return "img/AnaliticaLeishmaniaDog.jpg"
+            }else if(tipo=="VacunaRabiaDog"){
+                return "img/VacunaRabiaDog.jpg"
+            }else if(tipo=="VacunaPolivalenteDog"){
+                return "img/VacunaPolivalenteDog.jpg"
+            }else if(tipo=="TosPerrerasDog"){
+                return "img/TosPerrerasDog.jpg"
+            }else if(tipo=="DesparasitacionCat"){
+                return "img/DesparasitacionCat.jpg"
+            }else if(tipo=="TrivalenteLeucemiaCat"){
+                return "img/TrivalenteLeucemiaCat.jpg"
+            }else if(tipo=="MaltaCat"){
+                return "img/MaltaCat.jpg"
+            }else if(tipo=="PipetaCat"){
+                return "img/PipetaCat.jpg"
+            }
+            return "img/otraIcon.jpg"            
+        }   
 
         this.IDGenerator = function (length) {
             this.length = length;

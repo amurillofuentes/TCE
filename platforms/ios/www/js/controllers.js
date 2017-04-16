@@ -1,4 +1,5 @@
 /*
+
  .bar.bar-stable { background-color: #E9D423;
  .bar-stable .button { background-color: #079307;
  .bar-stable .button.button-clear { color: #FF0000;
@@ -6,6 +7,15 @@
  .button.button-positive { border-color: #4DB6CE;
  .button.button-positive.active,.button.button-positive.activated { border-color: #0087A3;
  .button.button-positive.active,.button.button-positive.activated { background-color: #0087A3;
+
+    dejar solo impares en se que actuacion de gatos-->hecho
+    quitar version y boton de borrar datos -->hecho
+    cambiar correo por el de tecuroencasa-->hecho
+    avisos quitando opciones y dejando solo 24hrs antes-->hecho
+    
+    multimedia android
+    factura hosting
+
 */
 
 angular.module('starter.controllers', ['ionic.cloud'])
@@ -243,7 +253,7 @@ angular.module('starter.controllers', ['ionic.cloud'])
                 var currentTime6Months = new Date(new Date(fechaPet).setMonth(fechaPet.getMonth() + 6));
 
             //creo las actuaciones depende de si es perro o gatoIcon
-if (pet.type.localeCompare('Perro') == 0) {
+            if (pet.type.localeCompare('Perro') == 0) {
                 console.log('addMyPetsCtrl -- createActuacionesDeMascota--type = perro');
                 //10 de enero: desparasitacion interna        
                 $scope.newact = createActuacion('desparasitacion interna', processDateToInsert(currentTime, new Date('2016-01-10T09:00:00')), "DesparasitacionInternaDog", 'http://tecuroencasa.com/hidatidosis/');
@@ -387,17 +397,7 @@ if (pet.type.localeCompare('Perro') == 0) {
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //MALTA cada mes
-                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime2Months), "MaltaCat", 'http://tecuroencasa.com/');
-                console.log("gato creado-->",JSON.stringify($scope.newact));
-                BlankService.actuacionesDeLasMascotas.push($scope.newact);
-                $scope.act = {};
-                //MALTA cada mes
                 $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime3Months), "MaltaCat", 'http://tecuroencasa.com/');
-                console.log("gato creado-->",JSON.stringify($scope.newact));
-                BlankService.actuacionesDeLasMascotas.push($scope.newact);
-                $scope.act = {};
-                //MALTA cada mes
-                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime4Months), "MaltaCat", 'http://tecuroencasa.com/');
                 console.log("gato creado-->",JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
@@ -407,27 +407,12 @@ if (pet.type.localeCompare('Perro') == 0) {
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //MALTA cada mes
-                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime6Months), "MaltaCat", 'http://tecuroencasa.com/');
-                console.log("gato creado-->",JSON.stringify($scope.newact));
-                BlankService.actuacionesDeLasMascotas.push($scope.newact);
-                $scope.act = {};
-                //MALTA cada mes
                 $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime7Months), "MaltaCat", 'http://tecuroencasa.com/');
                 console.log("gato creado-->",JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
                 //MALTA cada mes
-                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime8Months), "MaltaCat", 'http://tecuroencasa.com/');
-                console.log("gato creado-->",JSON.stringify($scope.newact));
-                BlankService.actuacionesDeLasMascotas.push($scope.newact);
-                $scope.act = {};
-                //MALTA cada mes
                 $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime9Months), "MaltaCat", 'http://tecuroencasa.com/');
-                console.log("gato creado-->",JSON.stringify($scope.newact));
-                BlankService.actuacionesDeLasMascotas.push($scope.newact);
-                $scope.act = {};
-                //MALTA cada mes
-                $scope.newact = createActuacion('MALTA', processDateToInsert(currentTime, currentTime10Months), "MaltaCat", 'http://tecuroencasa.com/');
                 console.log("gato creado-->",JSON.stringify($scope.newact));
                 BlankService.actuacionesDeLasMascotas.push($scope.newact);
                 $scope.act = {};
